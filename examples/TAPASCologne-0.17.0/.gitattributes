@@ -1,0 +1,8 @@
+./cologne_bbox.osm.xml filter=lfs diff=lfs merge=lfs -text
+./cologne.launchd.xml filter=lfs diff=lfs merge=lfs -text
+./cologne.net.xml filter=lfs diff=lfs merge=lfs -text
+./cologne.poly.xml filter=lfs diff=lfs merge=lfs -text
+./cologne.rou.xml filter=lfs diff=lfs merge=lfs -text
+./config.xml filter=lfs diff=lfs merge=lfs -text
+./osm-typemap.xml filter=lfs diff=lfs merge=lfs -text
+*.xml filter=lfs diff=lfs merge=lfs -text

@@ -1,0 +1,3661 @@
+
+Preparing for running configuration General, run #0...
+Scenario: $repetition=0
+Assigned runID=General-0-20161106-22:43:50-12704
+Setting up network `RSUExampleScenario'...
+Initializing...
+
+Running simulation...
+** Event #0   t=0   Elapsed: 0.000s (0m 00s)  0% completed
+     Speed:     ev/sec=0   simsec/sec=0   ev/simsec=0
+     Messages:  created: 7   present: 7   in FES: 3
+** Event #218234   t=21661.6   Elapsed: 28.409s (0m 28s)  75% completed
+     Speed:     ev/sec=7681.86   simsec/sec=762.487   ev/simsec=10.0747
+     Messages:  created: 2648   present: 1363   in FES: 62
+
+<!> SIGINT or SIGTERM received, exiting at event #218234, t=21661.6.
+
+
+Calling finish() at end of Run #0...
+[INFO]	Writing TraCI message of 2 bytes
+[INFO]	Reading TraCI message of 7 bytes
+[INFO]	connectionManager:  unregistering nic #872
+[INFO]	connectionManager: Update cons in [(10,39,0)]
+[INFO]	connectionManager: Update cons in [(11,39,0)]
+[INFO]	connectionManager: Update cons in [(9,40,0)]
+[INFO]	connectionManager: Update cons in [(10,40,0)]
+[INFO]	NicEntry: disconnecting nic #68 and #872
+[INFO]	NicEntry: disconnecting nic #872 and #68
+[INFO]	connectionManager: Update cons in [(11,40,0)]
+[INFO]	connectionManager: Update cons in [(9,41,0)]
+[INFO]	connectionManager: Update cons in [(10,41,0)]
+[INFO]	connectionManager: Update cons in [(11,41,0)]
+[INFO]	connectionManager: Update cons in [(9,39,0)]
+[INFO]	connectionManager:  unregistering nic #518
+[INFO]	connectionManager: Update cons in [(25,39,0)]
+[INFO]	connectionManager: Update cons in [(23,37,0)]
+[INFO]	connectionManager: Update cons in [(24,37,0)]
+[INFO]	connectionManager: Update cons in [(25,37,0)]
+[INFO]	connectionManager: Update cons in [(23,38,0)]
+[INFO]	connectionManager: Update cons in [(24,38,0)]
+[INFO]	NicEntry: disconnecting nic #602 and #518
+[INFO]	NicEntry: disconnecting nic #518 and #602
+[INFO]	connectionManager: Update cons in [(25,38,0)]
+[INFO]	connectionManager: Update cons in [(23,39,0)]
+[INFO]	connectionManager: Update cons in [(24,39,0)]
+[INFO]	NicEntry: disconnecting nic #968 and #518
+[INFO]	NicEntry: disconnecting nic #518 and #968
+[INFO]	connectionManager:  unregistering nic #212
+[INFO]	connectionManager: Update cons in [(45,37,0)]
+[INFO]	NicEntry: disconnecting nic #1316 and #212
+[INFO]	NicEntry: disconnecting nic #212 and #1316
+[INFO]	connectionManager: Update cons in [(43,38,0)]
+[INFO]	connectionManager: Update cons in [(44,38,0)]
+[INFO]	connectionManager: Update cons in [(45,38,0)]
+[INFO]	NicEntry: disconnecting nic #1088 and #212
+[INFO]	NicEntry: disconnecting nic #212 and #1088
+[INFO]	connectionManager: Update cons in [(43,36,0)]
+[INFO]	connectionManager: Update cons in [(44,36,0)]
+[INFO]	connectionManager: Update cons in [(45,36,0)]
+[INFO]	connectionManager: Update cons in [(43,37,0)]
+[INFO]	connectionManager: Update cons in [(44,37,0)]
+[INFO]	connectionManager:  unregistering nic #14
+[INFO]	connectionManager: Update cons in [(30,54,0)]
+[INFO]	connectionManager: Update cons in [(31,54,0)]
+[INFO]	connectionManager: Update cons in [(32,54,0)]
+[INFO]	connectionManager: Update cons in [(30,55,0)]
+[INFO]	connectionManager: Update cons in [(31,55,0)]
+[INFO]	connectionManager: Update cons in [(32,55,0)]
+[INFO]	connectionManager: Update cons in [(30,53,0)]
+[INFO]	connectionManager: Update cons in [(31,53,0)]
+[INFO]	connectionManager: Update cons in [(32,53,0)]
+[INFO]	connectionManager:  unregistering nic #284
+[INFO]	connectionManager: Update cons in [(23,31,0)]
+[INFO]	connectionManager: Update cons in [(24,31,0)]
+[INFO]	connectionManager: Update cons in [(25,31,0)]
+[INFO]	connectionManager: Update cons in [(23,32,0)]
+[INFO]	NicEntry: disconnecting nic #104 and #284
+[INFO]	NicEntry: disconnecting nic #284 and #104
+[INFO]	NicEntry: disconnecting nic #1790 and #284
+[INFO]	NicEntry: disconnecting nic #284 and #1790
+[INFO]	connectionManager: Update cons in [(24,32,0)]
+[INFO]	NicEntry: disconnecting nic #296 and #284
+[INFO]	NicEntry: disconnecting nic #284 and #296
+[INFO]	NicEntry: disconnecting nic #1652 and #284
+[INFO]	NicEntry: disconnecting nic #284 and #1652
+[INFO]	connectionManager: Update cons in [(25,32,0)]
+[INFO]	connectionManager: Update cons in [(23,33,0)]
+[INFO]	NicEntry: disconnecting nic #692 and #284
+[INFO]	NicEntry: disconnecting nic #284 and #692
+[INFO]	connectionManager: Update cons in [(24,33,0)]
+[INFO]	connectionManager: Update cons in [(25,33,0)]
+[INFO]	connectionManager:  unregistering nic #674
+[INFO]	connectionManager: Update cons in [(26,30,0)]
+[INFO]	connectionManager: Update cons in [(24,31,0)]
+[INFO]	connectionManager: Update cons in [(25,31,0)]
+[INFO]	connectionManager: Update cons in [(26,31,0)]
+[INFO]	NicEntry: disconnecting nic #740 and #674
+[INFO]	NicEntry: disconnecting nic #674 and #740
+[INFO]	connectionManager: Update cons in [(24,32,0)]
+[INFO]	connectionManager: Update cons in [(25,32,0)]
+[INFO]	connectionManager: Update cons in [(26,32,0)]
+[INFO]	connectionManager: Update cons in [(24,30,0)]
+[INFO]	connectionManager: Update cons in [(25,30,0)]
+[INFO]	NicEntry: disconnecting nic #1388 and #674
+[INFO]	NicEntry: disconnecting nic #674 and #1388
+[INFO]	connectionManager:  unregistering nic #1460
+[INFO]	connectionManager: Update cons in [(22,43,0)]
+[INFO]	connectionManager: Update cons in [(23,43,0)]
+[INFO]	connectionManager: Update cons in [(21,44,0)]
+[INFO]	connectionManager: Update cons in [(22,44,0)]
+[INFO]	NicEntry: disconnecting nic #572 and #1460
+[INFO]	NicEntry: disconnecting nic #1460 and #572
+[INFO]	connectionManager: Update cons in [(23,44,0)]
+[INFO]	connectionManager: Update cons in [(21,42,0)]
+[INFO]	connectionManager: Update cons in [(22,42,0)]
+[INFO]	connectionManager: Update cons in [(23,42,0)]
+[INFO]	connectionManager: Update cons in [(21,43,0)]
+[INFO]	NicEntry: disconnecting nic #1604 and #1460
+[INFO]	NicEntry: disconnecting nic #1460 and #1604
+[INFO]	connectionManager:  unregistering nic #188
+[INFO]	connectionManager: Update cons in [(25,39,0)]
+[INFO]	NicEntry: disconnecting nic #1202 and #188
+[INFO]	NicEntry: disconnecting nic #188 and #1202
+[INFO]	connectionManager: Update cons in [(26,39,0)]
+[INFO]	connectionManager: Update cons in [(24,37,0)]
+[INFO]	connectionManager: Update cons in [(25,37,0)]
+[INFO]	connectionManager: Update cons in [(26,37,0)]
+[INFO]	connectionManager: Update cons in [(24,38,0)]
+[INFO]	connectionManager: Update cons in [(25,38,0)]
+[INFO]	connectionManager: Update cons in [(26,38,0)]
+[INFO]	NicEntry: disconnecting nic #530 and #188
+[INFO]	NicEntry: disconnecting nic #188 and #530
+[INFO]	connectionManager: Update cons in [(24,39,0)]
+[INFO]	connectionManager:  unregistering nic #74
+[INFO]	connectionManager: Update cons in [(35,38,0)]
+[INFO]	connectionManager: Update cons in [(33,39,0)]
+[INFO]	connectionManager: Update cons in [(34,39,0)]
+[INFO]	NicEntry: disconnecting nic #56 and #74
+[INFO]	NicEntry: disconnecting nic #74 and #56
+[INFO]	NicEntry: disconnecting nic #728 and #74
+[INFO]	NicEntry: disconnecting nic #74 and #728
+[INFO]	connectionManager: Update cons in [(35,39,0)]
+[INFO]	NicEntry: disconnecting nic #860 and #74
+[INFO]	NicEntry: disconnecting nic #74 and #860
+[INFO]	connectionManager: Update cons in [(33,40,0)]
+[INFO]	connectionManager: Update cons in [(34,40,0)]
+[INFO]	connectionManager: Update cons in [(35,40,0)]
+[INFO]	connectionManager: Update cons in [(33,38,0)]
+[INFO]	connectionManager: Update cons in [(34,38,0)]
+[INFO]	connectionManager:  unregistering nic #716
+[INFO]	connectionManager: Update cons in [(40,53,0)]
+[INFO]	connectionManager: Update cons in [(38,54,0)]
+[INFO]	connectionManager: Update cons in [(39,54,0)]
+[INFO]	NicEntry: disconnecting nic #464 and #716
+[INFO]	NicEntry: disconnecting nic #716 and #464
+[INFO]	connectionManager: Update cons in [(40,54,0)]
+[INFO]	connectionManager: Update cons in [(38,55,0)]
+[INFO]	NicEntry: disconnecting nic #350 and #716
+[INFO]	NicEntry: disconnecting nic #716 and #350
+[INFO]	connectionManager: Update cons in [(39,55,0)]
+[INFO]	connectionManager: Update cons in [(40,55,0)]
+[INFO]	connectionManager: Update cons in [(38,53,0)]
+[INFO]	connectionManager: Update cons in [(39,53,0)]
+[INFO]	connectionManager:  unregistering nic #1700
+[INFO]	connectionManager: Update cons in [(22,43,0)]
+[INFO]	connectionManager: Update cons in [(23,43,0)]
+[INFO]	connectionManager: Update cons in [(21,41,0)]
+[INFO]	connectionManager: Update cons in [(22,41,0)]
+[INFO]	connectionManager: Update cons in [(23,41,0)]
+[INFO]	connectionManager: Update cons in [(21,42,0)]
+[INFO]	connectionManager: Update cons in [(22,42,0)]
+[INFO]	connectionManager: Update cons in [(23,42,0)]
+[INFO]	connectionManager: Update cons in [(21,43,0)]
+[INFO]	NicEntry: disconnecting nic #1604 and #1700
+[INFO]	NicEntry: disconnecting nic #1700 and #1604
+[INFO]	connectionManager:  unregistering nic #608
+[INFO]	connectionManager: Update cons in [(30,40,0)]
+[INFO]	connectionManager: Update cons in [(28,41,0)]
+[INFO]	connectionManager: Update cons in [(29,41,0)]
+[INFO]	connectionManager: Update cons in [(30,41,0)]
+[INFO]	connectionManager: Update cons in [(28,39,0)]
+[INFO]	connectionManager: Update cons in [(29,39,0)]
+[INFO]	NicEntry: disconnecting nic #482 and #608
+[INFO]	NicEntry: disconnecting nic #608 and #482
+[INFO]	connectionManager: Update cons in [(30,39,0)]
+[INFO]	connectionManager: Update cons in [(28,40,0)]
+[INFO]	connectionManager: Update cons in [(29,40,0)]
+[INFO]	NicEntry: disconnecting nic #842 and #608
+[INFO]	NicEntry: disconnecting nic #608 and #842
+[INFO]	NicEntry: disconnecting nic #1520 and #608
+[INFO]	NicEntry: disconnecting nic #608 and #1520
+[INFO]	NicEntry: disconnecting nic #1586 and #608
+[INFO]	NicEntry: disconnecting nic #608 and #1586
+[INFO]	NicEntry: disconnecting nic #1784 and #608
+[INFO]	NicEntry: disconnecting nic #608 and #1784
+[INFO]	connectionManager:  unregistering nic #524
+[INFO]	connectionManager: Update cons in [(28,35,0)]
+[INFO]	connectionManager: Update cons in [(26,33,0)]
+[INFO]	connectionManager: Update cons in [(27,33,0)]
+[INFO]	NicEntry: disconnecting nic #998 and #524
+[INFO]	NicEntry: disconnecting nic #524 and #998
+[INFO]	connectionManager: Update cons in [(28,33,0)]
+[INFO]	connectionManager: Update cons in [(26,34,0)]
+[INFO]	NicEntry: disconnecting nic #656 and #524
+[INFO]	NicEntry: disconnecting nic #524 and #656
+[INFO]	connectionManager: Update cons in [(27,34,0)]
+[INFO]	NicEntry: disconnecting nic #146 and #524
+[INFO]	NicEntry: disconnecting nic #524 and #146
+[INFO]	NicEntry: disconnecting nic #548 and #524
+[INFO]	NicEntry: disconnecting nic #524 and #548
+[INFO]	NicEntry: disconnecting nic #668 and #524
+[INFO]	NicEntry: disconnecting nic #524 and #668
+[INFO]	NicEntry: disconnecting nic #722 and #524
+[INFO]	NicEntry: disconnecting nic #524 and #722
+[INFO]	connectionManager: Update cons in [(28,34,0)]
+[INFO]	connectionManager: Update cons in [(26,35,0)]
+[INFO]	connectionManager: Update cons in [(27,35,0)]
+[INFO]	connectionManager:  unregistering nic #1550
+[INFO]	connectionManager: Update cons in [(33,36,0)]
+[INFO]	connectionManager: Update cons in [(31,34,0)]
+[INFO]	connectionManager: Update cons in [(32,34,0)]
+[INFO]	connectionManager: Update cons in [(33,34,0)]
+[INFO]	connectionManager: Update cons in [(31,35,0)]
+[INFO]	connectionManager: Update cons in [(32,35,0)]
+[INFO]	NicEntry: disconnecting nic #1064 and #1550
+[INFO]	NicEntry: disconnecting nic #1550 and #1064
+[INFO]	connectionManager: Update cons in [(33,35,0)]
+[INFO]	connectionManager: Update cons in [(31,36,0)]
+[INFO]	connectionManager: Update cons in [(32,36,0)]
+[INFO]	connectionManager:  unregistering nic #962
+[INFO]	connectionManager: Update cons in [(38,34,0)]
+[INFO]	connectionManager: Update cons in [(39,34,0)]
+[INFO]	connectionManager: Update cons in [(37,32,0)]
+[INFO]	connectionManager: Update cons in [(38,32,0)]
+[INFO]	connectionManager: Update cons in [(39,32,0)]
+[INFO]	connectionManager: Update cons in [(37,33,0)]
+[INFO]	connectionManager: Update cons in [(38,33,0)]
+[INFO]	NicEntry: disconnecting nic #1658 and #962
+[INFO]	NicEntry: disconnecting nic #962 and #1658
+[INFO]	connectionManager: Update cons in [(39,33,0)]
+[INFO]	connectionManager: Update cons in [(37,34,0)]
+[INFO]	connectionManager:  unregistering nic #1286
+[INFO]	connectionManager: Update cons in [(20,41,0)]
+[INFO]	connectionManager: Update cons in [(21,41,0)]
+[INFO]	NicEntry: disconnecting nic #80 and #1286
+[INFO]	NicEntry: disconnecting nic #1286 and #80
+[INFO]	connectionManager: Update cons in [(19,42,0)]
+[INFO]	connectionManager: Update cons in [(20,42,0)]
+[INFO]	connectionManager: Update cons in [(21,42,0)]
+[INFO]	connectionManager: Update cons in [(19,40,0)]
+[INFO]	connectionManager: Update cons in [(20,40,0)]
+[INFO]	connectionManager: Update cons in [(21,40,0)]
+[INFO]	connectionManager: Update cons in [(19,41,0)]
+[INFO]	connectionManager:  unregistering nic #488
+[INFO]	connectionManager: Update cons in [(40,53,0)]
+[INFO]	connectionManager: Update cons in [(41,53,0)]
+[INFO]	connectionManager: Update cons in [(39,51,0)]
+[INFO]	connectionManager: Update cons in [(40,51,0)]
+[INFO]	NicEntry: disconnecting nic #1628 and #488
+[INFO]	NicEntry: disconnecting nic #488 and #1628
+[INFO]	connectionManager: Update cons in [(41,51,0)]
+[INFO]	connectionManager: Update cons in [(39,52,0)]
+[INFO]	connectionManager: Update cons in [(40,52,0)]
+[INFO]	connectionManager: Update cons in [(41,52,0)]
+[INFO]	connectionManager: Update cons in [(39,53,0)]
+[INFO]	connectionManager:  unregistering nic #1190
+[INFO]	connectionManager: Update cons in [(24,45,0)]
+[INFO]	NicEntry: disconnecting nic #782 and #1190
+[INFO]	NicEntry: disconnecting nic #1190 and #782
+[INFO]	connectionManager: Update cons in [(25,45,0)]
+[INFO]	connectionManager: Update cons in [(23,46,0)]
+[INFO]	NicEntry: disconnecting nic #956 and #1190
+[INFO]	NicEntry: disconnecting nic #1190 and #956
+[INFO]	connectionManager: Update cons in [(24,46,0)]
+[INFO]	NicEntry: disconnecting nic #1544 and #1190
+[INFO]	NicEntry: disconnecting nic #1190 and #1544
+[INFO]	connectionManager: Update cons in [(25,46,0)]
+[INFO]	connectionManager: Update cons in [(23,44,0)]
+[INFO]	connectionManager: Update cons in [(24,44,0)]
+[INFO]	connectionManager: Update cons in [(25,44,0)]
+[INFO]	connectionManager: Update cons in [(23,45,0)]
+[INFO]	connectionManager:  unregistering nic #1004
+[INFO]	connectionManager: Update cons in [(43,32,0)]
+[INFO]	connectionManager: Update cons in [(41,33,0)]
+[INFO]	connectionManager: Update cons in [(42,33,0)]
+[INFO]	NicEntry: disconnecting nic #1874 and #1004
+[INFO]	NicEntry: disconnecting nic #1004 and #1874
+[INFO]	connectionManager: Update cons in [(43,33,0)]
+[INFO]	connectionManager: Update cons in [(41,31,0)]
+[INFO]	connectionManager: Update cons in [(42,31,0)]
+[INFO]	connectionManager: Update cons in [(43,31,0)]
+[INFO]	connectionManager: Update cons in [(41,32,0)]
+[INFO]	connectionManager: Update cons in [(42,32,0)]
+[INFO]	connectionManager:  unregistering nic #794
+[INFO]	connectionManager: Update cons in [(23,34,0)]
+[INFO]	connectionManager: Update cons in [(24,34,0)]
+[INFO]	connectionManager: Update cons in [(22,35,0)]
+[INFO]	NicEntry: disconnecting nic #1118 and #794
+[INFO]	NicEntry: disconnecting nic #794 and #1118
+[INFO]	NicEntry: disconnecting nic #1346 and #794
+[INFO]	NicEntry: disconnecting nic #794 and #1346
+[INFO]	connectionManager: Update cons in [(23,35,0)]
+[INFO]	NicEntry: disconnecting nic #1310 and #794
+[INFO]	NicEntry: disconnecting nic #794 and #1310
+[INFO]	connectionManager: Update cons in [(24,35,0)]
+[INFO]	connectionManager: Update cons in [(22,36,0)]
+[INFO]	connectionManager: Update cons in [(23,36,0)]
+[INFO]	connectionManager: Update cons in [(24,36,0)]
+[INFO]	connectionManager: Update cons in [(22,34,0)]
+[INFO]	connectionManager:  unregistering nic #80
+[INFO]	connectionManager: Update cons in [(22,40,0)]
+[INFO]	connectionManager: Update cons in [(20,41,0)]
+[INFO]	connectionManager: Update cons in [(21,41,0)]
+[INFO]	NicEntry: disconnecting nic #1862 and #80
+[INFO]	NicEntry: disconnecting nic #80 and #1862
+[INFO]	connectionManager: Update cons in [(22,41,0)]
+[INFO]	connectionManager: Update cons in [(20,42,0)]
+[INFO]	connectionManager: Update cons in [(21,42,0)]
+[INFO]	connectionManager: Update cons in [(22,42,0)]
+[INFO]	connectionManager: Update cons in [(20,40,0)]
+[INFO]	connectionManager: Update cons in [(21,40,0)]
+[INFO]	connectionManager:  unregistering nic #818
+[INFO]	connectionManager: Update cons in [(37,43,0)]
+[INFO]	connectionManager: Update cons in [(35,44,0)]
+[INFO]	NicEntry: disconnecting nic #896 and #818
+[INFO]	NicEntry: disconnecting nic #818 and #896
+[INFO]	connectionManager: Update cons in [(36,44,0)]
+[INFO]	connectionManager: Update cons in [(37,44,0)]
+[INFO]	connectionManager: Update cons in [(35,45,0)]
+[INFO]	connectionManager: Update cons in [(36,45,0)]
+[INFO]	connectionManager: Update cons in [(37,45,0)]
+[INFO]	connectionManager: Update cons in [(35,43,0)]
+[INFO]	NicEntry: disconnecting nic #272 and #818
+[INFO]	NicEntry: disconnecting nic #818 and #272
+[INFO]	connectionManager: Update cons in [(36,43,0)]
+[INFO]	connectionManager:  unregistering nic #1772
+[INFO]	connectionManager: Update cons in [(40,33,0)]
+[INFO]	connectionManager: Update cons in [(41,33,0)]
+[INFO]	connectionManager: Update cons in [(39,34,0)]
+[INFO]	connectionManager: Update cons in [(40,34,0)]
+[INFO]	connectionManager: Update cons in [(41,34,0)]
+[INFO]	connectionManager: Update cons in [(39,35,0)]
+[INFO]	connectionManager: Update cons in [(40,35,0)]
+[INFO]	connectionManager: Update cons in [(41,35,0)]
+[INFO]	connectionManager: Update cons in [(39,33,0)]
+[INFO]	connectionManager:  unregistering nic #1226
+[INFO]	connectionManager: Update cons in [(45,51,0)]
+[INFO]	connectionManager: Update cons in [(43,52,0)]
+[INFO]	connectionManager: Update cons in [(44,52,0)]
+[INFO]	connectionManager: Update cons in [(45,52,0)]
+[INFO]	connectionManager: Update cons in [(43,50,0)]
+[INFO]	connectionManager: Update cons in [(44,50,0)]
+[INFO]	connectionManager: Update cons in [(45,50,0)]
+[INFO]	connectionManager: Update cons in [(43,51,0)]
+[INFO]	NicEntry: disconnecting nic #290 and #1226
+[INFO]	NicEntry: disconnecting nic #1226 and #290
+[INFO]	NicEntry: disconnecting nic #1130 and #1226
+[INFO]	NicEntry: disconnecting nic #1226 and #1130
+[INFO]	connectionManager: Update cons in [(44,51,0)]
+[INFO]	connectionManager:  unregistering nic #968
+[INFO]	connectionManager: Update cons in [(25,39,0)]
+[INFO]	NicEntry: disconnecting nic #224 and #968
+[INFO]	NicEntry: disconnecting nic #968 and #224
+[INFO]	connectionManager: Update cons in [(23,40,0)]
+[INFO]	connectionManager: Update cons in [(24,40,0)]
+[INFO]	NicEntry: disconnecting nic #242 and #968
+[INFO]	NicEntry: disconnecting nic #968 and #242
+[INFO]	NicEntry: disconnecting nic #1028 and #968
+[INFO]	NicEntry: disconnecting nic #968 and #1028
+[INFO]	connectionManager: Update cons in [(25,40,0)]
+[INFO]	connectionManager: Update cons in [(23,38,0)]
+[INFO]	connectionManager: Update cons in [(24,38,0)]
+[INFO]	NicEntry: disconnecting nic #602 and #968
+[INFO]	NicEntry: disconnecting nic #968 and #602
+[INFO]	connectionManager: Update cons in [(25,38,0)]
+[INFO]	connectionManager: Update cons in [(23,39,0)]
+[INFO]	connectionManager: Update cons in [(24,39,0)]
+[INFO]	connectionManager:  unregistering nic #356
+[INFO]	connectionManager: Update cons in [(45,57,0)]
+[INFO]	connectionManager: Update cons in [(46,57,0)]
+[INFO]	connectionManager: Update cons in [(44,58,0)]
+[INFO]	connectionManager: Update cons in [(45,58,0)]
+[INFO]	connectionManager: Update cons in [(46,58,0)]
+[INFO]	connectionManager: Update cons in [(44,56,0)]
+[INFO]	connectionManager: Update cons in [(45,56,0)]
+[INFO]	connectionManager: Update cons in [(46,56,0)]
+[INFO]	connectionManager: Update cons in [(44,57,0)]
+[INFO]	connectionManager:  unregistering nic #434
+[INFO]	connectionManager: Update cons in [(25,53,0)]
+[INFO]	connectionManager: Update cons in [(26,53,0)]
+[INFO]	connectionManager: Update cons in [(27,53,0)]
+[INFO]	NicEntry: disconnecting nic #122 and #434
+[INFO]	NicEntry: disconnecting nic #434 and #122
+[INFO]	connectionManager: Update cons in [(25,54,0)]
+[INFO]	connectionManager: Update cons in [(26,54,0)]
+[INFO]	connectionManager: Update cons in [(27,54,0)]
+[INFO]	connectionManager: Update cons in [(25,52,0)]
+[INFO]	connectionManager: Update cons in [(26,52,0)]
+[INFO]	NicEntry: disconnecting nic #1646 and #434
+[INFO]	NicEntry: disconnecting nic #434 and #1646
+[INFO]	connectionManager: Update cons in [(27,52,0)]
+[INFO]	connectionManager:  unregistering nic #1850
+[INFO]	connectionManager: Update cons in [(35,21,0)]
+[INFO]	connectionManager: Update cons in [(33,22,0)]
+[INFO]	connectionManager: Update cons in [(34,22,0)]
+[INFO]	connectionManager: Update cons in [(35,22,0)]
+[INFO]	connectionManager: Update cons in [(33,20,0)]
+[INFO]	connectionManager: Update cons in [(34,20,0)]
+[INFO]	connectionManager: Update cons in [(35,20,0)]
+[INFO]	connectionManager: Update cons in [(33,21,0)]
+[INFO]	connectionManager: Update cons in [(34,21,0)]
+[INFO]	connectionManager:  unregistering nic #332
+[INFO]	connectionManager: Update cons in [(16,11,0)]
+[INFO]	connectionManager: Update cons in [(14,12,0)]
+[INFO]	connectionManager: Update cons in [(15,12,0)]
+[INFO]	connectionManager: Update cons in [(16,12,0)]
+[INFO]	connectionManager: Update cons in [(14,10,0)]
+[INFO]	connectionManager: Update cons in [(15,10,0)]
+[INFO]	connectionManager: Update cons in [(16,10,0)]
+[INFO]	connectionManager: Update cons in [(14,11,0)]
+[INFO]	connectionManager: Update cons in [(15,11,0)]
+[INFO]	NicEntry: disconnecting nic #1274 and #332
+[INFO]	NicEntry: disconnecting nic #332 and #1274
+[INFO]	connectionManager:  unregistering nic #1400
+[INFO]	connectionManager: Update cons in [(33,30,0)]
+[INFO]	NicEntry: disconnecting nic #812 and #1400
+[INFO]	NicEntry: disconnecting nic #1400 and #812
+[INFO]	connectionManager: Update cons in [(34,30,0)]
+[INFO]	connectionManager: Update cons in [(35,30,0)]
+[INFO]	connectionManager: Update cons in [(33,31,0)]
+[INFO]	NicEntry: disconnecting nic #20 and #1400
+[INFO]	NicEntry: disconnecting nic #1400 and #20
+[INFO]	connectionManager: Update cons in [(34,31,0)]
+[INFO]	connectionManager: Update cons in [(35,31,0)]
+[INFO]	connectionManager: Update cons in [(33,32,0)]
+[INFO]	connectionManager: Update cons in [(34,32,0)]
+[INFO]	connectionManager: Update cons in [(35,32,0)]
+[INFO]	connectionManager:  unregistering nic #770
+[INFO]	connectionManager: Update cons in [(33,50,0)]
+[INFO]	connectionManager: Update cons in [(31,51,0)]
+[INFO]	connectionManager: Update cons in [(32,51,0)]
+[INFO]	connectionManager: Update cons in [(33,51,0)]
+[INFO]	connectionManager: Update cons in [(31,49,0)]
+[INFO]	connectionManager: Update cons in [(32,49,0)]
+[INFO]	connectionManager: Update cons in [(33,49,0)]
+[INFO]	connectionManager: Update cons in [(31,50,0)]
+[INFO]	connectionManager: Update cons in [(32,50,0)]
+[INFO]	NicEntry: disconnecting nic #260 and #770
+[INFO]	NicEntry: disconnecting nic #770 and #260
+[INFO]	NicEntry: disconnecting nic #410 and #770
+[INFO]	NicEntry: disconnecting nic #770 and #410
+[INFO]	connectionManager:  unregistering nic #1556
+[INFO]	connectionManager: Update cons in [(32,25,0)]
+[INFO]	connectionManager: Update cons in [(30,26,0)]
+[INFO]	connectionManager: Update cons in [(31,26,0)]
+[INFO]	connectionManager: Update cons in [(32,26,0)]
+[INFO]	connectionManager: Update cons in [(30,27,0)]
+[INFO]	connectionManager: Update cons in [(31,27,0)]
+[INFO]	connectionManager: Update cons in [(32,27,0)]
+[INFO]	connectionManager: Update cons in [(30,25,0)]
+[INFO]	connectionManager: Update cons in [(31,25,0)]
+[INFO]	connectionManager:  unregistering nic #44
+[INFO]	connectionManager: Update cons in [(17,39,0)]
+[INFO]	connectionManager: Update cons in [(15,40,0)]
+[INFO]	connectionManager: Update cons in [(16,40,0)]
+[INFO]	connectionManager: Update cons in [(17,40,0)]
+[INFO]	connectionManager: Update cons in [(15,38,0)]
+[INFO]	connectionManager: Update cons in [(16,38,0)]
+[INFO]	connectionManager: Update cons in [(17,38,0)]
+[INFO]	connectionManager: Update cons in [(15,39,0)]
+[INFO]	connectionManager: Update cons in [(16,39,0)]
+[INFO]	connectionManager:  unregistering nic #494
+[INFO]	connectionManager: Update cons in [(40,36,0)]
+[INFO]	connectionManager: Update cons in [(41,36,0)]
+[INFO]	connectionManager: Update cons in [(39,37,0)]
+[INFO]	connectionManager: Update cons in [(40,37,0)]
+[INFO]	connectionManager: Update cons in [(41,37,0)]
+[INFO]	connectionManager: Update cons in [(39,38,0)]
+[INFO]	connectionManager: Update cons in [(40,38,0)]
+[INFO]	connectionManager: Update cons in [(41,38,0)]
+[INFO]	connectionManager: Update cons in [(39,36,0)]
+[INFO]	connectionManager:  unregistering nic #1328
+[INFO]	connectionManager: Update cons in [(10,39,0)]
+[INFO]	connectionManager: Update cons in [(11,39,0)]
+[INFO]	connectionManager: Update cons in [(9,37,0)]
+[INFO]	connectionManager: Update cons in [(10,37,0)]
+[INFO]	connectionManager: Update cons in [(11,37,0)]
+[INFO]	connectionManager: Update cons in [(9,38,0)]
+[INFO]	connectionManager: Update cons in [(10,38,0)]
+[INFO]	NicEntry: disconnecting nic #1496 and #1328
+[INFO]	NicEntry: disconnecting nic #1328 and #1496
+[INFO]	connectionManager: Update cons in [(11,38,0)]
+[INFO]	connectionManager: Update cons in [(9,39,0)]
+[INFO]	connectionManager:  unregistering nic #530
+[INFO]	connectionManager: Update cons in [(27,38,0)]
+[INFO]	connectionManager: Update cons in [(25,39,0)]
+[INFO]	NicEntry: disconnecting nic #1202 and #530
+[INFO]	NicEntry: disconnecting nic #530 and #1202
+[INFO]	connectionManager: Update cons in [(26,39,0)]
+[INFO]	NicEntry: disconnecting nic #206 and #530
+[INFO]	NicEntry: disconnecting nic #530 and #206
+[INFO]	NicEntry: disconnecting nic #1808 and #530
+[INFO]	NicEntry: disconnecting nic #530 and #1808
+[INFO]	connectionManager: Update cons in [(27,39,0)]
+[INFO]	connectionManager: Update cons in [(25,37,0)]
+[INFO]	connectionManager: Update cons in [(26,37,0)]
+[INFO]	NicEntry: disconnecting nic #1250 and #530
+[INFO]	NicEntry: disconnecting nic #530 and #1250
+[INFO]	connectionManager: Update cons in [(27,37,0)]
+[INFO]	connectionManager: Update cons in [(25,38,0)]
+[INFO]	connectionManager: Update cons in [(26,38,0)]
+[INFO]	NicEntry: disconnecting nic #1472 and #530
+[INFO]	NicEntry: disconnecting nic #530 and #1472
+[INFO]	connectionManager:  unregistering nic #614
+[INFO]	connectionManager: Update cons in [(31,51,0)]
+[INFO]	connectionManager: Update cons in [(32,51,0)]
+[INFO]	connectionManager: Update cons in [(30,52,0)]
+[INFO]	connectionManager: Update cons in [(31,52,0)]
+[INFO]	connectionManager: Update cons in [(32,52,0)]
+[INFO]	connectionManager: Update cons in [(30,53,0)]
+[INFO]	connectionManager: Update cons in [(31,53,0)]
+[INFO]	connectionManager: Update cons in [(32,53,0)]
+[INFO]	connectionManager: Update cons in [(30,51,0)]
+[INFO]	connectionManager:  unregistering nic #920
+[INFO]	connectionManager: Update cons in [(12,41,0)]
+[INFO]	connectionManager: Update cons in [(13,41,0)]
+[INFO]	connectionManager: Update cons in [(14,41,0)]
+[INFO]	connectionManager: Update cons in [(12,39,0)]
+[INFO]	connectionManager: Update cons in [(13,39,0)]
+[INFO]	connectionManager: Update cons in [(14,39,0)]
+[INFO]	connectionManager: Update cons in [(12,40,0)]
+[INFO]	connectionManager: Update cons in [(13,40,0)]
+[INFO]	connectionManager: Update cons in [(14,40,0)]
+[INFO]	connectionManager:  unregistering nic #1010
+[INFO]	connectionManager: Update cons in [(40,33,0)]
+[INFO]	connectionManager: Update cons in [(41,33,0)]
+[INFO]	connectionManager: Update cons in [(42,33,0)]
+[INFO]	connectionManager: Update cons in [(40,34,0)]
+[INFO]	connectionManager: Update cons in [(41,34,0)]
+[INFO]	connectionManager: Update cons in [(42,34,0)]
+[INFO]	connectionManager: Update cons in [(40,32,0)]
+[INFO]	connectionManager: Update cons in [(41,32,0)]
+[INFO]	connectionManager: Update cons in [(42,32,0)]
+[INFO]	connectionManager:  unregistering nic #878
+[INFO]	connectionManager: Update cons in [(43,49,0)]
+[INFO]	connectionManager: Update cons in [(41,50,0)]
+[INFO]	connectionManager: Update cons in [(42,50,0)]
+[INFO]	connectionManager: Update cons in [(43,50,0)]
+[INFO]	connectionManager: Update cons in [(41,48,0)]
+[INFO]	connectionManager: Update cons in [(42,48,0)]
+[INFO]	connectionManager: Update cons in [(43,48,0)]
+[INFO]	connectionManager: Update cons in [(41,49,0)]
+[INFO]	connectionManager: Update cons in [(42,49,0)]
+[INFO]	NicEntry: disconnecting nic #788 and #878
+[INFO]	NicEntry: disconnecting nic #878 and #788
+[INFO]	connectionManager:  unregistering nic #1100
+[INFO]	connectionManager: Update cons in [(35,35,0)]
+[INFO]	connectionManager: Update cons in [(33,33,0)]
+[INFO]	connectionManager: Update cons in [(34,33,0)]
+[INFO]	NicEntry: disconnecting nic #986 and #1100
+[INFO]	NicEntry: disconnecting nic #1100 and #986
+[INFO]	connectionManager: Update cons in [(35,33,0)]
+[INFO]	connectionManager: Update cons in [(33,34,0)]
+[INFO]	connectionManager: Update cons in [(34,34,0)]
+[INFO]	connectionManager: Update cons in [(35,34,0)]
+[INFO]	connectionManager: Update cons in [(33,35,0)]
+[INFO]	connectionManager: Update cons in [(34,35,0)]
+[INFO]	connectionManager:  unregistering nic #848
+[INFO]	connectionManager: Update cons in [(10,39,0)]
+[INFO]	connectionManager: Update cons in [(11,39,0)]
+[INFO]	NicEntry: disconnecting nic #1640 and #848
+[INFO]	NicEntry: disconnecting nic #848 and #1640
+[INFO]	connectionManager: Update cons in [(12,39,0)]
+[INFO]	connectionManager: Update cons in [(10,37,0)]
+[INFO]	connectionManager: Update cons in [(11,37,0)]
+[INFO]	connectionManager: Update cons in [(12,37,0)]
+[INFO]	connectionManager: Update cons in [(10,38,0)]
+[INFO]	connectionManager: Update cons in [(11,38,0)]
+[INFO]	connectionManager: Update cons in [(12,38,0)]
+[INFO]	connectionManager:  unregistering nic #134
+[INFO]	connectionManager: Update cons in [(34,47,0)]
+[INFO]	connectionManager: Update cons in [(35,47,0)]
+[INFO]	connectionManager: Update cons in [(33,45,0)]
+[INFO]	connectionManager: Update cons in [(34,45,0)]
+[INFO]	connectionManager: Update cons in [(35,45,0)]
+[INFO]	NicEntry: disconnecting nic #86 and #134
+[INFO]	NicEntry: disconnecting nic #134 and #86
+[INFO]	connectionManager: Update cons in [(33,46,0)]
+[INFO]	connectionManager: Update cons in [(34,46,0)]
+[INFO]	connectionManager: Update cons in [(35,46,0)]
+[INFO]	connectionManager: Update cons in [(33,47,0)]
+[INFO]	connectionManager:  unregistering nic #1256
+[INFO]	connectionManager: Update cons in [(14,29,0)]
+[INFO]	connectionManager: Update cons in [(15,29,0)]
+[INFO]	connectionManager: Update cons in [(13,30,0)]
+[INFO]	connectionManager: Update cons in [(14,30,0)]
+[INFO]	NicEntry: disconnecting nic #752 and #1256
+[INFO]	NicEntry: disconnecting nic #1256 and #752
+[INFO]	connectionManager: Update cons in [(15,30,0)]
+[INFO]	connectionManager: Update cons in [(13,31,0)]
+[INFO]	connectionManager: Update cons in [(14,31,0)]
+[INFO]	connectionManager: Update cons in [(15,31,0)]
+[INFO]	connectionManager: Update cons in [(13,29,0)]
+[INFO]	connectionManager:  unregistering nic #1136
+[INFO]	connectionManager: Update cons in [(24,42,0)]
+[INFO]	connectionManager: Update cons in [(25,42,0)]
+[INFO]	NicEntry: disconnecting nic #1034 and #1136
+[INFO]	NicEntry: disconnecting nic #1136 and #1034
+[INFO]	NicEntry: disconnecting nic #1724 and #1136
+[INFO]	NicEntry: disconnecting nic #1136 and #1724
+[INFO]	connectionManager: Update cons in [(26,42,0)]
+[INFO]	connectionManager: Update cons in [(24,43,0)]
+[INFO]	connectionManager: Update cons in [(25,43,0)]
+[INFO]	connectionManager: Update cons in [(26,43,0)]
+[INFO]	connectionManager: Update cons in [(24,41,0)]
+[INFO]	connectionManager: Update cons in [(25,41,0)]
+[INFO]	NicEntry: disconnecting nic #1292 and #1136
+[INFO]	NicEntry: disconnecting nic #1136 and #1292
+[INFO]	connectionManager: Update cons in [(26,41,0)]
+[INFO]	connectionManager:  unregistering nic #464
+[INFO]	connectionManager: Update cons in [(40,53,0)]
+[INFO]	connectionManager: Update cons in [(38,54,0)]
+[INFO]	connectionManager: Update cons in [(39,54,0)]
+[INFO]	connectionManager: Update cons in [(40,54,0)]
+[INFO]	connectionManager: Update cons in [(38,55,0)]
+[INFO]	NicEntry: disconnecting nic #350 and #464
+[INFO]	NicEntry: disconnecting nic #464 and #350
+[INFO]	connectionManager: Update cons in [(39,55,0)]
+[INFO]	connectionManager: Update cons in [(40,55,0)]
+[INFO]	connectionManager: Update cons in [(38,53,0)]
+[INFO]	connectionManager: Update cons in [(39,53,0)]
+[INFO]	connectionManager:  unregistering nic #1634
+[INFO]	connectionManager: Update cons in [(27,21,0)]
+[INFO]	connectionManager: Update cons in [(28,21,0)]
+[INFO]	connectionManager: Update cons in [(26,22,0)]
+[INFO]	connectionManager: Update cons in [(27,22,0)]
+[INFO]	connectionManager: Update cons in [(28,22,0)]
+[INFO]	connectionManager: Update cons in [(26,20,0)]
+[INFO]	connectionManager: Update cons in [(27,20,0)]
+[INFO]	connectionManager: Update cons in [(28,20,0)]
+[INFO]	connectionManager: Update cons in [(26,21,0)]
+[INFO]	connectionManager:  unregistering nic #1166
+[INFO]	connectionManager: Update cons in [(30,37,0)]
+[INFO]	connectionManager: Update cons in [(31,37,0)]
+[INFO]	connectionManager: Update cons in [(29,38,0)]
+[INFO]	connectionManager: Update cons in [(30,38,0)]
+[INFO]	NicEntry: disconnecting nic #1370 and #1166
+[INFO]	NicEntry: disconnecting nic #1166 and #1370
+[INFO]	connectionManager: Update cons in [(31,38,0)]
+[INFO]	NicEntry: disconnecting nic #1886 and #1166
+[INFO]	NicEntry: disconnecting nic #1166 and #1886
+[INFO]	connectionManager: Update cons in [(29,39,0)]
+[INFO]	connectionManager: Update cons in [(30,39,0)]
+[INFO]	connectionManager: Update cons in [(31,39,0)]
+[INFO]	connectionManager: Update cons in [(29,37,0)]
+[INFO]	connectionManager:  unregistering nic #680
+[INFO]	connectionManager: Update cons in [(43,32,0)]
+[INFO]	connectionManager: Update cons in [(44,32,0)]
+[INFO]	connectionManager: Update cons in [(42,33,0)]
+[INFO]	connectionManager: Update cons in [(43,33,0)]
+[INFO]	connectionManager: Update cons in [(44,33,0)]
+[INFO]	connectionManager: Update cons in [(42,31,0)]
+[INFO]	connectionManager: Update cons in [(43,31,0)]
+[INFO]	connectionManager: Update cons in [(44,31,0)]
+[INFO]	connectionManager: Update cons in [(42,32,0)]
+[INFO]	connectionManager:  unregistering nic #374
+[INFO]	connectionManager: Update cons in [(47,59,0)]
+[INFO]	connectionManager: Update cons in [(45,60,0)]
+[INFO]	connectionManager: Update cons in [(46,60,0)]
+[INFO]	connectionManager: Update cons in [(47,60,0)]
+[INFO]	connectionManager: Update cons in [(45,58,0)]
+[INFO]	connectionManager: Update cons in [(46,58,0)]
+[INFO]	NicEntry: disconnecting nic #1478 and #374
+[INFO]	NicEntry: disconnecting nic #374 and #1478
+[INFO]	connectionManager: Update cons in [(47,58,0)]
+[INFO]	connectionManager: Update cons in [(45,59,0)]
+[INFO]	connectionManager: Update cons in [(46,59,0)]
+[INFO]	connectionManager:  unregistering nic #1370
+[INFO]	connectionManager: Update cons in [(30,37,0)]
+[INFO]	connectionManager: Update cons in [(31,37,0)]
+[INFO]	connectionManager: Update cons in [(29,38,0)]
+[INFO]	connectionManager: Update cons in [(30,38,0)]
+[INFO]	connectionManager: Update cons in [(31,38,0)]
+[INFO]	NicEntry: disconnecting nic #1886 and #1370
+[INFO]	NicEntry: disconnecting nic #1370 and #1886
+[INFO]	connectionManager: Update cons in [(29,39,0)]
+[INFO]	connectionManager: Update cons in [(30,39,0)]
+[INFO]	connectionManager: Update cons in [(31,39,0)]
+[INFO]	connectionManager: Update cons in [(29,37,0)]
+[INFO]	connectionManager:  unregistering nic #926
+[INFO]	connectionManager: Update cons in [(14,29,0)]
+[INFO]	connectionManager: Update cons in [(15,29,0)]
+[INFO]	connectionManager: Update cons in [(13,30,0)]
+[INFO]	connectionManager: Update cons in [(14,30,0)]
+[INFO]	connectionManager: Update cons in [(15,30,0)]
+[INFO]	connectionManager: Update cons in [(13,28,0)]
+[INFO]	connectionManager: Update cons in [(14,28,0)]
+[INFO]	NicEntry: disconnecting nic #992 and #926
+[INFO]	NicEntry: disconnecting nic #926 and #992
+[INFO]	connectionManager: Update cons in [(15,28,0)]
+[INFO]	connectionManager: Update cons in [(13,29,0)]
+[INFO]	connectionManager:  unregistering nic #740
+[INFO]	connectionManager: Update cons in [(26,30,0)]
+[INFO]	connectionManager: Update cons in [(27,30,0)]
+[INFO]	connectionManager: Update cons in [(25,31,0)]
+[INFO]	connectionManager: Update cons in [(26,31,0)]
+[INFO]	connectionManager: Update cons in [(27,31,0)]
+[INFO]	connectionManager: Update cons in [(25,32,0)]
+[INFO]	connectionManager: Update cons in [(26,32,0)]
+[INFO]	connectionManager: Update cons in [(27,32,0)]
+[INFO]	connectionManager: Update cons in [(25,30,0)]
+[INFO]	connectionManager:  unregistering nic #410
+[INFO]	connectionManager: Update cons in [(33,50,0)]
+[INFO]	connectionManager: Update cons in [(31,51,0)]
+[INFO]	connectionManager: Update cons in [(32,51,0)]
+[INFO]	connectionManager: Update cons in [(33,51,0)]
+[INFO]	connectionManager: Update cons in [(31,49,0)]
+[INFO]	connectionManager: Update cons in [(32,49,0)]
+[INFO]	NicEntry: disconnecting nic #1580 and #410
+[INFO]	NicEntry: disconnecting nic #410 and #1580
+[INFO]	connectionManager: Update cons in [(33,49,0)]
+[INFO]	connectionManager: Update cons in [(31,50,0)]
+[INFO]	connectionManager: Update cons in [(32,50,0)]
+[INFO]	NicEntry: disconnecting nic #260 and #410
+[INFO]	NicEntry: disconnecting nic #410 and #260
+[INFO]	connectionManager:  unregistering nic #584
+[INFO]	connectionManager: Update cons in [(17,39,0)]
+[INFO]	NicEntry: disconnecting nic #1436 and #584
+[INFO]	NicEntry: disconnecting nic #584 and #1436
+[INFO]	connectionManager: Update cons in [(18,39,0)]
+[INFO]	NicEntry: disconnecting nic #32 and #584
+[INFO]	NicEntry: disconnecting nic #584 and #32
+[INFO]	NicEntry: disconnecting nic #248 and #584
+[INFO]	NicEntry: disconnecting nic #584 and #248
+[INFO]	NicEntry: disconnecting nic #1736 and #584
+[INFO]	NicEntry: disconnecting nic #584 and #1736
+[INFO]	connectionManager: Update cons in [(16,40,0)]
+[INFO]	connectionManager: Update cons in [(17,40,0)]
+[INFO]	connectionManager: Update cons in [(18,40,0)]
+[INFO]	connectionManager: Update cons in [(16,38,0)]
+[INFO]	connectionManager: Update cons in [(17,38,0)]
+[INFO]	connectionManager: Update cons in [(18,38,0)]
+[INFO]	connectionManager: Update cons in [(16,39,0)]
+[INFO]	connectionManager:  unregistering nic #554
+[INFO]	connectionManager: Update cons in [(17,25,0)]
+[INFO]	connectionManager: Update cons in [(15,26,0)]
+[INFO]	connectionManager: Update cons in [(16,26,0)]
+[INFO]	connectionManager: Update cons in [(17,26,0)]
+[INFO]	NicEntry: disconnecting nic #1718 and #554
+[INFO]	NicEntry: disconnecting nic #554 and #1718
+[INFO]	connectionManager: Update cons in [(15,27,0)]
+[INFO]	connectionManager: Update cons in [(16,27,0)]
+[INFO]	connectionManager: Update cons in [(17,27,0)]
+[INFO]	connectionManager: Update cons in [(15,25,0)]
+[INFO]	connectionManager: Update cons in [(16,25,0)]
+[INFO]	connectionManager:  unregistering nic #1466
+[INFO]	connectionManager: Update cons in [(32,42,0)]
+[INFO]	connectionManager: Update cons in [(30,40,0)]
+[INFO]	connectionManager: Update cons in [(31,40,0)]
+[INFO]	connectionManager: Update cons in [(32,40,0)]
+[INFO]	connectionManager: Update cons in [(30,41,0)]
+[INFO]	connectionManager: Update cons in [(31,41,0)]
+[INFO]	connectionManager: Update cons in [(32,41,0)]
+[INFO]	NicEntry: disconnecting nic #428 and #1466
+[INFO]	NicEntry: disconnecting nic #1466 and #428
+[INFO]	connectionManager: Update cons in [(30,42,0)]
+[INFO]	connectionManager: Update cons in [(31,42,0)]
+[INFO]	connectionManager:  unregistering nic #1880
+[INFO]	connectionManager: Update cons in [(21,32,0)]
+[INFO]	connectionManager: Update cons in [(19,30,0)]
+[INFO]	connectionManager: Update cons in [(20,30,0)]
+[INFO]	connectionManager: Update cons in [(21,30,0)]
+[INFO]	connectionManager: Update cons in [(19,31,0)]
+[INFO]	connectionManager: Update cons in [(20,31,0)]
+[INFO]	connectionManager: Update cons in [(21,31,0)]
+[INFO]	connectionManager: Update cons in [(19,32,0)]
+[INFO]	NicEntry: disconnecting nic #1430 and #1880
+[INFO]	NicEntry: disconnecting nic #1880 and #1430
+[INFO]	connectionManager: Update cons in [(20,32,0)]
+[INFO]	connectionManager:  unregistering nic #638
+[INFO]	connectionManager: Update cons in [(39,25,0)]
+[INFO]	connectionManager: Update cons in [(37,26,0)]
+[INFO]	NicEntry: disconnecting nic #50 and #638
+[INFO]	NicEntry: disconnecting nic #638 and #50
+[INFO]	connectionManager: Update cons in [(38,26,0)]
+[INFO]	connectionManager: Update cons in [(39,26,0)]
+[INFO]	connectionManager: Update cons in [(37,24,0)]
+[INFO]	connectionManager: Update cons in [(38,24,0)]
+[INFO]	connectionManager: Update cons in [(39,24,0)]
+[INFO]	connectionManager: Update cons in [(37,25,0)]
+[INFO]	connectionManager: Update cons in [(38,25,0)]
+[INFO]	connectionManager:  unregistering nic #164
+[INFO]	connectionManager: Update cons in [(17,39,0)]
+[INFO]	connectionManager: Update cons in [(18,39,0)]
+[INFO]	connectionManager: Update cons in [(16,37,0)]
+[INFO]	connectionManager: Update cons in [(17,37,0)]
+[INFO]	connectionManager: Update cons in [(18,37,0)]
+[INFO]	connectionManager: Update cons in [(16,38,0)]
+[INFO]	connectionManager: Update cons in [(17,38,0)]
+[INFO]	connectionManager: Update cons in [(18,38,0)]
+[INFO]	connectionManager: Update cons in [(16,39,0)]
+[INFO]	connectionManager:  unregistering nic #308
+[INFO]	connectionManager: Update cons in [(18,33,0)]
+[INFO]	connectionManager: Update cons in [(19,33,0)]
+[INFO]	NicEntry: disconnecting nic #1244 and #308
+[INFO]	NicEntry: disconnecting nic #308 and #1244
+[INFO]	connectionManager: Update cons in [(20,33,0)]
+[INFO]	connectionManager: Update cons in [(18,34,0)]
+[INFO]	connectionManager: Update cons in [(19,34,0)]
+[INFO]	connectionManager: Update cons in [(20,34,0)]
+[INFO]	connectionManager: Update cons in [(18,32,0)]
+[INFO]	connectionManager: Update cons in [(19,32,0)]
+[INFO]	NicEntry: disconnecting nic #914 and #308
+[INFO]	NicEntry: disconnecting nic #308 and #914
+[INFO]	connectionManager: Update cons in [(20,32,0)]
+[INFO]	connectionManager:  unregistering nic #1196
+[INFO]	connectionManager: Update cons in [(39,42,0)]
+[INFO]	connectionManager: Update cons in [(37,40,0)]
+[INFO]	connectionManager: Update cons in [(38,40,0)]
+[INFO]	connectionManager: Update cons in [(39,40,0)]
+[INFO]	connectionManager: Update cons in [(37,41,0)]
+[INFO]	connectionManager: Update cons in [(38,41,0)]
+[INFO]	connectionManager: Update cons in [(39,41,0)]
+[INFO]	connectionManager: Update cons in [(37,42,0)]
+[INFO]	connectionManager: Update cons in [(38,42,0)]
+[INFO]	connectionManager:  unregistering nic #536
+[INFO]	connectionManager: Update cons in [(16,28,0)]
+[INFO]	connectionManager: Update cons in [(14,26,0)]
+[INFO]	connectionManager: Update cons in [(15,26,0)]
+[INFO]	connectionManager: Update cons in [(16,26,0)]
+[INFO]	connectionManager: Update cons in [(14,27,0)]
+[INFO]	connectionManager: Update cons in [(15,27,0)]
+[INFO]	NicEntry: disconnecting nic #590 and #536
+[INFO]	NicEntry: disconnecting nic #536 and #590
+[INFO]	connectionManager: Update cons in [(16,27,0)]
+[INFO]	connectionManager: Update cons in [(14,28,0)]
+[INFO]	connectionManager: Update cons in [(15,28,0)]
+[INFO]	connectionManager:  unregistering nic #1070
+[INFO]	connectionManager: Update cons in [(32,59,0)]
+[INFO]	connectionManager: Update cons in [(33,59,0)]
+[INFO]	connectionManager: Update cons in [(31,60,0)]
+[INFO]	connectionManager: Update cons in [(32,60,0)]
+[INFO]	connectionManager: Update cons in [(33,60,0)]
+[INFO]	connectionManager: Update cons in [(31,58,0)]
+[INFO]	connectionManager: Update cons in [(32,58,0)]
+[INFO]	connectionManager: Update cons in [(33,58,0)]
+[INFO]	connectionManager: Update cons in [(31,59,0)]
+[INFO]	connectionManager:  unregistering nic #254
+[INFO]	connectionManager: Update cons in [(37,40,0)]
+[INFO]	connectionManager: Update cons in [(35,38,0)]
+[INFO]	connectionManager: Update cons in [(36,38,0)]
+[INFO]	connectionManager: Update cons in [(37,38,0)]
+[INFO]	connectionManager: Update cons in [(35,39,0)]
+[INFO]	NicEntry: disconnecting nic #698 and #254
+[INFO]	NicEntry: disconnecting nic #254 and #698
+[INFO]	connectionManager: Update cons in [(36,39,0)]
+[INFO]	connectionManager: Update cons in [(37,39,0)]
+[INFO]	connectionManager: Update cons in [(35,40,0)]
+[INFO]	connectionManager: Update cons in [(36,40,0)]
+[INFO]	connectionManager:  unregistering nic #338
+[INFO]	connectionManager: Update cons in [(32,56,0)]
+[INFO]	connectionManager: Update cons in [(33,56,0)]
+[INFO]	connectionManager: Update cons in [(31,54,0)]
+[INFO]	connectionManager: Update cons in [(32,54,0)]
+[INFO]	connectionManager: Update cons in [(33,54,0)]
+[INFO]	connectionManager: Update cons in [(31,55,0)]
+[INFO]	connectionManager: Update cons in [(32,55,0)]
+[INFO]	connectionManager: Update cons in [(33,55,0)]
+[INFO]	connectionManager: Update cons in [(31,56,0)]
+[INFO]	connectionManager:  unregistering nic #1580
+[INFO]	connectionManager: Update cons in [(33,50,0)]
+[INFO]	connectionManager: Update cons in [(31,48,0)]
+[INFO]	connectionManager: Update cons in [(32,48,0)]
+[INFO]	connectionManager: Update cons in [(33,48,0)]
+[INFO]	connectionManager: Update cons in [(31,49,0)]
+[INFO]	NicEntry: disconnecting nic #200 and #1580
+[INFO]	NicEntry: disconnecting nic #1580 and #200
+[INFO]	connectionManager: Update cons in [(32,49,0)]
+[INFO]	connectionManager: Update cons in [(33,49,0)]
+[INFO]	connectionManager: Update cons in [(31,50,0)]
+[INFO]	connectionManager: Update cons in [(32,50,0)]
+[INFO]	NicEntry: disconnecting nic #260 and #1580
+[INFO]	NicEntry: disconnecting nic #1580 and #260
+[INFO]	connectionManager:  unregistering nic #1292
+[INFO]	connectionManager: Update cons in [(24,42,0)]
+[INFO]	connectionManager: Update cons in [(25,42,0)]
+[INFO]	NicEntry: disconnecting nic #1724 and #1292
+[INFO]	NicEntry: disconnecting nic #1292 and #1724
+[INFO]	connectionManager: Update cons in [(26,42,0)]
+[INFO]	connectionManager: Update cons in [(24,40,0)]
+[INFO]	connectionManager: Update cons in [(25,40,0)]
+[INFO]	connectionManager: Update cons in [(26,40,0)]
+[INFO]	connectionManager: Update cons in [(24,41,0)]
+[INFO]	NicEntry: disconnecting nic #1160 and #1292
+[INFO]	NicEntry: disconnecting nic #1292 and #1160
+[INFO]	connectionManager: Update cons in [(25,41,0)]
+[INFO]	NicEntry: disconnecting nic #560 and #1292
+[INFO]	NicEntry: disconnecting nic #1292 and #560
+[INFO]	connectionManager: Update cons in [(26,41,0)]
+[INFO]	connectionManager:  unregistering nic #1706
+[INFO]	connectionManager: Update cons in [(35,52,0)]
+[INFO]	connectionManager: Update cons in [(36,52,0)]
+[INFO]	connectionManager: Update cons in [(37,52,0)]
+[INFO]	connectionManager: Update cons in [(35,53,0)]
+[INFO]	NicEntry: disconnecting nic #1052 and #1706
+[INFO]	NicEntry: disconnecting nic #1706 and #1052
+[INFO]	NicEntry: disconnecting nic #1622 and #1706
+[INFO]	NicEntry: disconnecting nic #1706 and #1622
+[INFO]	connectionManager: Update cons in [(36,53,0)]
+[INFO]	connectionManager: Update cons in [(37,53,0)]
+[INFO]	connectionManager: Update cons in [(35,51,0)]
+[INFO]	connectionManager: Update cons in [(36,51,0)]
+[INFO]	connectionManager: Update cons in [(37,51,0)]
+[INFO]	connectionManager:  unregistering nic #1424
+[INFO]	connectionManager: Update cons in [(22,40,0)]
+[INFO]	connectionManager: Update cons in [(23,40,0)]
+[INFO]	connectionManager: Update cons in [(21,41,0)]
+[INFO]	NicEntry: disconnecting nic #1862 and #1424
+[INFO]	NicEntry: disconnecting nic #1424 and #1862
+[INFO]	connectionManager: Update cons in [(22,41,0)]
+[INFO]	NicEntry: disconnecting nic #398 and #1424
+[INFO]	NicEntry: disconnecting nic #1424 and #398
+[INFO]	NicEntry: disconnecting nic #1814 and #1424
+[INFO]	NicEntry: disconnecting nic #1424 and #1814
+[INFO]	connectionManager: Update cons in [(23,41,0)]
+[INFO]	connectionManager: Update cons in [(21,42,0)]
+[INFO]	connectionManager: Update cons in [(22,42,0)]
+[INFO]	connectionManager: Update cons in [(23,42,0)]
+[INFO]	connectionManager: Update cons in [(21,40,0)]
+[INFO]	connectionManager:  unregistering nic #1604
+[INFO]	connectionManager: Update cons in [(22,43,0)]
+[INFO]	connectionManager: Update cons in [(20,44,0)]
+[INFO]	connectionManager: Update cons in [(21,44,0)]
+[INFO]	connectionManager: Update cons in [(22,44,0)]
+[INFO]	connectionManager: Update cons in [(20,42,0)]
+[INFO]	connectionManager: Update cons in [(21,42,0)]
+[INFO]	connectionManager: Update cons in [(22,42,0)]
+[INFO]	connectionManager: Update cons in [(20,43,0)]
+[INFO]	connectionManager: Update cons in [(21,43,0)]
+[INFO]	connectionManager:  unregistering nic #500
+[INFO]	connectionManager: Update cons in [(41,30,0)]
+[INFO]	connectionManager: Update cons in [(39,31,0)]
+[INFO]	connectionManager: Update cons in [(40,31,0)]
+[INFO]	connectionManager: Update cons in [(41,31,0)]
+[INFO]	connectionManager: Update cons in [(39,32,0)]
+[INFO]	connectionManager: Update cons in [(40,32,0)]
+[INFO]	connectionManager: Update cons in [(41,32,0)]
+[INFO]	connectionManager: Update cons in [(39,30,0)]
+[INFO]	connectionManager: Update cons in [(40,30,0)]
+[INFO]	connectionManager:  unregistering nic #644
+[INFO]	connectionManager: Update cons in [(23,37,0)]
+[INFO]	NicEntry: disconnecting nic #344 and #644
+[INFO]	NicEntry: disconnecting nic #644 and #344
+[INFO]	connectionManager: Update cons in [(24,37,0)]
+[INFO]	connectionManager: Update cons in [(22,38,0)]
+[INFO]	connectionManager: Update cons in [(23,38,0)]
+[INFO]	connectionManager: Update cons in [(24,38,0)]
+[INFO]	connectionManager: Update cons in [(22,36,0)]
+[INFO]	connectionManager: Update cons in [(23,36,0)]
+[INFO]	connectionManager: Update cons in [(24,36,0)]
+[INFO]	connectionManager: Update cons in [(22,37,0)]
+[INFO]	connectionManager:  unregistering nic #1232
+[INFO]	connectionManager: Update cons in [(43,49,0)]
+[INFO]	connectionManager: Update cons in [(44,49,0)]
+[INFO]	connectionManager: Update cons in [(42,47,0)]
+[INFO]	connectionManager: Update cons in [(43,47,0)]
+[INFO]	connectionManager: Update cons in [(44,47,0)]
+[INFO]	connectionManager: Update cons in [(42,48,0)]
+[INFO]	connectionManager: Update cons in [(43,48,0)]
+[INFO]	NicEntry: disconnecting nic #1754 and #1232
+[INFO]	NicEntry: disconnecting nic #1232 and #1754
+[INFO]	connectionManager: Update cons in [(44,48,0)]
+[INFO]	connectionManager: Update cons in [(42,49,0)]
+[INFO]	NicEntry: disconnecting nic #788 and #1232
+[INFO]	NicEntry: disconnecting nic #1232 and #788
+[INFO]	connectionManager:  unregistering nic #380
+[INFO]	connectionManager: Update cons in [(48,53,0)]
+[INFO]	connectionManager: Update cons in [(46,54,0)]
+[INFO]	connectionManager: Update cons in [(47,54,0)]
+[INFO]	connectionManager: Update cons in [(48,54,0)]
+[INFO]	connectionManager: Update cons in [(46,55,0)]
+[INFO]	connectionManager: Update cons in [(47,55,0)]
+[INFO]	connectionManager: Update cons in [(48,55,0)]
+[INFO]	connectionManager: Update cons in [(46,53,0)]
+[INFO]	connectionManager: Update cons in [(47,53,0)]
+[INFO]	connectionManager:  unregistering nic #218
+[INFO]	connectionManager: Update cons in [(38,31,0)]
+[INFO]	connectionManager: Update cons in [(36,32,0)]
+[INFO]	connectionManager: Update cons in [(37,32,0)]
+[INFO]	connectionManager: Update cons in [(38,32,0)]
+[INFO]	connectionManager: Update cons in [(36,33,0)]
+[INFO]	connectionManager: Update cons in [(37,33,0)]
+[INFO]	connectionManager: Update cons in [(38,33,0)]
+[INFO]	connectionManager: Update cons in [(36,31,0)]
+[INFO]	connectionManager: Update cons in [(37,31,0)]
+[INFO]	connectionManager:  unregistering nic #722
+[INFO]	connectionManager: Update cons in [(28,35,0)]
+[INFO]	connectionManager: Update cons in [(26,33,0)]
+[INFO]	connectionManager: Update cons in [(27,33,0)]
+[INFO]	connectionManager: Update cons in [(28,33,0)]
+[INFO]	connectionManager: Update cons in [(26,34,0)]
+[INFO]	connectionManager: Update cons in [(27,34,0)]
+[INFO]	NicEntry: disconnecting nic #146 and #722
+[INFO]	NicEntry: disconnecting nic #722 and #146
+[INFO]	NicEntry: disconnecting nic #548 and #722
+[INFO]	NicEntry: disconnecting nic #722 and #548
+[INFO]	NicEntry: disconnecting nic #668 and #722
+[INFO]	NicEntry: disconnecting nic #722 and #668
+[INFO]	connectionManager: Update cons in [(28,34,0)]
+[INFO]	connectionManager: Update cons in [(26,35,0)]
+[INFO]	connectionManager: Update cons in [(27,35,0)]
+[INFO]	connectionManager:  unregistering nic #1778
+[INFO]	connectionManager: Update cons in [(10,36,0)]
+[INFO]	NicEntry: disconnecting nic #1406 and #1778
+[INFO]	NicEntry: disconnecting nic #1778 and #1406
+[INFO]	connectionManager: Update cons in [(8,34,0)]
+[INFO]	connectionManager: Update cons in [(9,34,0)]
+[INFO]	connectionManager: Update cons in [(10,34,0)]
+[INFO]	connectionManager: Update cons in [(8,35,0)]
+[INFO]	connectionManager: Update cons in [(9,35,0)]
+[INFO]	connectionManager: Update cons in [(10,35,0)]
+[INFO]	connectionManager: Update cons in [(8,36,0)]
+[INFO]	connectionManager: Update cons in [(9,36,0)]
+[INFO]	connectionManager:  unregistering nic #290
+[INFO]	connectionManager: Update cons in [(43,52,0)]
+[INFO]	connectionManager: Update cons in [(44,52,0)]
+[INFO]	connectionManager: Update cons in [(42,50,0)]
+[INFO]	connectionManager: Update cons in [(43,50,0)]
+[INFO]	connectionManager: Update cons in [(44,50,0)]
+[INFO]	connectionManager: Update cons in [(42,51,0)]
+[INFO]	NicEntry: disconnecting nic #1598 and #290
+[INFO]	NicEntry: disconnecting nic #290 and #1598
+[INFO]	connectionManager: Update cons in [(43,51,0)]
+[INFO]	connectionManager: Update cons in [(44,51,0)]
+[INFO]	connectionManager: Update cons in [(42,52,0)]
+[INFO]	NicEntry: disconnecting nic #182 and #290
+[INFO]	NicEntry: disconnecting nic #290 and #182
+[INFO]	connectionManager:  unregistering nic #896
+[INFO]	connectionManager: Update cons in [(34,44,0)]
+[INFO]	connectionManager: Update cons in [(35,44,0)]
+[INFO]	connectionManager: Update cons in [(36,44,0)]
+[INFO]	connectionManager: Update cons in [(34,45,0)]
+[INFO]	connectionManager: Update cons in [(35,45,0)]
+[INFO]	connectionManager: Update cons in [(36,45,0)]
+[INFO]	connectionManager: Update cons in [(34,43,0)]
+[INFO]	connectionManager: Update cons in [(35,43,0)]
+[INFO]	NicEntry: disconnecting nic #272 and #896
+[INFO]	NicEntry: disconnecting nic #896 and #272
+[INFO]	connectionManager: Update cons in [(36,43,0)]
+[INFO]	connectionManager:  unregistering nic #1526
+[INFO]	connectionManager: Update cons in [(31,28,0)]
+[INFO]	connectionManager: Update cons in [(32,28,0)]
+[INFO]	connectionManager: Update cons in [(33,28,0)]
+[INFO]	connectionManager: Update cons in [(31,29,0)]
+[INFO]	connectionManager: Update cons in [(32,29,0)]
+[INFO]	connectionManager: Update cons in [(33,29,0)]
+[INFO]	connectionManager: Update cons in [(31,27,0)]
+[INFO]	connectionManager: Update cons in [(32,27,0)]
+[INFO]	connectionManager: Update cons in [(33,27,0)]
+[INFO]	connectionManager:  unregistering nic #1742
+[INFO]	connectionManager: Update cons in [(45,51,0)]
+[INFO]	connectionManager: Update cons in [(46,51,0)]
+[INFO]	connectionManager: Update cons in [(47,51,0)]
+[INFO]	connectionManager: Update cons in [(45,52,0)]
+[INFO]	NicEntry: disconnecting nic #806 and #1742
+[INFO]	NicEntry: disconnecting nic #1742 and #806
+[INFO]	connectionManager: Update cons in [(46,52,0)]
+[INFO]	NicEntry: disconnecting nic #578 and #1742
+[INFO]	NicEntry: disconnecting nic #1742 and #578
+[INFO]	connectionManager: Update cons in [(47,52,0)]
+[INFO]	connectionManager: Update cons in [(45,53,0)]
+[INFO]	connectionManager: Update cons in [(46,53,0)]
+[INFO]	connectionManager: Update cons in [(47,53,0)]
+[INFO]	connectionManager:  unregistering nic #50
+[INFO]	connectionManager: Update cons in [(36,26,0)]
+[INFO]	connectionManager: Update cons in [(37,26,0)]
+[INFO]	connectionManager: Update cons in [(38,26,0)]
+[INFO]	connectionManager: Update cons in [(36,27,0)]
+[INFO]	connectionManager: Update cons in [(37,27,0)]
+[INFO]	connectionManager: Update cons in [(38,27,0)]
+[INFO]	connectionManager: Update cons in [(36,25,0)]
+[INFO]	connectionManager: Update cons in [(37,25,0)]
+[INFO]	connectionManager: Update cons in [(38,25,0)]
+[INFO]	connectionManager:  unregistering nic #590
+[INFO]	connectionManager: Update cons in [(16,28,0)]
+[INFO]	connectionManager: Update cons in [(14,26,0)]
+[INFO]	connectionManager: Update cons in [(15,26,0)]
+[INFO]	connectionManager: Update cons in [(16,26,0)]
+[INFO]	connectionManager: Update cons in [(14,27,0)]
+[INFO]	connectionManager: Update cons in [(15,27,0)]
+[INFO]	connectionManager: Update cons in [(16,27,0)]
+[INFO]	connectionManager: Update cons in [(14,28,0)]
+[INFO]	connectionManager: Update cons in [(15,28,0)]
+[INFO]	connectionManager:  unregistering nic #800
+[INFO]	connectionManager: Update cons in [(30,34,0)]
+[INFO]	connectionManager: Update cons in [(28,32,0)]
+[INFO]	connectionManager: Update cons in [(29,32,0)]
+[INFO]	connectionManager: Update cons in [(30,32,0)]
+[INFO]	connectionManager: Update cons in [(28,33,0)]
+[INFO]	connectionManager: Update cons in [(29,33,0)]
+[INFO]	connectionManager: Update cons in [(30,33,0)]
+[INFO]	connectionManager: Update cons in [(28,34,0)]
+[INFO]	connectionManager: Update cons in [(29,34,0)]
+[INFO]	connectionManager:  unregistering nic #20
+[INFO]	connectionManager: Update cons in [(33,30,0)]
+[INFO]	NicEntry: disconnecting nic #812 and #20
+[INFO]	NicEntry: disconnecting nic #20 and #812
+[INFO]	connectionManager: Update cons in [(34,30,0)]
+[INFO]	connectionManager: Update cons in [(32,31,0)]
+[INFO]	connectionManager: Update cons in [(33,31,0)]
+[INFO]	connectionManager: Update cons in [(34,31,0)]
+[INFO]	connectionManager: Update cons in [(32,32,0)]
+[INFO]	connectionManager: Update cons in [(33,32,0)]
+[INFO]	connectionManager: Update cons in [(34,32,0)]
+[INFO]	connectionManager: Update cons in [(32,30,0)]
+[INFO]	connectionManager:  unregistering nic #1640
+[INFO]	connectionManager: Update cons in [(10,39,0)]
+[INFO]	connectionManager: Update cons in [(11,39,0)]
+[INFO]	connectionManager: Update cons in [(12,39,0)]
+[INFO]	NicEntry: disconnecting nic #1142 and #1640
+[INFO]	NicEntry: disconnecting nic #1640 and #1142
+[INFO]	connectionManager: Update cons in [(10,40,0)]
+[INFO]	connectionManager: Update cons in [(11,40,0)]
+[INFO]	connectionManager: Update cons in [(12,40,0)]
+[INFO]	connectionManager: Update cons in [(10,38,0)]
+[INFO]	connectionManager: Update cons in [(11,38,0)]
+[INFO]	connectionManager: Update cons in [(12,38,0)]
+[INFO]	connectionManager:  unregistering nic #1430
+[INFO]	connectionManager: Update cons in [(18,33,0)]
+[INFO]	connectionManager: Update cons in [(19,33,0)]
+[INFO]	connectionManager: Update cons in [(20,33,0)]
+[INFO]	connectionManager: Update cons in [(18,31,0)]
+[INFO]	connectionManager: Update cons in [(19,31,0)]
+[INFO]	connectionManager: Update cons in [(20,31,0)]
+[INFO]	connectionManager: Update cons in [(18,32,0)]
+[INFO]	connectionManager: Update cons in [(19,32,0)]
+[INFO]	NicEntry: disconnecting nic #914 and #1430
+[INFO]	NicEntry: disconnecting nic #1430 and #914
+[INFO]	connectionManager: Update cons in [(20,32,0)]
+[INFO]	connectionManager:  unregistering nic #974
+[INFO]	connectionManager: Update cons in [(13,35,0)]
+[INFO]	connectionManager: Update cons in [(14,35,0)]
+[INFO]	connectionManager: Update cons in [(12,36,0)]
+[INFO]	connectionManager: Update cons in [(13,36,0)]
+[INFO]	connectionManager: Update cons in [(14,36,0)]
+[INFO]	connectionManager: Update cons in [(12,37,0)]
+[INFO]	connectionManager: Update cons in [(13,37,0)]
+[INFO]	connectionManager: Update cons in [(14,37,0)]
+[INFO]	connectionManager: Update cons in [(12,35,0)]
+[INFO]	connectionManager:  unregistering nic #1334
+[INFO]	connectionManager: Update cons in [(20,21,0)]
+[INFO]	NicEntry: disconnecting nic #1538 and #1334
+[INFO]	NicEntry: disconnecting nic #1334 and #1538
+[INFO]	connectionManager: Update cons in [(18,22,0)]
+[INFO]	connectionManager: Update cons in [(19,22,0)]
+[INFO]	connectionManager: Update cons in [(20,22,0)]
+[INFO]	connectionManager: Update cons in [(18,20,0)]
+[INFO]	connectionManager: Update cons in [(19,20,0)]
+[INFO]	NicEntry: disconnecting nic #1802 and #1334
+[INFO]	NicEntry: disconnecting nic #1334 and #1802
+[INFO]	connectionManager: Update cons in [(20,20,0)]
+[INFO]	NicEntry: disconnecting nic #1676 and #1334
+[INFO]	NicEntry: disconnecting nic #1334 and #1676
+[INFO]	connectionManager: Update cons in [(18,21,0)]
+[INFO]	connectionManager: Update cons in [(19,21,0)]
+[INFO]	connectionManager:  unregistering nic #110
+[INFO]	connectionManager: Update cons in [(19,24,0)]
+[INFO]	connectionManager: Update cons in [(17,22,0)]
+[INFO]	connectionManager: Update cons in [(18,22,0)]
+[INFO]	connectionManager: Update cons in [(19,22,0)]
+[INFO]	connectionManager: Update cons in [(17,23,0)]
+[INFO]	connectionManager: Update cons in [(18,23,0)]
+[INFO]	connectionManager: Update cons in [(19,23,0)]
+[INFO]	connectionManager: Update cons in [(17,24,0)]
+[INFO]	connectionManager: Update cons in [(18,24,0)]
+[INFO]	connectionManager:  unregistering nic #170
+[INFO]	connectionManager: Update cons in [(17,22,0)]
+[INFO]	connectionManager: Update cons in [(18,22,0)]
+[INFO]	connectionManager: Update cons in [(19,22,0)]
+[INFO]	connectionManager: Update cons in [(17,20,0)]
+[INFO]	connectionManager: Update cons in [(18,20,0)]
+[INFO]	connectionManager: Update cons in [(19,20,0)]
+[INFO]	connectionManager: Update cons in [(17,21,0)]
+[INFO]	connectionManager: Update cons in [(18,21,0)]
+[INFO]	NicEntry: disconnecting nic #1148 and #170
+[INFO]	NicEntry: disconnecting nic #170 and #1148
+[INFO]	connectionManager: Update cons in [(19,21,0)]
+[INFO]	connectionManager:  unregistering nic #1016
+[INFO]	connectionManager: Update cons in [(39,22,0)]
+[INFO]	connectionManager: Update cons in [(40,22,0)]
+[INFO]	connectionManager: Update cons in [(38,23,0)]
+[INFO]	connectionManager: Update cons in [(39,23,0)]
+[INFO]	connectionManager: Update cons in [(40,23,0)]
+[INFO]	connectionManager: Update cons in [(38,24,0)]
+[INFO]	connectionManager: Update cons in [(39,24,0)]
+[INFO]	connectionManager: Update cons in [(40,24,0)]
+[INFO]	connectionManager: Update cons in [(38,22,0)]
+[INFO]	connectionManager:  unregistering nic #1856
+[INFO]	connectionManager: Update cons in [(28,55,0)]
+[INFO]	connectionManager: Update cons in [(29,55,0)]
+[INFO]	connectionManager: Update cons in [(27,56,0)]
+[INFO]	connectionManager: Update cons in [(28,56,0)]
+[INFO]	connectionManager: Update cons in [(29,56,0)]
+[INFO]	connectionManager: Update cons in [(27,54,0)]
+[INFO]	connectionManager: Update cons in [(28,54,0)]
+[INFO]	connectionManager: Update cons in [(29,54,0)]
+[INFO]	connectionManager: Update cons in [(27,55,0)]
+[INFO]	connectionManager:  unregistering nic #86
+[INFO]	connectionManager: Update cons in [(36,46,0)]
+[INFO]	connectionManager: Update cons in [(34,44,0)]
+[INFO]	connectionManager: Update cons in [(35,44,0)]
+[INFO]	connectionManager: Update cons in [(36,44,0)]
+[INFO]	connectionManager: Update cons in [(34,45,0)]
+[INFO]	connectionManager: Update cons in [(35,45,0)]
+[INFO]	connectionManager: Update cons in [(36,45,0)]
+[INFO]	connectionManager: Update cons in [(34,46,0)]
+[INFO]	connectionManager: Update cons in [(35,46,0)]
+[INFO]	connectionManager:  unregistering nic #140
+[INFO]	connectionManager: Update cons in [(33,33,0)]
+[INFO]	connectionManager: Update cons in [(34,33,0)]
+[INFO]	NicEntry: disconnecting nic #986 and #140
+[INFO]	NicEntry: disconnecting nic #140 and #986
+[INFO]	connectionManager: Update cons in [(35,33,0)]
+[INFO]	connectionManager: Update cons in [(33,31,0)]
+[INFO]	connectionManager: Update cons in [(34,31,0)]
+[INFO]	connectionManager: Update cons in [(35,31,0)]
+[INFO]	connectionManager: Update cons in [(33,32,0)]
+[INFO]	connectionManager: Update cons in [(34,32,0)]
+[INFO]	connectionManager: Update cons in [(35,32,0)]
+[INFO]	connectionManager:  unregistering nic #1886
+[INFO]	connectionManager: Update cons in [(32,39,0)]
+[INFO]	connectionManager: Update cons in [(30,37,0)]
+[INFO]	connectionManager: Update cons in [(31,37,0)]
+[INFO]	connectionManager: Update cons in [(32,37,0)]
+[INFO]	connectionManager: Update cons in [(30,38,0)]
+[INFO]	connectionManager: Update cons in [(31,38,0)]
+[INFO]	connectionManager: Update cons in [(32,38,0)]
+[INFO]	connectionManager: Update cons in [(30,39,0)]
+[INFO]	connectionManager: Update cons in [(31,39,0)]
+[INFO]	connectionManager:  unregistering nic #1676
+[INFO]	connectionManager: Update cons in [(20,21,0)]
+[INFO]	NicEntry: disconnecting nic #1538 and #1676
+[INFO]	NicEntry: disconnecting nic #1676 and #1538
+[INFO]	connectionManager: Update cons in [(21,21,0)]
+[INFO]	connectionManager: Update cons in [(19,19,0)]
+[INFO]	connectionManager: Update cons in [(20,19,0)]
+[INFO]	connectionManager: Update cons in [(21,19,0)]
+[INFO]	connectionManager: Update cons in [(19,20,0)]
+[INFO]	NicEntry: disconnecting nic #1802 and #1676
+[INFO]	NicEntry: disconnecting nic #1676 and #1802
+[INFO]	connectionManager: Update cons in [(20,20,0)]
+[INFO]	connectionManager: Update cons in [(21,20,0)]
+[INFO]	connectionManager: Update cons in [(19,21,0)]
+[INFO]	connectionManager:  unregistering nic #440
+[INFO]	connectionManager: Update cons in [(16,34,0)]
+[INFO]	connectionManager: Update cons in [(17,34,0)]
+[INFO]	connectionManager: Update cons in [(15,35,0)]
+[INFO]	connectionManager: Update cons in [(16,35,0)]
+[INFO]	connectionManager: Update cons in [(17,35,0)]
+[INFO]	NicEntry: disconnecting nic #26 and #440
+[INFO]	NicEntry: disconnecting nic #440 and #26
+[INFO]	connectionManager: Update cons in [(15,36,0)]
+[INFO]	connectionManager: Update cons in [(16,36,0)]
+[INFO]	connectionManager: Update cons in [(17,36,0)]
+[INFO]	connectionManager: Update cons in [(15,34,0)]
+[INFO]	connectionManager:  unregistering nic #386
+[INFO]	connectionManager: Update cons in [(33,33,0)]
+[INFO]	connectionManager: Update cons in [(34,33,0)]
+[INFO]	connectionManager: Update cons in [(32,34,0)]
+[INFO]	connectionManager: Update cons in [(33,34,0)]
+[INFO]	connectionManager: Update cons in [(34,34,0)]
+[INFO]	connectionManager: Update cons in [(32,35,0)]
+[INFO]	connectionManager: Update cons in [(33,35,0)]
+[INFO]	connectionManager: Update cons in [(34,35,0)]
+[INFO]	connectionManager: Update cons in [(32,33,0)]
+[INFO]	connectionManager:  unregistering nic #1076
+[INFO]	connectionManager: Update cons in [(37,37,0)]
+[INFO]	connectionManager: Update cons in [(38,37,0)]
+[INFO]	connectionManager: Update cons in [(39,37,0)]
+[INFO]	connectionManager: Update cons in [(37,35,0)]
+[INFO]	connectionManager: Update cons in [(38,35,0)]
+[INFO]	connectionManager: Update cons in [(39,35,0)]
+[INFO]	connectionManager: Update cons in [(37,36,0)]
+[INFO]	connectionManager: Update cons in [(38,36,0)]
+[INFO]	connectionManager: Update cons in [(39,36,0)]
+[INFO]	connectionManager:  unregistering nic #932
+[INFO]	connectionManager: Update cons in [(24,42,0)]
+[INFO]	connectionManager: Update cons in [(22,43,0)]
+[INFO]	connectionManager: Update cons in [(23,43,0)]
+[INFO]	connectionManager: Update cons in [(24,43,0)]
+[INFO]	connectionManager: Update cons in [(22,41,0)]
+[INFO]	connectionManager: Update cons in [(23,41,0)]
+[INFO]	connectionManager: Update cons in [(24,41,0)]
+[INFO]	connectionManager: Update cons in [(22,42,0)]
+[INFO]	connectionManager: Update cons in [(23,42,0)]
+[INFO]	connectionManager:  unregistering nic #1262
+[INFO]	connectionManager: Update cons in [(29,43,0)]
+[INFO]	connectionManager: Update cons in [(27,41,0)]
+[INFO]	connectionManager: Update cons in [(28,41,0)]
+[INFO]	connectionManager: Update cons in [(29,41,0)]
+[INFO]	connectionManager: Update cons in [(27,42,0)]
+[INFO]	NicEntry: disconnecting nic #1238 and #1262
+[INFO]	NicEntry: disconnecting nic #1262 and #1238
+[INFO]	connectionManager: Update cons in [(28,42,0)]
+[INFO]	NicEntry: disconnecting nic #302 and #1262
+[INFO]	NicEntry: disconnecting nic #1262 and #302
+[INFO]	NicEntry: disconnecting nic #632 and #1262
+[INFO]	NicEntry: disconnecting nic #1262 and #632
+[INFO]	connectionManager: Update cons in [(29,42,0)]
+[INFO]	connectionManager: Update cons in [(27,43,0)]
+[INFO]	NicEntry: disconnecting nic #890 and #1262
+[INFO]	NicEntry: disconnecting nic #1262 and #890
+[INFO]	connectionManager: Update cons in [(28,43,0)]
+[INFO]	connectionManager:  unregistering nic #314
+[INFO]	connectionManager: Update cons in [(23,31,0)]
+[INFO]	connectionManager: Update cons in [(21,32,0)]
+[INFO]	connectionManager: Update cons in [(22,32,0)]
+[INFO]	connectionManager: Update cons in [(23,32,0)]
+[INFO]	connectionManager: Update cons in [(21,30,0)]
+[INFO]	connectionManager: Update cons in [(22,30,0)]
+[INFO]	connectionManager: Update cons in [(23,30,0)]
+[INFO]	connectionManager: Update cons in [(21,31,0)]
+[INFO]	connectionManager: Update cons in [(22,31,0)]
+[INFO]	connectionManager:  unregistering nic #470
+[INFO]	connectionManager: Update cons in [(26,33,0)]
+[INFO]	NicEntry: disconnecting nic #1058 and #470
+[INFO]	NicEntry: disconnecting nic #470 and #1058
+[INFO]	connectionManager: Update cons in [(24,34,0)]
+[INFO]	connectionManager: Update cons in [(25,34,0)]
+[INFO]	connectionManager: Update cons in [(26,34,0)]
+[INFO]	NicEntry: disconnecting nic #362 and #470
+[INFO]	NicEntry: disconnecting nic #470 and #362
+[INFO]	connectionManager: Update cons in [(24,32,0)]
+[INFO]	connectionManager: Update cons in [(25,32,0)]
+[INFO]	connectionManager: Update cons in [(26,32,0)]
+[INFO]	connectionManager: Update cons in [(24,33,0)]
+[INFO]	connectionManager: Update cons in [(25,33,0)]
+[INFO]	NicEntry: disconnecting nic #1682 and #470
+[INFO]	NicEntry: disconnecting nic #470 and #1682
+[INFO]	connectionManager:  unregistering nic #980
+[INFO]	connectionManager: Update cons in [(47,56,0)]
+[INFO]	connectionManager: Update cons in [(45,54,0)]
+[INFO]	connectionManager: Update cons in [(46,54,0)]
+[INFO]	connectionManager: Update cons in [(47,54,0)]
+[INFO]	connectionManager: Update cons in [(45,55,0)]
+[INFO]	connectionManager: Update cons in [(46,55,0)]
+[INFO]	connectionManager: Update cons in [(47,55,0)]
+[INFO]	connectionManager: Update cons in [(45,56,0)]
+[INFO]	connectionManager: Update cons in [(46,56,0)]
+[INFO]	connectionManager:  unregistering nic #116
+[INFO]	connectionManager: Update cons in [(28,32,0)]
+[INFO]	connectionManager: Update cons in [(26,30,0)]
+[INFO]	connectionManager: Update cons in [(27,30,0)]
+[INFO]	connectionManager: Update cons in [(28,30,0)]
+[INFO]	connectionManager: Update cons in [(26,31,0)]
+[INFO]	connectionManager: Update cons in [(27,31,0)]
+[INFO]	connectionManager: Update cons in [(28,31,0)]
+[INFO]	NicEntry: disconnecting nic #884 and #116
+[INFO]	NicEntry: disconnecting nic #116 and #884
+[INFO]	connectionManager: Update cons in [(26,32,0)]
+[INFO]	connectionManager: Update cons in [(27,32,0)]
+[INFO]	connectionManager:  unregistering nic #746
+[INFO]	connectionManager: Update cons in [(14,12,0)]
+[INFO]	connectionManager: Update cons in [(15,12,0)]
+[INFO]	connectionManager: Update cons in [(13,10,0)]
+[INFO]	connectionManager: Update cons in [(14,10,0)]
+[INFO]	connectionManager: Update cons in [(15,10,0)]
+[INFO]	connectionManager: Update cons in [(13,11,0)]
+[INFO]	NicEntry: disconnecting nic #830 and #746
+[INFO]	NicEntry: disconnecting nic #746 and #830
+[INFO]	connectionManager: Update cons in [(14,11,0)]
+[INFO]	NicEntry: disconnecting nic #1340 and #746
+[INFO]	NicEntry: disconnecting nic #746 and #1340
+[INFO]	connectionManager: Update cons in [(15,11,0)]
+[INFO]	connectionManager: Update cons in [(13,12,0)]
+[INFO]	connectionManager:  unregistering nic #176
+[INFO]	connectionManager: Update cons in [(35,35,0)]
+[INFO]	connectionManager: Update cons in [(33,36,0)]
+[INFO]	connectionManager: Update cons in [(34,36,0)]
+[INFO]	NicEntry: disconnecting nic #1412 and #176
+[INFO]	NicEntry: disconnecting nic #176 and #1412
+[INFO]	NicEntry: disconnecting nic #1616 and #176
+[INFO]	NicEntry: disconnecting nic #176 and #1616
+[INFO]	connectionManager: Update cons in [(35,36,0)]
+[INFO]	connectionManager: Update cons in [(33,37,0)]
+[INFO]	NicEntry: disconnecting nic #128 and #176
+[INFO]	NicEntry: disconnecting nic #176 and #128
+[INFO]	connectionManager: Update cons in [(34,37,0)]
+[INFO]	connectionManager: Update cons in [(35,37,0)]
+[INFO]	connectionManager: Update cons in [(33,35,0)]
+[INFO]	connectionManager: Update cons in [(34,35,0)]
+[INFO]	connectionManager:  unregistering nic #1520
+[INFO]	connectionManager: Update cons in [(30,40,0)]
+[INFO]	connectionManager: Update cons in [(28,41,0)]
+[INFO]	connectionManager: Update cons in [(29,41,0)]
+[INFO]	connectionManager: Update cons in [(30,41,0)]
+[INFO]	connectionManager: Update cons in [(28,39,0)]
+[INFO]	connectionManager: Update cons in [(29,39,0)]
+[INFO]	connectionManager: Update cons in [(30,39,0)]
+[INFO]	connectionManager: Update cons in [(28,40,0)]
+[INFO]	connectionManager: Update cons in [(29,40,0)]
+[INFO]	NicEntry: disconnecting nic #842 and #1520
+[INFO]	NicEntry: disconnecting nic #1520 and #842
+[INFO]	NicEntry: disconnecting nic #1586 and #1520
+[INFO]	NicEntry: disconnecting nic #1520 and #1586
+[INFO]	NicEntry: disconnecting nic #1784 and #1520
+[INFO]	NicEntry: disconnecting nic #1520 and #1784
+[INFO]	connectionManager:  unregistering nic #1814
+[INFO]	connectionManager: Update cons in [(22,40,0)]
+[INFO]	connectionManager: Update cons in [(23,40,0)]
+[INFO]	connectionManager: Update cons in [(21,41,0)]
+[INFO]	NicEntry: disconnecting nic #1862 and #1814
+[INFO]	NicEntry: disconnecting nic #1814 and #1862
+[INFO]	connectionManager: Update cons in [(22,41,0)]
+[INFO]	NicEntry: disconnecting nic #398 and #1814
+[INFO]	NicEntry: disconnecting nic #1814 and #398
+[INFO]	connectionManager: Update cons in [(23,41,0)]
+[INFO]	connectionManager: Update cons in [(21,42,0)]
+[INFO]	connectionManager: Update cons in [(22,42,0)]
+[INFO]	connectionManager: Update cons in [(23,42,0)]
+[INFO]	connectionManager: Update cons in [(21,40,0)]
+[INFO]	connectionManager:  unregistering nic #224
+[INFO]	connectionManager: Update cons in [(25,39,0)]
+[INFO]	NicEntry: disconnecting nic #1202 and #224
+[INFO]	NicEntry: disconnecting nic #224 and #1202
+[INFO]	connectionManager: Update cons in [(26,39,0)]
+[INFO]	connectionManager: Update cons in [(24,40,0)]
+[INFO]	NicEntry: disconnecting nic #1028 and #224
+[INFO]	NicEntry: disconnecting nic #224 and #1028
+[INFO]	connectionManager: Update cons in [(25,40,0)]
+[INFO]	connectionManager: Update cons in [(26,40,0)]
+[INFO]	connectionManager: Update cons in [(24,38,0)]
+[INFO]	connectionManager: Update cons in [(25,38,0)]
+[INFO]	connectionManager: Update cons in [(26,38,0)]
+[INFO]	connectionManager: Update cons in [(24,39,0)]
+[INFO]	connectionManager:  unregistering nic #1376
+[INFO]	connectionManager: Update cons in [(13,32,0)]
+[INFO]	connectionManager: Update cons in [(14,32,0)]
+[INFO]	connectionManager: Update cons in [(15,32,0)]
+[INFO]	connectionManager: Update cons in [(13,30,0)]
+[INFO]	connectionManager: Update cons in [(14,30,0)]
+[INFO]	connectionManager: Update cons in [(15,30,0)]
+[INFO]	connectionManager: Update cons in [(13,31,0)]
+[INFO]	connectionManager: Update cons in [(14,31,0)]
+[INFO]	NicEntry: disconnecting nic #1748 and #1376
+[INFO]	NicEntry: disconnecting nic #1376 and #1748
+[INFO]	connectionManager: Update cons in [(15,31,0)]
+[INFO]	connectionManager:  unregistering nic #854
+[INFO]	connectionManager: Update cons in [(19,27,0)]
+[INFO]	connectionManager: Update cons in [(20,27,0)]
+[INFO]	connectionManager: Update cons in [(21,27,0)]
+[INFO]	connectionManager: Update cons in [(19,25,0)]
+[INFO]	connectionManager: Update cons in [(20,25,0)]
+[INFO]	connectionManager: Update cons in [(21,25,0)]
+[INFO]	connectionManager: Update cons in [(19,26,0)]
+[INFO]	connectionManager: Update cons in [(20,26,0)]
+[INFO]	connectionManager: Update cons in [(21,26,0)]
+[INFO]	connectionManager:  unregistering nic #446
+[INFO]	connectionManager: Update cons in [(33,53,0)]
+[INFO]	connectionManager: Update cons in [(31,54,0)]
+[INFO]	connectionManager: Update cons in [(32,54,0)]
+[INFO]	connectionManager: Update cons in [(33,54,0)]
+[INFO]	NicEntry: disconnecting nic #326 and #446
+[INFO]	NicEntry: disconnecting nic #446 and #326
+[INFO]	connectionManager: Update cons in [(31,55,0)]
+[INFO]	connectionManager: Update cons in [(32,55,0)]
+[INFO]	connectionManager: Update cons in [(33,55,0)]
+[INFO]	connectionManager: Update cons in [(31,53,0)]
+[INFO]	connectionManager: Update cons in [(32,53,0)]
+[INFO]	connectionManager:  unregistering nic #1562
+[INFO]	connectionManager: Update cons in [(29,46,0)]
+[INFO]	connectionManager: Update cons in [(27,47,0)]
+[INFO]	connectionManager: Update cons in [(28,47,0)]
+[INFO]	connectionManager: Update cons in [(29,47,0)]
+[INFO]	connectionManager: Update cons in [(27,45,0)]
+[INFO]	connectionManager: Update cons in [(28,45,0)]
+[INFO]	connectionManager: Update cons in [(29,45,0)]
+[INFO]	connectionManager: Update cons in [(27,46,0)]
+[INFO]	connectionManager: Update cons in [(28,46,0)]
+[INFO]	NicEntry: disconnecting nic #1322 and #1562
+[INFO]	NicEntry: disconnecting nic #1562 and #1322
+[INFO]	connectionManager:  unregistering nic #194
+[INFO]	connectionManager: Update cons in [(14,12,0)]
+[INFO]	connectionManager: Update cons in [(15,12,0)]
+[INFO]	connectionManager: Update cons in [(13,13,0)]
+[INFO]	connectionManager: Update cons in [(14,13,0)]
+[INFO]	connectionManager: Update cons in [(15,13,0)]
+[INFO]	connectionManager: Update cons in [(13,14,0)]
+[INFO]	connectionManager: Update cons in [(14,14,0)]
+[INFO]	connectionManager: Update cons in [(15,14,0)]
+[INFO]	connectionManager: Update cons in [(13,12,0)]
+[INFO]	connectionManager:  unregistering nic #560
+[INFO]	connectionManager: Update cons in [(24,42,0)]
+[INFO]	connectionManager: Update cons in [(25,42,0)]
+[INFO]	connectionManager: Update cons in [(26,42,0)]
+[INFO]	connectionManager: Update cons in [(24,40,0)]
+[INFO]	connectionManager: Update cons in [(25,40,0)]
+[INFO]	connectionManager: Update cons in [(26,40,0)]
+[INFO]	connectionManager: Update cons in [(24,41,0)]
+[INFO]	NicEntry: disconnecting nic #566 and #560
+[INFO]	NicEntry: disconnecting nic #560 and #566
+[INFO]	NicEntry: disconnecting nic #1160 and #560
+[INFO]	NicEntry: disconnecting nic #560 and #1160
+[INFO]	connectionManager: Update cons in [(25,41,0)]
+[INFO]	connectionManager: Update cons in [(26,41,0)]
+[INFO]	connectionManager:  unregistering nic #1436
+[INFO]	connectionManager: Update cons in [(17,39,0)]
+[INFO]	connectionManager: Update cons in [(18,39,0)]
+[INFO]	NicEntry: disconnecting nic #32 and #1436
+[INFO]	NicEntry: disconnecting nic #1436 and #32
+[INFO]	NicEntry: disconnecting nic #1736 and #1436
+[INFO]	NicEntry: disconnecting nic #1436 and #1736
+[INFO]	connectionManager: Update cons in [(16,40,0)]
+[INFO]	connectionManager: Update cons in [(17,40,0)]
+[INFO]	connectionManager: Update cons in [(18,40,0)]
+[INFO]	connectionManager: Update cons in [(16,38,0)]
+[INFO]	connectionManager: Update cons in [(17,38,0)]
+[INFO]	connectionManager: Update cons in [(18,38,0)]
+[INFO]	connectionManager: Update cons in [(16,39,0)]
+[INFO]	connectionManager:  unregistering nic #1610
+[INFO]	connectionManager: Update cons in [(27,21,0)]
+[INFO]	connectionManager: Update cons in [(25,22,0)]
+[INFO]	connectionManager: Update cons in [(26,22,0)]
+[INFO]	connectionManager: Update cons in [(27,22,0)]
+[INFO]	connectionManager: Update cons in [(25,20,0)]
+[INFO]	connectionManager: Update cons in [(26,20,0)]
+[INFO]	connectionManager: Update cons in [(27,20,0)]
+[INFO]	connectionManager: Update cons in [(25,21,0)]
+[INFO]	connectionManager: Update cons in [(26,21,0)]
+[INFO]	connectionManager:  unregistering nic #26
+[INFO]	connectionManager: Update cons in [(18,36,0)]
+[INFO]	connectionManager: Update cons in [(16,34,0)]
+[INFO]	connectionManager: Update cons in [(17,34,0)]
+[INFO]	connectionManager: Update cons in [(18,34,0)]
+[INFO]	connectionManager: Update cons in [(16,35,0)]
+[INFO]	connectionManager: Update cons in [(17,35,0)]
+[INFO]	connectionManager: Update cons in [(18,35,0)]
+[INFO]	connectionManager: Update cons in [(16,36,0)]
+[INFO]	connectionManager: Update cons in [(17,36,0)]
+[INFO]	connectionManager:  unregistering nic #260
+[INFO]	connectionManager: Update cons in [(33,50,0)]
+[INFO]	connectionManager: Update cons in [(31,51,0)]
+[INFO]	connectionManager: Update cons in [(32,51,0)]
+[INFO]	connectionManager: Update cons in [(33,51,0)]
+[INFO]	connectionManager: Update cons in [(31,49,0)]
+[INFO]	NicEntry: disconnecting nic #200 and #260
+[INFO]	NicEntry: disconnecting nic #260 and #200
+[INFO]	connectionManager: Update cons in [(32,49,0)]
+[INFO]	connectionManager: Update cons in [(33,49,0)]
+[INFO]	connectionManager: Update cons in [(31,50,0)]
+[INFO]	connectionManager: Update cons in [(32,50,0)]
+[INFO]	connectionManager:  unregistering nic #1712
+[INFO]	connectionManager: Update cons in [(27,44,0)]
+[INFO]	connectionManager: Update cons in [(28,44,0)]
+[INFO]	connectionManager: Update cons in [(26,45,0)]
+[INFO]	connectionManager: Update cons in [(27,45,0)]
+[INFO]	connectionManager: Update cons in [(28,45,0)]
+[INFO]	connectionManager: Update cons in [(26,43,0)]
+[INFO]	connectionManager: Update cons in [(27,43,0)]
+[INFO]	connectionManager: Update cons in [(28,43,0)]
+[INFO]	connectionManager: Update cons in [(26,44,0)]
+[INFO]	connectionManager:  unregistering nic #1046
+[INFO]	connectionManager: Update cons in [(40,39,0)]
+[INFO]	connectionManager: Update cons in [(38,40,0)]
+[INFO]	connectionManager: Update cons in [(39,40,0)]
+[INFO]	connectionManager: Update cons in [(40,40,0)]
+[INFO]	connectionManager: Update cons in [(38,41,0)]
+[INFO]	connectionManager: Update cons in [(39,41,0)]
+[INFO]	connectionManager: Update cons in [(40,41,0)]
+[INFO]	connectionManager: Update cons in [(38,39,0)]
+[INFO]	connectionManager: Update cons in [(39,39,0)]
+[INFO]	connectionManager:  unregistering nic #1142
+[INFO]	connectionManager: Update cons in [(13,38,0)]
+[INFO]	connectionManager: Update cons in [(11,39,0)]
+[INFO]	connectionManager: Update cons in [(12,39,0)]
+[INFO]	NicEntry: disconnecting nic #476 and #1142
+[INFO]	NicEntry: disconnecting nic #1142 and #476
+[INFO]	connectionManager: Update cons in [(13,39,0)]
+[INFO]	connectionManager: Update cons in [(11,40,0)]
+[INFO]	connectionManager: Update cons in [(12,40,0)]
+[INFO]	connectionManager: Update cons in [(13,40,0)]
+[INFO]	connectionManager: Update cons in [(11,38,0)]
+[INFO]	connectionManager: Update cons in [(12,38,0)]
+[INFO]	connectionManager:  unregistering nic #56
+[INFO]	connectionManager: Update cons in [(35,38,0)]
+[INFO]	connectionManager: Update cons in [(33,39,0)]
+[INFO]	connectionManager: Update cons in [(34,39,0)]
+[INFO]	NicEntry: disconnecting nic #728 and #56
+[INFO]	NicEntry: disconnecting nic #56 and #728
+[INFO]	connectionManager: Update cons in [(35,39,0)]
+[INFO]	NicEntry: disconnecting nic #860 and #56
+[INFO]	NicEntry: disconnecting nic #56 and #860
+[INFO]	connectionManager: Update cons in [(33,40,0)]
+[INFO]	connectionManager: Update cons in [(34,40,0)]
+[INFO]	connectionManager: Update cons in [(35,40,0)]
+[INFO]	connectionManager: Update cons in [(33,38,0)]
+[INFO]	connectionManager: Update cons in [(34,38,0)]
+[INFO]	connectionManager:  unregistering nic #362
+[INFO]	connectionManager: Update cons in [(26,33,0)]
+[INFO]	NicEntry: disconnecting nic #1058 and #362
+[INFO]	NicEntry: disconnecting nic #362 and #1058
+[INFO]	connectionManager: Update cons in [(27,33,0)]
+[INFO]	NicEntry: disconnecting nic #998 and #362
+[INFO]	NicEntry: disconnecting nic #362 and #998
+[INFO]	connectionManager: Update cons in [(25,34,0)]
+[INFO]	connectionManager: Update cons in [(26,34,0)]
+[INFO]	NicEntry: disconnecting nic #656 and #362
+[INFO]	NicEntry: disconnecting nic #362 and #656
+[INFO]	connectionManager: Update cons in [(27,34,0)]
+[INFO]	connectionManager: Update cons in [(25,35,0)]
+[INFO]	connectionManager: Update cons in [(26,35,0)]
+[INFO]	connectionManager: Update cons in [(27,35,0)]
+[INFO]	connectionManager: Update cons in [(25,33,0)]
+[INFO]	connectionManager:  unregistering nic #1532
+[INFO]	connectionManager: Update cons in [(29,29,0)]
+[INFO]	connectionManager: Update cons in [(30,29,0)]
+[INFO]	connectionManager: Update cons in [(28,30,0)]
+[INFO]	connectionManager: Update cons in [(29,30,0)]
+[INFO]	connectionManager: Update cons in [(30,30,0)]
+[INFO]	connectionManager: Update cons in [(28,28,0)]
+[INFO]	connectionManager: Update cons in [(29,28,0)]
+[INFO]	connectionManager: Update cons in [(30,28,0)]
+[INFO]	connectionManager: Update cons in [(28,29,0)]
+[INFO]	NicEntry: disconnecting nic #1910 and #1532
+[INFO]	NicEntry: disconnecting nic #1532 and #1910
+[INFO]	connectionManager:  unregistering nic #1340
+[INFO]	connectionManager: Update cons in [(14,12,0)]
+[INFO]	connectionManager: Update cons in [(15,12,0)]
+[INFO]	connectionManager: Update cons in [(13,10,0)]
+[INFO]	connectionManager: Update cons in [(14,10,0)]
+[INFO]	connectionManager: Update cons in [(15,10,0)]
+[INFO]	connectionManager: Update cons in [(13,11,0)]
+[INFO]	NicEntry: disconnecting nic #830 and #1340
+[INFO]	NicEntry: disconnecting nic #1340 and #830
+[INFO]	connectionManager: Update cons in [(14,11,0)]
+[INFO]	connectionManager: Update cons in [(15,11,0)]
+[INFO]	connectionManager: Update cons in [(13,12,0)]
+[INFO]	connectionManager:  unregistering nic #1682
+[INFO]	connectionManager: Update cons in [(26,33,0)]
+[INFO]	NicEntry: disconnecting nic #1058 and #1682
+[INFO]	NicEntry: disconnecting nic #1682 and #1058
+[INFO]	connectionManager: Update cons in [(24,34,0)]
+[INFO]	connectionManager: Update cons in [(25,34,0)]
+[INFO]	connectionManager: Update cons in [(26,34,0)]
+[INFO]	connectionManager: Update cons in [(24,32,0)]
+[INFO]	NicEntry: disconnecting nic #1652 and #1682
+[INFO]	NicEntry: disconnecting nic #1682 and #1652
+[INFO]	connectionManager: Update cons in [(25,32,0)]
+[INFO]	connectionManager: Update cons in [(26,32,0)]
+[INFO]	connectionManager: Update cons in [(24,33,0)]
+[INFO]	connectionManager: Update cons in [(25,33,0)]
+[INFO]	connectionManager:  unregistering nic #1106
+[INFO]	connectionManager: Update cons in [(28,49,0)]
+[INFO]	connectionManager: Update cons in [(26,47,0)]
+[INFO]	connectionManager: Update cons in [(27,47,0)]
+[INFO]	connectionManager: Update cons in [(28,47,0)]
+[INFO]	connectionManager: Update cons in [(26,48,0)]
+[INFO]	connectionManager: Update cons in [(27,48,0)]
+[INFO]	NicEntry: disconnecting nic #1382 and #1106
+[INFO]	NicEntry: disconnecting nic #1106 and #1382
+[INFO]	connectionManager: Update cons in [(28,48,0)]
+[INFO]	connectionManager: Update cons in [(26,49,0)]
+[INFO]	connectionManager: Update cons in [(27,49,0)]
+[INFO]	connectionManager:  unregistering nic #986
+[INFO]	connectionManager: Update cons in [(33,33,0)]
+[INFO]	connectionManager: Update cons in [(34,33,0)]
+[INFO]	connectionManager: Update cons in [(35,33,0)]
+[INFO]	connectionManager: Update cons in [(33,34,0)]
+[INFO]	connectionManager: Update cons in [(34,34,0)]
+[INFO]	connectionManager: Update cons in [(35,34,0)]
+[INFO]	connectionManager: Update cons in [(33,32,0)]
+[INFO]	connectionManager: Update cons in [(34,32,0)]
+[INFO]	connectionManager: Update cons in [(35,32,0)]
+[INFO]	connectionManager:  unregistering nic #62
+[INFO]	connectionManager: Update cons in [(34,41,0)]
+[INFO]	connectionManager: Update cons in [(35,41,0)]
+[INFO]	connectionManager: Update cons in [(36,41,0)]
+[INFO]	connectionManager: Update cons in [(34,42,0)]
+[INFO]	connectionManager: Update cons in [(35,42,0)]
+[INFO]	connectionManager: Update cons in [(36,42,0)]
+[INFO]	connectionManager: Update cons in [(34,40,0)]
+[INFO]	connectionManager: Update cons in [(35,40,0)]
+[INFO]	connectionManager: Update cons in [(36,40,0)]
+[INFO]	connectionManager:  unregistering nic #506
+[INFO]	connectionManager: Update cons in [(20,38,0)]
+[INFO]	connectionManager: Update cons in [(18,39,0)]
+[INFO]	NicEntry: disconnecting nic #248 and #506
+[INFO]	NicEntry: disconnecting nic #506 and #248
+[INFO]	connectionManager: Update cons in [(19,39,0)]
+[INFO]	connectionManager: Update cons in [(20,39,0)]
+[INFO]	connectionManager: Update cons in [(18,40,0)]
+[INFO]	connectionManager: Update cons in [(19,40,0)]
+[INFO]	connectionManager: Update cons in [(20,40,0)]
+[INFO]	connectionManager: Update cons in [(18,38,0)]
+[INFO]	connectionManager: Update cons in [(19,38,0)]
+[INFO]	connectionManager:  unregistering nic #686
+[INFO]	connectionManager: Update cons in [(19,27,0)]
+[INFO]	connectionManager: Update cons in [(20,27,0)]
+[INFO]	connectionManager: Update cons in [(18,25,0)]
+[INFO]	connectionManager: Update cons in [(19,25,0)]
+[INFO]	connectionManager: Update cons in [(20,25,0)]
+[INFO]	connectionManager: Update cons in [(18,26,0)]
+[INFO]	connectionManager: Update cons in [(19,26,0)]
+[INFO]	connectionManager: Update cons in [(20,26,0)]
+[INFO]	connectionManager: Update cons in [(18,27,0)]
+[INFO]	connectionManager:  unregistering nic #776
+[INFO]	connectionManager: Update cons in [(27,41,0)]
+[INFO]	connectionManager: Update cons in [(25,39,0)]
+[INFO]	connectionManager: Update cons in [(26,39,0)]
+[INFO]	connectionManager: Update cons in [(27,39,0)]
+[INFO]	connectionManager: Update cons in [(25,40,0)]
+[INFO]	connectionManager: Update cons in [(26,40,0)]
+[INFO]	connectionManager: Update cons in [(27,40,0)]
+[INFO]	connectionManager: Update cons in [(25,41,0)]
+[INFO]	connectionManager: Update cons in [(26,41,0)]
+[INFO]	connectionManager:  unregistering nic #1238
+[INFO]	connectionManager: Update cons in [(27,41,0)]
+[INFO]	connectionManager: Update cons in [(28,41,0)]
+[INFO]	connectionManager: Update cons in [(26,42,0)]
+[INFO]	connectionManager: Update cons in [(27,42,0)]
+[INFO]	connectionManager: Update cons in [(28,42,0)]
+[INFO]	NicEntry: disconnecting nic #302 and #1238
+[INFO]	NicEntry: disconnecting nic #1238 and #302
+[INFO]	NicEntry: disconnecting nic #632 and #1238
+[INFO]	NicEntry: disconnecting nic #1238 and #632
+[INFO]	connectionManager: Update cons in [(26,43,0)]
+[INFO]	connectionManager: Update cons in [(27,43,0)]
+[INFO]	NicEntry: disconnecting nic #890 and #1238
+[INFO]	NicEntry: disconnecting nic #1238 and #890
+[INFO]	connectionManager: Update cons in [(28,43,0)]
+[INFO]	connectionManager: Update cons in [(26,41,0)]
+[INFO]	connectionManager:  unregistering nic #1298
+[INFO]	connectionManager: Update cons in [(36,29,0)]
+[INFO]	connectionManager: Update cons in [(37,29,0)]
+[INFO]	connectionManager: Update cons in [(35,30,0)]
+[INFO]	connectionManager: Update cons in [(36,30,0)]
+[INFO]	NicEntry: disconnecting nic #1760 and #1298
+[INFO]	NicEntry: disconnecting nic #1298 and #1760
+[INFO]	connectionManager: Update cons in [(37,30,0)]
+[INFO]	connectionManager: Update cons in [(35,31,0)]
+[INFO]	connectionManager: Update cons in [(36,31,0)]
+[INFO]	connectionManager: Update cons in [(37,31,0)]
+[INFO]	connectionManager: Update cons in [(35,29,0)]
+[INFO]	connectionManager:  unregistering nic #1784
+[INFO]	connectionManager: Update cons in [(30,40,0)]
+[INFO]	connectionManager: Update cons in [(28,41,0)]
+[INFO]	connectionManager: Update cons in [(29,41,0)]
+[INFO]	connectionManager: Update cons in [(30,41,0)]
+[INFO]	connectionManager: Update cons in [(28,39,0)]
+[INFO]	connectionManager: Update cons in [(29,39,0)]
+[INFO]	NicEntry: disconnecting nic #482 and #1784
+[INFO]	NicEntry: disconnecting nic #1784 and #482
+[INFO]	connectionManager: Update cons in [(30,39,0)]
+[INFO]	connectionManager: Update cons in [(28,40,0)]
+[INFO]	connectionManager: Update cons in [(29,40,0)]
+[INFO]	NicEntry: disconnecting nic #842 and #1784
+[INFO]	NicEntry: disconnecting nic #1784 and #842
+[INFO]	NicEntry: disconnecting nic #1586 and #1784
+[INFO]	NicEntry: disconnecting nic #1784 and #1586
+[INFO]	connectionManager:  unregistering nic #476
+[INFO]	connectionManager: Update cons in [(13,38,0)]
+[INFO]	connectionManager: Update cons in [(11,39,0)]
+[INFO]	connectionManager: Update cons in [(12,39,0)]
+[INFO]	connectionManager: Update cons in [(13,39,0)]
+[INFO]	connectionManager: Update cons in [(11,40,0)]
+[INFO]	connectionManager: Update cons in [(12,40,0)]
+[INFO]	connectionManager: Update cons in [(13,40,0)]
+[INFO]	connectionManager: Update cons in [(11,38,0)]
+[INFO]	connectionManager: Update cons in [(12,38,0)]
+[INFO]	connectionManager:  unregistering nic #1202
+[INFO]	connectionManager: Update cons in [(25,39,0)]
+[INFO]	connectionManager: Update cons in [(26,39,0)]
+[INFO]	connectionManager: Update cons in [(24,40,0)]
+[INFO]	connectionManager: Update cons in [(25,40,0)]
+[INFO]	connectionManager: Update cons in [(26,40,0)]
+[INFO]	connectionManager: Update cons in [(24,38,0)]
+[INFO]	connectionManager: Update cons in [(25,38,0)]
+[INFO]	connectionManager: Update cons in [(26,38,0)]
+[INFO]	connectionManager: Update cons in [(24,39,0)]
+[INFO]	connectionManager:  unregistering nic #1646
+[INFO]	connectionManager: Update cons in [(25,53,0)]
+[INFO]	connectionManager: Update cons in [(26,53,0)]
+[INFO]	connectionManager: Update cons in [(27,53,0)]
+[INFO]	NicEntry: disconnecting nic #122 and #1646
+[INFO]	NicEntry: disconnecting nic #1646 and #122
+[INFO]	connectionManager: Update cons in [(25,51,0)]
+[INFO]	connectionManager: Update cons in [(26,51,0)]
+[INFO]	connectionManager: Update cons in [(27,51,0)]
+[INFO]	connectionManager: Update cons in [(25,52,0)]
+[INFO]	connectionManager: Update cons in [(26,52,0)]
+[INFO]	connectionManager: Update cons in [(27,52,0)]
+[INFO]	connectionManager:  unregistering nic #68
+[INFO]	connectionManager: Update cons in [(10,39,0)]
+[INFO]	connectionManager: Update cons in [(11,39,0)]
+[INFO]	connectionManager: Update cons in [(9,40,0)]
+[INFO]	connectionManager: Update cons in [(10,40,0)]
+[INFO]	connectionManager: Update cons in [(11,40,0)]
+[INFO]	connectionManager: Update cons in [(9,41,0)]
+[INFO]	connectionManager: Update cons in [(10,41,0)]
+[INFO]	connectionManager: Update cons in [(11,41,0)]
+[INFO]	connectionManager: Update cons in [(9,39,0)]
+[INFO]	connectionManager:  unregistering nic #1022
+[INFO]	connectionManager: Update cons in [(39,28,0)]
+[INFO]	connectionManager: Update cons in [(37,29,0)]
+[INFO]	connectionManager: Update cons in [(38,29,0)]
+[INFO]	connectionManager: Update cons in [(39,29,0)]
+[INFO]	connectionManager: Update cons in [(37,30,0)]
+[INFO]	connectionManager: Update cons in [(38,30,0)]
+[INFO]	connectionManager: Update cons in [(39,30,0)]
+[INFO]	connectionManager: Update cons in [(37,28,0)]
+[INFO]	connectionManager: Update cons in [(38,28,0)]
+[INFO]	connectionManager:  unregistering nic #1406
+[INFO]	connectionManager: Update cons in [(10,36,0)]
+[INFO]	connectionManager: Update cons in [(11,36,0)]
+[INFO]	connectionManager: Update cons in [(9,37,0)]
+[INFO]	connectionManager: Update cons in [(10,37,0)]
+[INFO]	connectionManager: Update cons in [(11,37,0)]
+[INFO]	connectionManager: Update cons in [(9,35,0)]
+[INFO]	connectionManager: Update cons in [(10,35,0)]
+[INFO]	connectionManager: Update cons in [(11,35,0)]
+[INFO]	connectionManager: Update cons in [(9,36,0)]
+[INFO]	connectionManager:  unregistering nic #146
+[INFO]	connectionManager: Update cons in [(28,35,0)]
+[INFO]	connectionManager: Update cons in [(26,33,0)]
+[INFO]	connectionManager: Update cons in [(27,33,0)]
+[INFO]	NicEntry: disconnecting nic #998 and #146
+[INFO]	NicEntry: disconnecting nic #146 and #998
+[INFO]	connectionManager: Update cons in [(28,33,0)]
+[INFO]	connectionManager: Update cons in [(26,34,0)]
+[INFO]	connectionManager: Update cons in [(27,34,0)]
+[INFO]	NicEntry: disconnecting nic #548 and #146
+[INFO]	NicEntry: disconnecting nic #146 and #548
+[INFO]	NicEntry: disconnecting nic #668 and #146
+[INFO]	NicEntry: disconnecting nic #146 and #668
+[INFO]	connectionManager: Update cons in [(28,34,0)]
+[INFO]	connectionManager: Update cons in [(26,35,0)]
+[INFO]	connectionManager: Update cons in [(27,35,0)]
+[INFO]	connectionManager:  unregistering nic #416
+[INFO]	connectionManager: Update cons in [(40,56,0)]
+[INFO]	connectionManager: Update cons in [(41,56,0)]
+[INFO]	connectionManager: Update cons in [(39,57,0)]
+[INFO]	connectionManager: Update cons in [(40,57,0)]
+[INFO]	connectionManager: Update cons in [(41,57,0)]
+[INFO]	connectionManager: Update cons in [(39,55,0)]
+[INFO]	connectionManager: Update cons in [(40,55,0)]
+[INFO]	connectionManager: Update cons in [(41,55,0)]
+[INFO]	connectionManager: Update cons in [(39,56,0)]
+[INFO]	connectionManager:  unregistering nic #1268
+[INFO]	connectionManager: Update cons in [(23,34,0)]
+[INFO]	connectionManager: Update cons in [(21,32,0)]
+[INFO]	connectionManager: Update cons in [(22,32,0)]
+[INFO]	connectionManager: Update cons in [(23,32,0)]
+[INFO]	connectionManager: Update cons in [(21,33,0)]
+[INFO]	connectionManager: Update cons in [(22,33,0)]
+[INFO]	connectionManager: Update cons in [(23,33,0)]
+[INFO]	connectionManager: Update cons in [(21,34,0)]
+[INFO]	connectionManager: Update cons in [(22,34,0)]
+[INFO]	connectionManager:  unregistering nic #1496
+[INFO]	connectionManager: Update cons in [(10,39,0)]
+[INFO]	connectionManager: Update cons in [(11,39,0)]
+[INFO]	connectionManager: Update cons in [(9,37,0)]
+[INFO]	NicEntry: disconnecting nic #92 and #1496
+[INFO]	NicEntry: disconnecting nic #1496 and #92
+[INFO]	connectionManager: Update cons in [(10,37,0)]
+[INFO]	connectionManager: Update cons in [(11,37,0)]
+[INFO]	connectionManager: Update cons in [(9,38,0)]
+[INFO]	NicEntry: disconnecting nic #836 and #1496
+[INFO]	NicEntry: disconnecting nic #1496 and #836
+[INFO]	connectionManager: Update cons in [(10,38,0)]
+[INFO]	connectionManager: Update cons in [(11,38,0)]
+[INFO]	connectionManager: Update cons in [(9,39,0)]
+[INFO]	connectionManager:  unregistering nic #620
+[INFO]	connectionManager: Update cons in [(31,45,0)]
+[INFO]	connectionManager: Update cons in [(32,45,0)]
+[INFO]	connectionManager: Update cons in [(33,45,0)]
+[INFO]	connectionManager: Update cons in [(31,46,0)]
+[INFO]	connectionManager: Update cons in [(32,46,0)]
+[INFO]	connectionManager: Update cons in [(33,46,0)]
+[INFO]	connectionManager: Update cons in [(31,47,0)]
+[INFO]	connectionManager: Update cons in [(32,47,0)]
+[INFO]	connectionManager: Update cons in [(33,47,0)]
+[INFO]	connectionManager:  unregistering nic #1172
+[INFO]	connectionManager: Update cons in [(30,57,0)]
+[INFO]	connectionManager: Update cons in [(28,58,0)]
+[INFO]	connectionManager: Update cons in [(29,58,0)]
+[INFO]	connectionManager: Update cons in [(30,58,0)]
+[INFO]	connectionManager: Update cons in [(28,59,0)]
+[INFO]	connectionManager: Update cons in [(29,59,0)]
+[INFO]	connectionManager: Update cons in [(30,59,0)]
+[INFO]	connectionManager: Update cons in [(28,57,0)]
+[INFO]	connectionManager: Update cons in [(29,57,0)]
+[INFO]	connectionManager:  unregistering nic #92
+[INFO]	connectionManager: Update cons in [(10,36,0)]
+[INFO]	connectionManager: Update cons in [(8,37,0)]
+[INFO]	connectionManager: Update cons in [(9,37,0)]
+[INFO]	connectionManager: Update cons in [(10,37,0)]
+[INFO]	connectionManager: Update cons in [(8,38,0)]
+[INFO]	connectionManager: Update cons in [(9,38,0)]
+[INFO]	NicEntry: disconnecting nic #836 and #92
+[INFO]	NicEntry: disconnecting nic #92 and #836
+[INFO]	connectionManager: Update cons in [(10,38,0)]
+[INFO]	connectionManager: Update cons in [(8,36,0)]
+[INFO]	connectionManager: Update cons in [(9,36,0)]
+[INFO]	connectionManager:  unregistering nic #1112
+[INFO]	connectionManager: Update cons in [(26,30,0)]
+[INFO]	connectionManager: Update cons in [(24,28,0)]
+[INFO]	connectionManager: Update cons in [(25,28,0)]
+[INFO]	connectionManager: Update cons in [(26,28,0)]
+[INFO]	connectionManager: Update cons in [(24,29,0)]
+[INFO]	connectionManager: Update cons in [(25,29,0)]
+[INFO]	connectionManager: Update cons in [(26,29,0)]
+[INFO]	connectionManager: Update cons in [(24,30,0)]
+[INFO]	connectionManager: Update cons in [(25,30,0)]
+[INFO]	NicEntry: disconnecting nic #1388 and #1112
+[INFO]	NicEntry: disconnecting nic #1112 and #1388
+[INFO]	connectionManager:  unregistering nic #824
+[INFO]	connectionManager: Update cons in [(41,44,0)]
+[INFO]	connectionManager: Update cons in [(39,42,0)]
+[INFO]	connectionManager: Update cons in [(40,42,0)]
+[INFO]	connectionManager: Update cons in [(41,42,0)]
+[INFO]	connectionManager: Update cons in [(39,43,0)]
+[INFO]	connectionManager: Update cons in [(40,43,0)]
+[INFO]	connectionManager: Update cons in [(41,43,0)]
+[INFO]	connectionManager: Update cons in [(39,44,0)]
+[INFO]	connectionManager: Update cons in [(40,44,0)]
+[INFO]	connectionManager:  unregistering nic #1718
+[INFO]	connectionManager: Update cons in [(17,25,0)]
+[INFO]	connectionManager: Update cons in [(18,25,0)]
+[INFO]	connectionManager: Update cons in [(16,26,0)]
+[INFO]	connectionManager: Update cons in [(17,26,0)]
+[INFO]	connectionManager: Update cons in [(18,26,0)]
+[INFO]	connectionManager: Update cons in [(16,27,0)]
+[INFO]	connectionManager: Update cons in [(17,27,0)]
+[INFO]	connectionManager: Update cons in [(18,27,0)]
+[INFO]	connectionManager: Update cons in [(16,25,0)]
+[INFO]	connectionManager:  unregistering nic #1892
+[INFO]	connectionManager: Update cons in [(22,43,0)]
+[INFO]	connectionManager: Update cons in [(23,43,0)]
+[INFO]	connectionManager: Update cons in [(21,44,0)]
+[INFO]	connectionManager: Update cons in [(22,44,0)]
+[INFO]	NicEntry: disconnecting nic #572 and #1892
+[INFO]	NicEntry: disconnecting nic #1892 and #572
+[INFO]	connectionManager: Update cons in [(23,44,0)]
+[INFO]	connectionManager: Update cons in [(21,45,0)]
+[INFO]	connectionManager: Update cons in [(22,45,0)]
+[INFO]	connectionManager: Update cons in [(23,45,0)]
+[INFO]	connectionManager: Update cons in [(21,43,0)]
+[INFO]	connectionManager:  unregistering nic #902
+[INFO]	connectionManager: Update cons in [(18,19,0)]
+[INFO]	connectionManager: Update cons in [(16,17,0)]
+[INFO]	connectionManager: Update cons in [(17,17,0)]
+[INFO]	connectionManager: Update cons in [(18,17,0)]
+[INFO]	connectionManager: Update cons in [(16,18,0)]
+[INFO]	connectionManager: Update cons in [(17,18,0)]
+[INFO]	connectionManager: Update cons in [(18,18,0)]
+[INFO]	NicEntry: disconnecting nic #1208 and #902
+[INFO]	NicEntry: disconnecting nic #902 and #1208
+[INFO]	connectionManager: Update cons in [(16,19,0)]
+[INFO]	connectionManager: Update cons in [(17,19,0)]
+[INFO]	connectionManager:  unregistering nic #1688
+[INFO]	connectionManager: Update cons in [(20,18,0)]
+[INFO]	connectionManager: Update cons in [(18,19,0)]
+[INFO]	connectionManager: Update cons in [(19,19,0)]
+[INFO]	connectionManager: Update cons in [(20,19,0)]
+[INFO]	connectionManager: Update cons in [(18,20,0)]
+[INFO]	connectionManager: Update cons in [(19,20,0)]
+[INFO]	connectionManager: Update cons in [(20,20,0)]
+[INFO]	connectionManager: Update cons in [(18,18,0)]
+[INFO]	connectionManager: Update cons in [(19,18,0)]
+[INFO]	connectionManager:  unregistering nic #200
+[INFO]	connectionManager: Update cons in [(31,48,0)]
+[INFO]	connectionManager: Update cons in [(32,48,0)]
+[INFO]	connectionManager: Update cons in [(30,49,0)]
+[INFO]	connectionManager: Update cons in [(31,49,0)]
+[INFO]	connectionManager: Update cons in [(32,49,0)]
+[INFO]	connectionManager: Update cons in [(30,50,0)]
+[INFO]	connectionManager: Update cons in [(31,50,0)]
+[INFO]	connectionManager: Update cons in [(32,50,0)]
+[INFO]	connectionManager: Update cons in [(30,48,0)]
+[INFO]	connectionManager:  unregistering nic #1082
+[INFO]	connectionManager: Update cons in [(28,35,0)]
+[INFO]	connectionManager: Update cons in [(26,36,0)]
+[INFO]	connectionManager: Update cons in [(27,36,0)]
+[INFO]	connectionManager: Update cons in [(28,36,0)]
+[INFO]	connectionManager: Update cons in [(26,37,0)]
+[INFO]	connectionManager: Update cons in [(27,37,0)]
+[INFO]	connectionManager: Update cons in [(28,37,0)]
+[INFO]	connectionManager: Update cons in [(26,35,0)]
+[INFO]	connectionManager: Update cons in [(27,35,0)]
+[INFO]	connectionManager:  unregistering nic #122
+[INFO]	connectionManager: Update cons in [(28,52,0)]
+[INFO]	connectionManager: Update cons in [(26,53,0)]
+[INFO]	connectionManager: Update cons in [(27,53,0)]
+[INFO]	connectionManager: Update cons in [(28,53,0)]
+[INFO]	connectionManager: Update cons in [(26,54,0)]
+[INFO]	connectionManager: Update cons in [(27,54,0)]
+[INFO]	connectionManager: Update cons in [(28,54,0)]
+[INFO]	connectionManager: Update cons in [(26,52,0)]
+[INFO]	connectionManager: Update cons in [(27,52,0)]
+[INFO]	connectionManager:  unregistering nic #860
+[INFO]	connectionManager: Update cons in [(35,38,0)]
+[INFO]	connectionManager: Update cons in [(36,38,0)]
+[INFO]	connectionManager: Update cons in [(34,39,0)]
+[INFO]	NicEntry: disconnecting nic #728 and #860
+[INFO]	NicEntry: disconnecting nic #860 and #728
+[INFO]	connectionManager: Update cons in [(35,39,0)]
+[INFO]	NicEntry: disconnecting nic #698 and #860
+[INFO]	NicEntry: disconnecting nic #860 and #698
+[INFO]	connectionManager: Update cons in [(36,39,0)]
+[INFO]	connectionManager: Update cons in [(34,40,0)]
+[INFO]	connectionManager: Update cons in [(35,40,0)]
+[INFO]	connectionManager: Update cons in [(36,40,0)]
+[INFO]	connectionManager: Update cons in [(34,38,0)]
+[INFO]	connectionManager:  unregistering nic #1748
+[INFO]	connectionManager: Update cons in [(13,32,0)]
+[INFO]	connectionManager: Update cons in [(14,32,0)]
+[INFO]	connectionManager: Update cons in [(15,32,0)]
+[INFO]	connectionManager: Update cons in [(13,30,0)]
+[INFO]	connectionManager: Update cons in [(14,30,0)]
+[INFO]	NicEntry: disconnecting nic #752 and #1748
+[INFO]	NicEntry: disconnecting nic #1748 and #752
+[INFO]	connectionManager: Update cons in [(15,30,0)]
+[INFO]	connectionManager: Update cons in [(13,31,0)]
+[INFO]	connectionManager: Update cons in [(14,31,0)]
+[INFO]	connectionManager: Update cons in [(15,31,0)]
+[INFO]	connectionManager:  unregistering nic #1616
+[INFO]	connectionManager: Update cons in [(35,35,0)]
+[INFO]	connectionManager: Update cons in [(33,36,0)]
+[INFO]	connectionManager: Update cons in [(34,36,0)]
+[INFO]	NicEntry: disconnecting nic #1412 and #1616
+[INFO]	NicEntry: disconnecting nic #1616 and #1412
+[INFO]	connectionManager: Update cons in [(35,36,0)]
+[INFO]	connectionManager: Update cons in [(33,37,0)]
+[INFO]	connectionManager: Update cons in [(34,37,0)]
+[INFO]	connectionManager: Update cons in [(35,37,0)]
+[INFO]	connectionManager: Update cons in [(33,35,0)]
+[INFO]	connectionManager: Update cons in [(34,35,0)]
+[INFO]	connectionManager:  unregistering nic #320
+[INFO]	connectionManager: Update cons in [(20,55,0)]
+[INFO]	connectionManager: Update cons in [(21,55,0)]
+[INFO]	connectionManager: Update cons in [(22,55,0)]
+[INFO]	connectionManager: Update cons in [(20,56,0)]
+[INFO]	connectionManager: Update cons in [(21,56,0)]
+[INFO]	connectionManager: Update cons in [(22,56,0)]
+[INFO]	NicEntry: disconnecting nic #542 and #320
+[INFO]	NicEntry: disconnecting nic #320 and #542
+[INFO]	connectionManager: Update cons in [(20,54,0)]
+[INFO]	connectionManager: Update cons in [(21,54,0)]
+[INFO]	connectionManager: Update cons in [(22,54,0)]
+[INFO]	connectionManager:  unregistering nic #1148
+[INFO]	connectionManager: Update cons in [(17,22,0)]
+[INFO]	connectionManager: Update cons in [(18,22,0)]
+[INFO]	connectionManager: Update cons in [(19,22,0)]
+[INFO]	connectionManager: Update cons in [(17,20,0)]
+[INFO]	connectionManager: Update cons in [(18,20,0)]
+[INFO]	connectionManager: Update cons in [(19,20,0)]
+[INFO]	connectionManager: Update cons in [(17,21,0)]
+[INFO]	connectionManager: Update cons in [(18,21,0)]
+[INFO]	connectionManager: Update cons in [(19,21,0)]
+[INFO]	connectionManager:  unregistering nic #692
+[INFO]	connectionManager: Update cons in [(23,34,0)]
+[INFO]	connectionManager: Update cons in [(24,34,0)]
+[INFO]	connectionManager: Update cons in [(22,32,0)]
+[INFO]	connectionManager: Update cons in [(23,32,0)]
+[INFO]	NicEntry: disconnecting nic #104 and #692
+[INFO]	NicEntry: disconnecting nic #692 and #104
+[INFO]	connectionManager: Update cons in [(24,32,0)]
+[INFO]	NicEntry: disconnecting nic #296 and #692
+[INFO]	NicEntry: disconnecting nic #692 and #296
+[INFO]	connectionManager: Update cons in [(22,33,0)]
+[INFO]	connectionManager: Update cons in [(23,33,0)]
+[INFO]	connectionManager: Update cons in [(24,33,0)]
+[INFO]	connectionManager: Update cons in [(22,34,0)]
+[INFO]	connectionManager:  unregistering nic #1304
+[INFO]	connectionManager: Update cons in [(26,33,0)]
+[INFO]	NicEntry: disconnecting nic #1058 and #1304
+[INFO]	NicEntry: disconnecting nic #1304 and #1058
+[INFO]	connectionManager: Update cons in [(27,33,0)]
+[INFO]	connectionManager: Update cons in [(25,31,0)]
+[INFO]	connectionManager: Update cons in [(26,31,0)]
+[INFO]	connectionManager: Update cons in [(27,31,0)]
+[INFO]	connectionManager: Update cons in [(25,32,0)]
+[INFO]	connectionManager: Update cons in [(26,32,0)]
+[INFO]	connectionManager: Update cons in [(27,32,0)]
+[INFO]	NicEntry: disconnecting nic #1124 and #1304
+[INFO]	NicEntry: disconnecting nic #1304 and #1124
+[INFO]	connectionManager: Update cons in [(25,33,0)]
+[INFO]	connectionManager:  unregistering nic #1052
+[INFO]	connectionManager: Update cons in [(35,52,0)]
+[INFO]	connectionManager: Update cons in [(36,52,0)]
+[INFO]	connectionManager: Update cons in [(34,53,0)]
+[INFO]	connectionManager: Update cons in [(35,53,0)]
+[INFO]	NicEntry: disconnecting nic #1622 and #1052
+[INFO]	NicEntry: disconnecting nic #1052 and #1622
+[INFO]	connectionManager: Update cons in [(36,53,0)]
+[INFO]	connectionManager: Update cons in [(34,54,0)]
+[INFO]	connectionManager: Update cons in [(35,54,0)]
+[INFO]	NicEntry: disconnecting nic #1094 and #1052
+[INFO]	NicEntry: disconnecting nic #1052 and #1094
+[INFO]	connectionManager: Update cons in [(36,54,0)]
+[INFO]	connectionManager: Update cons in [(34,52,0)]
+[INFO]	connectionManager:  unregistering nic #1652
+[INFO]	connectionManager: Update cons in [(23,31,0)]
+[INFO]	connectionManager: Update cons in [(24,31,0)]
+[INFO]	connectionManager: Update cons in [(25,31,0)]
+[INFO]	connectionManager: Update cons in [(23,32,0)]
+[INFO]	connectionManager: Update cons in [(24,32,0)]
+[INFO]	NicEntry: disconnecting nic #296 and #1652
+[INFO]	NicEntry: disconnecting nic #1652 and #296
+[INFO]	connectionManager: Update cons in [(25,32,0)]
+[INFO]	connectionManager: Update cons in [(23,33,0)]
+[INFO]	connectionManager: Update cons in [(24,33,0)]
+[INFO]	connectionManager: Update cons in [(25,33,0)]
+[INFO]	connectionManager:  unregistering nic #752
+[INFO]	connectionManager: Update cons in [(14,29,0)]
+[INFO]	connectionManager: Update cons in [(15,29,0)]
+[INFO]	connectionManager: Update cons in [(13,30,0)]
+[INFO]	connectionManager: Update cons in [(14,30,0)]
+[INFO]	connectionManager: Update cons in [(15,30,0)]
+[INFO]	connectionManager: Update cons in [(13,31,0)]
+[INFO]	connectionManager: Update cons in [(14,31,0)]
+[INFO]	connectionManager: Update cons in [(15,31,0)]
+[INFO]	connectionManager: Update cons in [(13,29,0)]
+[INFO]	connectionManager:  unregistering nic #1538
+[INFO]	connectionManager: Update cons in [(20,21,0)]
+[INFO]	connectionManager: Update cons in [(21,21,0)]
+[INFO]	connectionManager: Update cons in [(19,22,0)]
+[INFO]	connectionManager: Update cons in [(20,22,0)]
+[INFO]	connectionManager: Update cons in [(21,22,0)]
+[INFO]	connectionManager: Update cons in [(19,20,0)]
+[INFO]	connectionManager: Update cons in [(20,20,0)]
+[INFO]	connectionManager: Update cons in [(21,20,0)]
+[INFO]	connectionManager: Update cons in [(19,21,0)]
+[INFO]	connectionManager:  unregistering nic #938
+[INFO]	connectionManager: Update cons in [(27,38,0)]
+[INFO]	connectionManager: Update cons in [(28,38,0)]
+[INFO]	connectionManager: Update cons in [(26,36,0)]
+[INFO]	connectionManager: Update cons in [(27,36,0)]
+[INFO]	connectionManager: Update cons in [(28,36,0)]
+[INFO]	connectionManager: Update cons in [(26,37,0)]
+[INFO]	connectionManager: Update cons in [(27,37,0)]
+[INFO]	connectionManager: Update cons in [(28,37,0)]
+[INFO]	connectionManager: Update cons in [(26,38,0)]
+[INFO]	connectionManager:  unregistering nic #1382
+[INFO]	connectionManager: Update cons in [(28,49,0)]
+[INFO]	connectionManager: Update cons in [(26,47,0)]
+[INFO]	connectionManager: Update cons in [(27,47,0)]
+[INFO]	connectionManager: Update cons in [(28,47,0)]
+[INFO]	connectionManager: Update cons in [(26,48,0)]
+[INFO]	connectionManager: Update cons in [(27,48,0)]
+[INFO]	connectionManager: Update cons in [(28,48,0)]
+[INFO]	connectionManager: Update cons in [(26,49,0)]
+[INFO]	connectionManager: Update cons in [(27,49,0)]
+[INFO]	connectionManager:  unregistering nic #1346
+[INFO]	connectionManager: Update cons in [(23,34,0)]
+[INFO]	connectionManager: Update cons in [(21,35,0)]
+[INFO]	connectionManager: Update cons in [(22,35,0)]
+[INFO]	NicEntry: disconnecting nic #950 and #1346
+[INFO]	NicEntry: disconnecting nic #1346 and #950
+[INFO]	NicEntry: disconnecting nic #1118 and #1346
+[INFO]	NicEntry: disconnecting nic #1346 and #1118
+[INFO]	connectionManager: Update cons in [(23,35,0)]
+[INFO]	connectionManager: Update cons in [(21,36,0)]
+[INFO]	connectionManager: Update cons in [(22,36,0)]
+[INFO]	connectionManager: Update cons in [(23,36,0)]
+[INFO]	connectionManager: Update cons in [(21,34,0)]
+[INFO]	connectionManager: Update cons in [(22,34,0)]
+[INFO]	connectionManager:  unregistering nic #1472
+[INFO]	connectionManager: Update cons in [(27,38,0)]
+[INFO]	connectionManager: Update cons in [(25,39,0)]
+[INFO]	connectionManager: Update cons in [(26,39,0)]
+[INFO]	NicEntry: disconnecting nic #206 and #1472
+[INFO]	NicEntry: disconnecting nic #1472 and #206
+[INFO]	connectionManager: Update cons in [(27,39,0)]
+[INFO]	connectionManager: Update cons in [(25,37,0)]
+[INFO]	connectionManager: Update cons in [(26,37,0)]
+[INFO]	NicEntry: disconnecting nic #1250 and #1472
+[INFO]	NicEntry: disconnecting nic #1472 and #1250
+[INFO]	connectionManager: Update cons in [(27,37,0)]
+[INFO]	connectionManager: Update cons in [(25,38,0)]
+[INFO]	connectionManager: Update cons in [(26,38,0)]
+[INFO]	connectionManager:  unregistering nic #392
+[INFO]	connectionManager: Update cons in [(16,34,0)]
+[INFO]	connectionManager: Update cons in [(14,32,0)]
+[INFO]	connectionManager: Update cons in [(15,32,0)]
+[INFO]	connectionManager: Update cons in [(16,32,0)]
+[INFO]	connectionManager: Update cons in [(14,33,0)]
+[INFO]	connectionManager: Update cons in [(15,33,0)]
+[INFO]	connectionManager: Update cons in [(16,33,0)]
+[INFO]	connectionManager: Update cons in [(14,34,0)]
+[INFO]	connectionManager: Update cons in [(15,34,0)]
+[INFO]	NicEntry: disconnecting nic #1898 and #392
+[INFO]	NicEntry: disconnecting nic #392 and #1898
+[INFO]	connectionManager:  unregistering nic #1898
+[INFO]	connectionManager: Update cons in [(16,34,0)]
+[INFO]	connectionManager: Update cons in [(14,35,0)]
+[INFO]	connectionManager: Update cons in [(15,35,0)]
+[INFO]	connectionManager: Update cons in [(16,35,0)]
+[INFO]	connectionManager: Update cons in [(14,33,0)]
+[INFO]	connectionManager: Update cons in [(15,33,0)]
+[INFO]	connectionManager: Update cons in [(16,33,0)]
+[INFO]	connectionManager: Update cons in [(14,34,0)]
+[INFO]	connectionManager: Update cons in [(15,34,0)]
+[INFO]	connectionManager:  unregistering nic #728
+[INFO]	connectionManager: Update cons in [(35,38,0)]
+[INFO]	connectionManager: Update cons in [(33,39,0)]
+[INFO]	connectionManager: Update cons in [(34,39,0)]
+[INFO]	connectionManager: Update cons in [(35,39,0)]
+[INFO]	connectionManager: Update cons in [(33,40,0)]
+[INFO]	connectionManager: Update cons in [(34,40,0)]
+[INFO]	connectionManager: Update cons in [(35,40,0)]
+[INFO]	connectionManager: Update cons in [(33,38,0)]
+[INFO]	connectionManager: Update cons in [(34,38,0)]
+[INFO]	connectionManager:  unregistering nic #1442
+[INFO]	connectionManager: Update cons in [(38,48,0)]
+[INFO]	connectionManager: Update cons in [(36,46,0)]
+[INFO]	connectionManager: Update cons in [(37,46,0)]
+[INFO]	connectionManager: Update cons in [(38,46,0)]
+[INFO]	connectionManager: Update cons in [(36,47,0)]
+[INFO]	connectionManager: Update cons in [(37,47,0)]
+[INFO]	connectionManager: Update cons in [(38,47,0)]
+[INFO]	connectionManager: Update cons in [(36,48,0)]
+[INFO]	connectionManager: Update cons in [(37,48,0)]
+[INFO]	connectionManager:  unregistering nic #596
+[INFO]	connectionManager: Update cons in [(39,42,0)]
+[INFO]	connectionManager: Update cons in [(40,42,0)]
+[INFO]	connectionManager: Update cons in [(41,42,0)]
+[INFO]	NicEntry: disconnecting nic #404 and #596
+[INFO]	NicEntry: disconnecting nic #596 and #404
+[INFO]	connectionManager: Update cons in [(39,40,0)]
+[INFO]	connectionManager: Update cons in [(40,40,0)]
+[INFO]	connectionManager: Update cons in [(41,40,0)]
+[INFO]	connectionManager: Update cons in [(39,41,0)]
+[INFO]	connectionManager: Update cons in [(40,41,0)]
+[INFO]	connectionManager: Update cons in [(41,41,0)]
+[INFO]	connectionManager:  unregistering nic #566
+[INFO]	connectionManager: Update cons in [(24,42,0)]
+[INFO]	connectionManager: Update cons in [(25,42,0)]
+[INFO]	connectionManager: Update cons in [(23,40,0)]
+[INFO]	connectionManager: Update cons in [(24,40,0)]
+[INFO]	NicEntry: disconnecting nic #242 and #566
+[INFO]	NicEntry: disconnecting nic #566 and #242
+[INFO]	connectionManager: Update cons in [(25,40,0)]
+[INFO]	connectionManager: Update cons in [(23,41,0)]
+[INFO]	connectionManager: Update cons in [(24,41,0)]
+[INFO]	NicEntry: disconnecting nic #1160 and #566
+[INFO]	NicEntry: disconnecting nic #566 and #1160
+[INFO]	connectionManager: Update cons in [(25,41,0)]
+[INFO]	connectionManager: Update cons in [(23,42,0)]
+[INFO]	connectionManager:  unregistering nic #452
+[INFO]	connectionManager: Update cons in [(20,41,0)]
+[INFO]	connectionManager: Update cons in [(21,41,0)]
+[INFO]	connectionManager: Update cons in [(19,42,0)]
+[INFO]	connectionManager: Update cons in [(20,42,0)]
+[INFO]	NicEntry: disconnecting nic #512 and #452
+[INFO]	NicEntry: disconnecting nic #452 and #512
+[INFO]	connectionManager: Update cons in [(21,42,0)]
+[INFO]	connectionManager: Update cons in [(19,43,0)]
+[INFO]	connectionManager: Update cons in [(20,43,0)]
+[INFO]	connectionManager: Update cons in [(21,43,0)]
+[INFO]	connectionManager: Update cons in [(19,41,0)]
+[INFO]	connectionManager:  unregistering nic #542
+[INFO]	connectionManager: Update cons in [(22,57,0)]
+[INFO]	connectionManager: Update cons in [(23,57,0)]
+[INFO]	connectionManager: Update cons in [(21,55,0)]
+[INFO]	connectionManager: Update cons in [(22,55,0)]
+[INFO]	connectionManager: Update cons in [(23,55,0)]
+[INFO]	connectionManager: Update cons in [(21,56,0)]
+[INFO]	connectionManager: Update cons in [(22,56,0)]
+[INFO]	connectionManager: Update cons in [(23,56,0)]
+[INFO]	connectionManager: Update cons in [(21,57,0)]
+[INFO]	connectionManager:  unregistering nic #1088
+[INFO]	connectionManager: Update cons in [(45,37,0)]
+[INFO]	NicEntry: disconnecting nic #1316 and #1088
+[INFO]	NicEntry: disconnecting nic #1088 and #1316
+[INFO]	connectionManager: Update cons in [(46,37,0)]
+[INFO]	connectionManager: Update cons in [(44,38,0)]
+[INFO]	connectionManager: Update cons in [(45,38,0)]
+[INFO]	connectionManager: Update cons in [(46,38,0)]
+[INFO]	connectionManager: Update cons in [(44,39,0)]
+[INFO]	connectionManager: Update cons in [(45,39,0)]
+[INFO]	connectionManager: Update cons in [(46,39,0)]
+[INFO]	connectionManager: Update cons in [(44,37,0)]
+[INFO]	connectionManager:  unregistering nic #422
+[INFO]	connectionManager: Update cons in [(15,40,0)]
+[INFO]	connectionManager: Update cons in [(13,38,0)]
+[INFO]	connectionManager: Update cons in [(14,38,0)]
+[INFO]	connectionManager: Update cons in [(15,38,0)]
+[INFO]	connectionManager: Update cons in [(13,39,0)]
+[INFO]	NicEntry: disconnecting nic #1394 and #422
+[INFO]	NicEntry: disconnecting nic #422 and #1394
+[INFO]	connectionManager: Update cons in [(14,39,0)]
+[INFO]	connectionManager: Update cons in [(15,39,0)]
+[INFO]	connectionManager: Update cons in [(13,40,0)]
+[INFO]	connectionManager: Update cons in [(14,40,0)]
+[INFO]	connectionManager:  unregistering nic #1568
+[INFO]	connectionManager: Update cons in [(17,42,0)]
+[INFO]	connectionManager: Update cons in [(15,43,0)]
+[INFO]	connectionManager: Update cons in [(16,43,0)]
+[INFO]	connectionManager: Update cons in [(17,43,0)]
+[INFO]	connectionManager: Update cons in [(15,44,0)]
+[INFO]	connectionManager: Update cons in [(16,44,0)]
+[INFO]	connectionManager: Update cons in [(17,44,0)]
+[INFO]	connectionManager: Update cons in [(15,42,0)]
+[INFO]	connectionManager: Update cons in [(16,42,0)]
+[INFO]	connectionManager:  unregistering nic #650
+[INFO]	connectionManager: Update cons in [(12,21,0)]
+[INFO]	connectionManager: Update cons in [(13,21,0)]
+[INFO]	connectionManager: Update cons in [(14,21,0)]
+[INFO]	connectionManager: Update cons in [(12,19,0)]
+[INFO]	connectionManager: Update cons in [(13,19,0)]
+[INFO]	connectionManager: Update cons in [(14,19,0)]
+[INFO]	connectionManager: Update cons in [(12,20,0)]
+[INFO]	connectionManager: Update cons in [(13,20,0)]
+[INFO]	connectionManager: Update cons in [(14,20,0)]
+[INFO]	connectionManager:  unregistering nic #1820
+[INFO]	connectionManager: Update cons in [(41,50,0)]
+[INFO]	NicEntry: disconnecting nic #908 and #1820
+[INFO]	NicEntry: disconnecting nic #1820 and #908
+[INFO]	connectionManager: Update cons in [(42,50,0)]
+[INFO]	connectionManager: Update cons in [(40,51,0)]
+[INFO]	connectionManager: Update cons in [(41,51,0)]
+[INFO]	connectionManager: Update cons in [(42,51,0)]
+[INFO]	connectionManager: Update cons in [(40,52,0)]
+[INFO]	connectionManager: Update cons in [(41,52,0)]
+[INFO]	connectionManager: Update cons in [(42,52,0)]
+[INFO]	NicEntry: disconnecting nic #182 and #1820
+[INFO]	NicEntry: disconnecting nic #1820 and #182
+[INFO]	connectionManager: Update cons in [(40,50,0)]
+[INFO]	connectionManager:  unregistering nic #266
+[INFO]	connectionManager: Update cons in [(34,41,0)]
+[INFO]	connectionManager: Update cons in [(32,39,0)]
+[INFO]	connectionManager: Update cons in [(33,39,0)]
+[INFO]	connectionManager: Update cons in [(34,39,0)]
+[INFO]	connectionManager: Update cons in [(32,40,0)]
+[INFO]	connectionManager: Update cons in [(33,40,0)]
+[INFO]	connectionManager: Update cons in [(34,40,0)]
+[INFO]	connectionManager: Update cons in [(32,41,0)]
+[INFO]	connectionManager: Update cons in [(33,41,0)]
+[INFO]	connectionManager:  unregistering nic #1118
+[INFO]	connectionManager: Update cons in [(23,34,0)]
+[INFO]	connectionManager: Update cons in [(21,35,0)]
+[INFO]	connectionManager: Update cons in [(22,35,0)]
+[INFO]	NicEntry: disconnecting nic #950 and #1118
+[INFO]	NicEntry: disconnecting nic #1118 and #950
+[INFO]	connectionManager: Update cons in [(23,35,0)]
+[INFO]	connectionManager: Update cons in [(21,36,0)]
+[INFO]	connectionManager: Update cons in [(22,36,0)]
+[INFO]	connectionManager: Update cons in [(23,36,0)]
+[INFO]	connectionManager: Update cons in [(21,34,0)]
+[INFO]	connectionManager: Update cons in [(22,34,0)]
+[INFO]	connectionManager:  unregistering nic #98
+[INFO]	connectionManager: Update cons in [(37,37,0)]
+[INFO]	connectionManager: Update cons in [(35,38,0)]
+[INFO]	connectionManager: Update cons in [(36,38,0)]
+[INFO]	connectionManager: Update cons in [(37,38,0)]
+[INFO]	connectionManager: Update cons in [(35,36,0)]
+[INFO]	connectionManager: Update cons in [(36,36,0)]
+[INFO]	connectionManager: Update cons in [(37,36,0)]
+[INFO]	connectionManager: Update cons in [(35,37,0)]
+[INFO]	connectionManager: Update cons in [(36,37,0)]
+[INFO]	connectionManager:  unregistering nic #830
+[INFO]	connectionManager: Update cons in [(14,12,0)]
+[INFO]	connectionManager: Update cons in [(12,10,0)]
+[INFO]	connectionManager: Update cons in [(13,10,0)]
+[INFO]	connectionManager: Update cons in [(14,10,0)]
+[INFO]	connectionManager: Update cons in [(12,11,0)]
+[INFO]	connectionManager: Update cons in [(13,11,0)]
+[INFO]	connectionManager: Update cons in [(14,11,0)]
+[INFO]	connectionManager: Update cons in [(12,12,0)]
+[INFO]	connectionManager: Update cons in [(13,12,0)]
+[INFO]	connectionManager:  unregistering nic #1028
+[INFO]	connectionManager: Update cons in [(25,39,0)]
+[INFO]	connectionManager: Update cons in [(23,40,0)]
+[INFO]	connectionManager: Update cons in [(24,40,0)]
+[INFO]	NicEntry: disconnecting nic #242 and #1028
+[INFO]	NicEntry: disconnecting nic #1028 and #242
+[INFO]	connectionManager: Update cons in [(25,40,0)]
+[INFO]	connectionManager: Update cons in [(23,41,0)]
+[INFO]	connectionManager: Update cons in [(24,41,0)]
+[INFO]	connectionManager: Update cons in [(25,41,0)]
+[INFO]	connectionManager: Update cons in [(23,39,0)]
+[INFO]	connectionManager: Update cons in [(24,39,0)]
+[INFO]	connectionManager:  unregistering nic #1826
+[INFO]	connectionManager: Update cons in [(41,47,0)]
+[INFO]	connectionManager: Update cons in [(39,48,0)]
+[INFO]	connectionManager: Update cons in [(40,48,0)]
+[INFO]	NicEntry: disconnecting nic #1448 and #1826
+[INFO]	NicEntry: disconnecting nic #1826 and #1448
+[INFO]	connectionManager: Update cons in [(41,48,0)]
+[INFO]	connectionManager: Update cons in [(39,49,0)]
+[INFO]	connectionManager: Update cons in [(40,49,0)]
+[INFO]	connectionManager: Update cons in [(41,49,0)]
+[INFO]	connectionManager: Update cons in [(39,47,0)]
+[INFO]	connectionManager: Update cons in [(40,47,0)]
+[INFO]	connectionManager:  unregistering nic #1862
+[INFO]	connectionManager: Update cons in [(22,40,0)]
+[INFO]	connectionManager: Update cons in [(20,41,0)]
+[INFO]	connectionManager: Update cons in [(21,41,0)]
+[INFO]	connectionManager: Update cons in [(22,41,0)]
+[INFO]	connectionManager: Update cons in [(20,42,0)]
+[INFO]	connectionManager: Update cons in [(21,42,0)]
+[INFO]	connectionManager: Update cons in [(22,42,0)]
+[INFO]	connectionManager: Update cons in [(20,40,0)]
+[INFO]	connectionManager: Update cons in [(21,40,0)]
+[INFO]	connectionManager:  unregistering nic #1310
+[INFO]	connectionManager: Update cons in [(23,34,0)]
+[INFO]	connectionManager: Update cons in [(24,34,0)]
+[INFO]	connectionManager: Update cons in [(22,35,0)]
+[INFO]	connectionManager: Update cons in [(23,35,0)]
+[INFO]	connectionManager: Update cons in [(24,35,0)]
+[INFO]	connectionManager: Update cons in [(22,36,0)]
+[INFO]	connectionManager: Update cons in [(23,36,0)]
+[INFO]	connectionManager: Update cons in [(24,36,0)]
+[INFO]	connectionManager: Update cons in [(22,34,0)]
+[INFO]	connectionManager:  unregistering nic #1178
+[INFO]	connectionManager: Update cons in [(41,50,0)]
+[INFO]	connectionManager: Update cons in [(42,50,0)]
+[INFO]	connectionManager: Update cons in [(40,48,0)]
+[INFO]	connectionManager: Update cons in [(41,48,0)]
+[INFO]	connectionManager: Update cons in [(42,48,0)]
+[INFO]	connectionManager: Update cons in [(40,49,0)]
+[INFO]	connectionManager: Update cons in [(41,49,0)]
+[INFO]	NicEntry: disconnecting nic #710 and #1178
+[INFO]	NicEntry: disconnecting nic #1178 and #710
+[INFO]	connectionManager: Update cons in [(42,49,0)]
+[INFO]	connectionManager: Update cons in [(40,50,0)]
+[INFO]	connectionManager:  unregistering nic #698
+[INFO]	connectionManager: Update cons in [(35,38,0)]
+[INFO]	connectionManager: Update cons in [(36,38,0)]
+[INFO]	connectionManager: Update cons in [(34,39,0)]
+[INFO]	connectionManager: Update cons in [(35,39,0)]
+[INFO]	connectionManager: Update cons in [(36,39,0)]
+[INFO]	connectionManager: Update cons in [(34,40,0)]
+[INFO]	connectionManager: Update cons in [(35,40,0)]
+[INFO]	connectionManager: Update cons in [(36,40,0)]
+[INFO]	connectionManager: Update cons in [(34,38,0)]
+[INFO]	connectionManager:  unregistering nic #908
+[INFO]	connectionManager: Update cons in [(41,50,0)]
+[INFO]	connectionManager: Update cons in [(42,50,0)]
+[INFO]	connectionManager: Update cons in [(40,51,0)]
+[INFO]	connectionManager: Update cons in [(41,51,0)]
+[INFO]	connectionManager: Update cons in [(42,51,0)]
+[INFO]	connectionManager: Update cons in [(40,49,0)]
+[INFO]	connectionManager: Update cons in [(41,49,0)]
+[INFO]	connectionManager: Update cons in [(42,49,0)]
+[INFO]	connectionManager: Update cons in [(40,50,0)]
+[INFO]	connectionManager:  unregistering nic #296
+[INFO]	connectionManager: Update cons in [(23,31,0)]
+[INFO]	connectionManager: Update cons in [(24,31,0)]
+[INFO]	connectionManager: Update cons in [(25,31,0)]
+[INFO]	connectionManager: Update cons in [(23,32,0)]
+[INFO]	NicEntry: disconnecting nic #104 and #296
+[INFO]	NicEntry: disconnecting nic #296 and #104
+[INFO]	NicEntry: disconnecting nic #1790 and #296
+[INFO]	NicEntry: disconnecting nic #296 and #1790
+[INFO]	connectionManager: Update cons in [(24,32,0)]
+[INFO]	connectionManager: Update cons in [(25,32,0)]
+[INFO]	connectionManager: Update cons in [(23,33,0)]
+[INFO]	connectionManager: Update cons in [(24,33,0)]
+[INFO]	connectionManager: Update cons in [(25,33,0)]
+[INFO]	connectionManager:  unregistering nic #1832
+[INFO]	connectionManager: Update cons in [(24,45,0)]
+[INFO]	connectionManager: Update cons in [(25,45,0)]
+[INFO]	connectionManager: Update cons in [(26,45,0)]
+[INFO]	connectionManager: Update cons in [(24,46,0)]
+[INFO]	connectionManager: Update cons in [(25,46,0)]
+[INFO]	connectionManager: Update cons in [(26,46,0)]
+[INFO]	connectionManager: Update cons in [(24,44,0)]
+[INFO]	connectionManager: Update cons in [(25,44,0)]
+[INFO]	connectionManager: Update cons in [(26,44,0)]
+[INFO]	connectionManager:  unregistering nic #1502
+[INFO]	connectionManager: Update cons in [(30,34,0)]
+[INFO]	connectionManager: Update cons in [(31,34,0)]
+[INFO]	connectionManager: Update cons in [(29,35,0)]
+[INFO]	connectionManager: Update cons in [(30,35,0)]
+[INFO]	connectionManager: Update cons in [(31,35,0)]
+[INFO]	connectionManager: Update cons in [(29,33,0)]
+[INFO]	connectionManager: Update cons in [(30,33,0)]
+[INFO]	connectionManager: Update cons in [(31,33,0)]
+[INFO]	connectionManager: Update cons in [(29,34,0)]
+[INFO]	connectionManager:  unregistering nic #32
+[INFO]	connectionManager: Update cons in [(17,39,0)]
+[INFO]	connectionManager: Update cons in [(18,39,0)]
+[INFO]	NicEntry: disconnecting nic #248 and #32
+[INFO]	NicEntry: disconnecting nic #32 and #248
+[INFO]	NicEntry: disconnecting nic #1736 and #32
+[INFO]	NicEntry: disconnecting nic #32 and #1736
+[INFO]	connectionManager: Update cons in [(19,39,0)]
+[INFO]	connectionManager: Update cons in [(17,40,0)]
+[INFO]	connectionManager: Update cons in [(18,40,0)]
+[INFO]	connectionManager: Update cons in [(19,40,0)]
+[INFO]	connectionManager: Update cons in [(17,38,0)]
+[INFO]	connectionManager: Update cons in [(18,38,0)]
+[INFO]	connectionManager: Update cons in [(19,38,0)]
+[INFO]	connectionManager:  unregistering nic #152
+[INFO]	connectionManager: Update cons in [(35,35,0)]
+[INFO]	connectionManager: Update cons in [(36,35,0)]
+[INFO]	connectionManager: Update cons in [(37,35,0)]
+[INFO]	connectionManager: Update cons in [(35,36,0)]
+[INFO]	connectionManager: Update cons in [(36,36,0)]
+[INFO]	connectionManager: Update cons in [(37,36,0)]
+[INFO]	connectionManager: Update cons in [(35,34,0)]
+[INFO]	connectionManager: Update cons in [(36,34,0)]
+[INFO]	connectionManager: Update cons in [(37,34,0)]
+[INFO]	connectionManager:  unregistering nic #866
+[INFO]	connectionManager: Update cons in [(28,32,0)]
+[INFO]	connectionManager: Update cons in [(29,32,0)]
+[INFO]	connectionManager: Update cons in [(27,30,0)]
+[INFO]	connectionManager: Update cons in [(28,30,0)]
+[INFO]	connectionManager: Update cons in [(29,30,0)]
+[INFO]	connectionManager: Update cons in [(27,31,0)]
+[INFO]	connectionManager: Update cons in [(28,31,0)]
+[INFO]	NicEntry: disconnecting nic #884 and #866
+[INFO]	NicEntry: disconnecting nic #866 and #884
+[INFO]	connectionManager: Update cons in [(29,31,0)]
+[INFO]	connectionManager: Update cons in [(27,32,0)]
+[INFO]	connectionManager:  unregistering nic #1412
+[INFO]	connectionManager: Update cons in [(35,35,0)]
+[INFO]	connectionManager: Update cons in [(33,36,0)]
+[INFO]	connectionManager: Update cons in [(34,36,0)]
+[INFO]	connectionManager: Update cons in [(35,36,0)]
+[INFO]	connectionManager: Update cons in [(33,37,0)]
+[INFO]	connectionManager: Update cons in [(34,37,0)]
+[INFO]	connectionManager: Update cons in [(35,37,0)]
+[INFO]	connectionManager: Update cons in [(33,35,0)]
+[INFO]	connectionManager: Update cons in [(34,35,0)]
+[INFO]	connectionManager:  unregistering nic #758
+[INFO]	connectionManager: Update cons in [(21,29,0)]
+[INFO]	connectionManager: Update cons in [(22,29,0)]
+[INFO]	connectionManager: Update cons in [(20,27,0)]
+[INFO]	connectionManager: Update cons in [(21,27,0)]
+[INFO]	connectionManager: Update cons in [(22,27,0)]
+[INFO]	connectionManager: Update cons in [(20,28,0)]
+[INFO]	connectionManager: Update cons in [(21,28,0)]
+[INFO]	connectionManager: Update cons in [(22,28,0)]
+[INFO]	connectionManager: Update cons in [(20,29,0)]
+[INFO]	connectionManager:  unregistering nic #944
+[INFO]	connectionManager: Update cons in [(45,37,0)]
+[INFO]	connectionManager: Update cons in [(43,38,0)]
+[INFO]	connectionManager: Update cons in [(44,38,0)]
+[INFO]	connectionManager: Update cons in [(45,38,0)]
+[INFO]	connectionManager: Update cons in [(43,39,0)]
+[INFO]	connectionManager: Update cons in [(44,39,0)]
+[INFO]	connectionManager: Update cons in [(45,39,0)]
+[INFO]	connectionManager: Update cons in [(43,37,0)]
+[INFO]	connectionManager: Update cons in [(44,37,0)]
+[INFO]	connectionManager:  unregistering nic #1754
+[INFO]	connectionManager: Update cons in [(43,49,0)]
+[INFO]	connectionManager: Update cons in [(44,49,0)]
+[INFO]	connectionManager: Update cons in [(42,47,0)]
+[INFO]	connectionManager: Update cons in [(43,47,0)]
+[INFO]	connectionManager: Update cons in [(44,47,0)]
+[INFO]	connectionManager: Update cons in [(42,48,0)]
+[INFO]	connectionManager: Update cons in [(43,48,0)]
+[INFO]	connectionManager: Update cons in [(44,48,0)]
+[INFO]	connectionManager: Update cons in [(42,49,0)]
+[INFO]	connectionManager:  unregistering nic #428
+[INFO]	connectionManager: Update cons in [(32,42,0)]
+[INFO]	connectionManager: Update cons in [(33,42,0)]
+[INFO]	connectionManager: Update cons in [(31,40,0)]
+[INFO]	connectionManager: Update cons in [(32,40,0)]
+[INFO]	connectionManager: Update cons in [(33,40,0)]
+[INFO]	connectionManager: Update cons in [(31,41,0)]
+[INFO]	connectionManager: Update cons in [(32,41,0)]
+[INFO]	connectionManager: Update cons in [(33,41,0)]
+[INFO]	connectionManager: Update cons in [(31,42,0)]
+[INFO]	connectionManager:  unregistering nic #626
+[INFO]	connectionManager: Update cons in [(22,40,0)]
+[INFO]	connectionManager: Update cons in [(23,40,0)]
+[INFO]	connectionManager: Update cons in [(24,40,0)]
+[INFO]	connectionManager: Update cons in [(22,38,0)]
+[INFO]	connectionManager: Update cons in [(23,38,0)]
+[INFO]	connectionManager: Update cons in [(24,38,0)]
+[INFO]	connectionManager: Update cons in [(22,39,0)]
+[INFO]	connectionManager: Update cons in [(23,39,0)]
+[INFO]	connectionManager: Update cons in [(24,39,0)]
+[INFO]	connectionManager:  unregistering nic #656
+[INFO]	connectionManager: Update cons in [(26,33,0)]
+[INFO]	connectionManager: Update cons in [(27,33,0)]
+[INFO]	connectionManager: Update cons in [(25,34,0)]
+[INFO]	connectionManager: Update cons in [(26,34,0)]
+[INFO]	connectionManager: Update cons in [(27,34,0)]
+[INFO]	connectionManager: Update cons in [(25,35,0)]
+[INFO]	connectionManager: Update cons in [(26,35,0)]
+[INFO]	connectionManager: Update cons in [(27,35,0)]
+[INFO]	connectionManager: Update cons in [(25,33,0)]
+[INFO]	connectionManager:  unregistering nic #1658
+[INFO]	connectionManager: Update cons in [(38,34,0)]
+[INFO]	connectionManager: Update cons in [(39,34,0)]
+[INFO]	connectionManager: Update cons in [(37,32,0)]
+[INFO]	connectionManager: Update cons in [(38,32,0)]
+[INFO]	connectionManager: Update cons in [(39,32,0)]
+[INFO]	connectionManager: Update cons in [(37,33,0)]
+[INFO]	connectionManager: Update cons in [(38,33,0)]
+[INFO]	connectionManager: Update cons in [(39,33,0)]
+[INFO]	connectionManager: Update cons in [(37,34,0)]
+[INFO]	connectionManager:  unregistering nic #1904
+[INFO]	connectionManager: Update cons in [(29,43,0)]
+[INFO]	connectionManager: Update cons in [(30,43,0)]
+[INFO]	connectionManager: Update cons in [(28,41,0)]
+[INFO]	connectionManager: Update cons in [(29,41,0)]
+[INFO]	connectionManager: Update cons in [(30,41,0)]
+[INFO]	connectionManager: Update cons in [(28,42,0)]
+[INFO]	connectionManager: Update cons in [(29,42,0)]
+[INFO]	connectionManager: Update cons in [(30,42,0)]
+[INFO]	connectionManager: Update cons in [(28,43,0)]
+[INFO]	connectionManager:  unregistering nic #1790
+[INFO]	connectionManager: Update cons in [(23,31,0)]
+[INFO]	connectionManager: Update cons in [(24,31,0)]
+[INFO]	connectionManager: Update cons in [(22,32,0)]
+[INFO]	connectionManager: Update cons in [(23,32,0)]
+[INFO]	NicEntry: disconnecting nic #104 and #1790
+[INFO]	NicEntry: disconnecting nic #1790 and #104
+[INFO]	connectionManager: Update cons in [(24,32,0)]
+[INFO]	connectionManager: Update cons in [(22,33,0)]
+[INFO]	connectionManager: Update cons in [(23,33,0)]
+[INFO]	connectionManager: Update cons in [(24,33,0)]
+[INFO]	connectionManager: Update cons in [(22,31,0)]
+[INFO]	connectionManager:  unregistering nic #1058
+[INFO]	connectionManager: Update cons in [(26,33,0)]
+[INFO]	connectionManager: Update cons in [(27,33,0)]
+[INFO]	connectionManager: Update cons in [(25,34,0)]
+[INFO]	connectionManager: Update cons in [(26,34,0)]
+[INFO]	connectionManager: Update cons in [(27,34,0)]
+[INFO]	connectionManager: Update cons in [(25,32,0)]
+[INFO]	connectionManager: Update cons in [(26,32,0)]
+[INFO]	connectionManager: Update cons in [(27,32,0)]
+[INFO]	connectionManager: Update cons in [(25,33,0)]
+[INFO]	connectionManager:  unregistering nic #1868
+[INFO]	connectionManager: Update cons in [(30,34,0)]
+[INFO]	connectionManager: Update cons in [(28,35,0)]
+[INFO]	NicEntry: disconnecting nic #38 and #1868
+[INFO]	NicEntry: disconnecting nic #1868 and #38
+[INFO]	connectionManager: Update cons in [(29,35,0)]
+[INFO]	connectionManager: Update cons in [(30,35,0)]
+[INFO]	connectionManager: Update cons in [(28,36,0)]
+[INFO]	connectionManager: Update cons in [(29,36,0)]
+[INFO]	connectionManager: Update cons in [(30,36,0)]
+[INFO]	connectionManager: Update cons in [(28,34,0)]
+[INFO]	connectionManager: Update cons in [(29,34,0)]
+[INFO]	connectionManager:  unregistering nic #482
+[INFO]	connectionManager: Update cons in [(30,40,0)]
+[INFO]	connectionManager: Update cons in [(28,38,0)]
+[INFO]	connectionManager: Update cons in [(29,38,0)]
+[INFO]	connectionManager: Update cons in [(30,38,0)]
+[INFO]	connectionManager: Update cons in [(28,39,0)]
+[INFO]	connectionManager: Update cons in [(29,39,0)]
+[INFO]	connectionManager: Update cons in [(30,39,0)]
+[INFO]	connectionManager: Update cons in [(28,40,0)]
+[INFO]	connectionManager: Update cons in [(29,40,0)]
+[INFO]	NicEntry: disconnecting nic #1586 and #482
+[INFO]	NicEntry: disconnecting nic #482 and #1586
+[INFO]	connectionManager:  unregistering nic #1796
+[INFO]	connectionManager: Update cons in [(23,37,0)]
+[INFO]	connectionManager: Update cons in [(21,38,0)]
+[INFO]	connectionManager: Update cons in [(22,38,0)]
+[INFO]	connectionManager: Update cons in [(23,38,0)]
+[INFO]	connectionManager: Update cons in [(21,36,0)]
+[INFO]	connectionManager: Update cons in [(22,36,0)]
+[INFO]	connectionManager: Update cons in [(23,36,0)]
+[INFO]	connectionManager: Update cons in [(21,37,0)]
+[INFO]	connectionManager: Update cons in [(22,37,0)]
+[INFO]	connectionManager:  unregistering nic #572
+[INFO]	connectionManager: Update cons in [(22,43,0)]
+[INFO]	connectionManager: Update cons in [(23,43,0)]
+[INFO]	connectionManager: Update cons in [(21,44,0)]
+[INFO]	connectionManager: Update cons in [(22,44,0)]
+[INFO]	connectionManager: Update cons in [(23,44,0)]
+[INFO]	connectionManager: Update cons in [(21,45,0)]
+[INFO]	connectionManager: Update cons in [(22,45,0)]
+[INFO]	connectionManager: Update cons in [(23,45,0)]
+[INFO]	connectionManager: Update cons in [(21,43,0)]
+[INFO]	connectionManager:  unregistering nic #1418
+[INFO]	connectionManager: Update cons in [(20,38,0)]
+[INFO]	connectionManager: Update cons in [(18,36,0)]
+[INFO]	connectionManager: Update cons in [(19,36,0)]
+[INFO]	connectionManager: Update cons in [(20,36,0)]
+[INFO]	connectionManager: Update cons in [(18,37,0)]
+[INFO]	connectionManager: Update cons in [(19,37,0)]
+[INFO]	connectionManager: Update cons in [(20,37,0)]
+[INFO]	connectionManager: Update cons in [(18,38,0)]
+[INFO]	connectionManager: Update cons in [(19,38,0)]
+[INFO]	connectionManager:  unregistering nic #992
+[INFO]	connectionManager: Update cons in [(14,29,0)]
+[INFO]	connectionManager: Update cons in [(15,29,0)]
+[INFO]	connectionManager: Update cons in [(13,27,0)]
+[INFO]	connectionManager: Update cons in [(14,27,0)]
+[INFO]	connectionManager: Update cons in [(15,27,0)]
+[INFO]	connectionManager: Update cons in [(13,28,0)]
+[INFO]	connectionManager: Update cons in [(14,28,0)]
+[INFO]	connectionManager: Update cons in [(15,28,0)]
+[INFO]	connectionManager: Update cons in [(13,29,0)]
+[INFO]	NicEntry: disconnecting nic #1484 and #992
+[INFO]	NicEntry: disconnecting nic #992 and #1484
+[INFO]	connectionManager:  unregistering nic #764
+[INFO]	connectionManager: Update cons in [(21,29,0)]
+[INFO]	connectionManager: Update cons in [(22,29,0)]
+[INFO]	connectionManager: Update cons in [(23,29,0)]
+[INFO]	connectionManager: Update cons in [(21,30,0)]
+[INFO]	connectionManager: Update cons in [(22,30,0)]
+[INFO]	connectionManager: Update cons in [(23,30,0)]
+[INFO]	connectionManager: Update cons in [(21,28,0)]
+[INFO]	connectionManager: Update cons in [(22,28,0)]
+[INFO]	connectionManager: Update cons in [(23,28,0)]
+[INFO]	connectionManager:  unregistering nic #1586
+[INFO]	connectionManager: Update cons in [(30,40,0)]
+[INFO]	connectionManager: Update cons in [(28,41,0)]
+[INFO]	connectionManager: Update cons in [(29,41,0)]
+[INFO]	connectionManager: Update cons in [(30,41,0)]
+[INFO]	connectionManager: Update cons in [(28,39,0)]
+[INFO]	connectionManager: Update cons in [(29,39,0)]
+[INFO]	connectionManager: Update cons in [(30,39,0)]
+[INFO]	connectionManager: Update cons in [(28,40,0)]
+[INFO]	connectionManager: Update cons in [(29,40,0)]
+[INFO]	NicEntry: disconnecting nic #842 and #1586
+[INFO]	NicEntry: disconnecting nic #1586 and #842
+[INFO]	connectionManager:  unregistering nic #1694
+[INFO]	connectionManager: Update cons in [(31,45,0)]
+[INFO]	connectionManager: Update cons in [(32,45,0)]
+[INFO]	connectionManager: Update cons in [(33,45,0)]
+[INFO]	connectionManager: Update cons in [(31,43,0)]
+[INFO]	connectionManager: Update cons in [(32,43,0)]
+[INFO]	connectionManager: Update cons in [(33,43,0)]
+[INFO]	connectionManager: Update cons in [(31,44,0)]
+[INFO]	connectionManager: Update cons in [(32,44,0)]
+[INFO]	connectionManager: Update cons in [(33,44,0)]
+[INFO]	connectionManager:  unregistering nic #950
+[INFO]	connectionManager: Update cons in [(23,34,0)]
+[INFO]	connectionManager: Update cons in [(21,35,0)]
+[INFO]	connectionManager: Update cons in [(22,35,0)]
+[INFO]	connectionManager: Update cons in [(23,35,0)]
+[INFO]	connectionManager: Update cons in [(21,36,0)]
+[INFO]	connectionManager: Update cons in [(22,36,0)]
+[INFO]	connectionManager: Update cons in [(23,36,0)]
+[INFO]	connectionManager: Update cons in [(21,34,0)]
+[INFO]	connectionManager: Update cons in [(22,34,0)]
+[INFO]	connectionManager:  unregistering nic #548
+[INFO]	connectionManager: Update cons in [(28,35,0)]
+[INFO]	connectionManager: Update cons in [(26,33,0)]
+[INFO]	connectionManager: Update cons in [(27,33,0)]
+[INFO]	NicEntry: disconnecting nic #998 and #548
+[INFO]	NicEntry: disconnecting nic #548 and #998
+[INFO]	connectionManager: Update cons in [(28,33,0)]
+[INFO]	connectionManager: Update cons in [(26,34,0)]
+[INFO]	connectionManager: Update cons in [(27,34,0)]
+[INFO]	NicEntry: disconnecting nic #668 and #548
+[INFO]	NicEntry: disconnecting nic #548 and #668
+[INFO]	connectionManager: Update cons in [(28,34,0)]
+[INFO]	connectionManager: Update cons in [(26,35,0)]
+[INFO]	connectionManager: Update cons in [(27,35,0)]
+[INFO]	connectionManager:  unregistering nic #236
+[INFO]	connectionManager: Update cons in [(34,61,0)]
+[INFO]	connectionManager: Update cons in [(32,59,0)]
+[INFO]	connectionManager: Update cons in [(33,59,0)]
+[INFO]	connectionManager: Update cons in [(34,59,0)]
+[INFO]	connectionManager: Update cons in [(32,60,0)]
+[INFO]	connectionManager: Update cons in [(33,60,0)]
+[INFO]	NicEntry: disconnecting nic #704 and #236
+[INFO]	NicEntry: disconnecting nic #236 and #704
+[INFO]	connectionManager: Update cons in [(34,60,0)]
+[INFO]	connectionManager: Update cons in [(32,61,0)]
+[INFO]	connectionManager: Update cons in [(33,61,0)]
+[INFO]	connectionManager:  unregistering nic #1094
+[INFO]	connectionManager: Update cons in [(35,55,0)]
+[INFO]	connectionManager: Update cons in [(36,55,0)]
+[INFO]	connectionManager: Update cons in [(34,53,0)]
+[INFO]	connectionManager: Update cons in [(35,53,0)]
+[INFO]	NicEntry: disconnecting nic #1622 and #1094
+[INFO]	NicEntry: disconnecting nic #1094 and #1622
+[INFO]	connectionManager: Update cons in [(36,53,0)]
+[INFO]	connectionManager: Update cons in [(34,54,0)]
+[INFO]	connectionManager: Update cons in [(35,54,0)]
+[INFO]	connectionManager: Update cons in [(36,54,0)]
+[INFO]	connectionManager: Update cons in [(34,55,0)]
+[INFO]	connectionManager:  unregistering nic #344
+[INFO]	connectionManager: Update cons in [(23,37,0)]
+[INFO]	connectionManager: Update cons in [(24,37,0)]
+[INFO]	connectionManager: Update cons in [(22,38,0)]
+[INFO]	connectionManager: Update cons in [(23,38,0)]
+[INFO]	connectionManager: Update cons in [(24,38,0)]
+[INFO]	connectionManager: Update cons in [(22,36,0)]
+[INFO]	connectionManager: Update cons in [(23,36,0)]
+[INFO]	connectionManager: Update cons in [(24,36,0)]
+[INFO]	connectionManager: Update cons in [(22,37,0)]
+[INFO]	connectionManager:  unregistering nic #1208
+[INFO]	connectionManager: Update cons in [(18,19,0)]
+[INFO]	connectionManager: Update cons in [(19,19,0)]
+[INFO]	connectionManager: Update cons in [(17,17,0)]
+[INFO]	connectionManager: Update cons in [(18,17,0)]
+[INFO]	connectionManager: Update cons in [(19,17,0)]
+[INFO]	connectionManager: Update cons in [(17,18,0)]
+[INFO]	connectionManager: Update cons in [(18,18,0)]
+[INFO]	connectionManager: Update cons in [(19,18,0)]
+[INFO]	connectionManager: Update cons in [(17,19,0)]
+[INFO]	connectionManager:  unregistering nic #1448
+[INFO]	connectionManager: Update cons in [(41,47,0)]
+[INFO]	connectionManager: Update cons in [(39,48,0)]
+[INFO]	connectionManager: Update cons in [(40,48,0)]
+[INFO]	connectionManager: Update cons in [(41,48,0)]
+[INFO]	connectionManager: Update cons in [(39,49,0)]
+[INFO]	connectionManager: Update cons in [(40,49,0)]
+[INFO]	connectionManager: Update cons in [(41,49,0)]
+[INFO]	connectionManager: Update cons in [(39,47,0)]
+[INFO]	connectionManager: Update cons in [(40,47,0)]
+[INFO]	connectionManager:  unregistering nic #368
+[INFO]	connectionManager: Update cons in [(24,42,0)]
+[INFO]	connectionManager: Update cons in [(25,42,0)]
+[INFO]	connectionManager: Update cons in [(23,43,0)]
+[INFO]	connectionManager: Update cons in [(24,43,0)]
+[INFO]	connectionManager: Update cons in [(25,43,0)]
+[INFO]	connectionManager: Update cons in [(23,44,0)]
+[INFO]	connectionManager: Update cons in [(24,44,0)]
+[INFO]	connectionManager: Update cons in [(25,44,0)]
+[INFO]	connectionManager: Update cons in [(23,42,0)]
+[INFO]	connectionManager:  unregistering nic #1664
+[INFO]	connectionManager: Update cons in [(30,37,0)]
+[INFO]	connectionManager: Update cons in [(28,38,0)]
+[INFO]	connectionManager: Update cons in [(29,38,0)]
+[INFO]	connectionManager: Update cons in [(30,38,0)]
+[INFO]	connectionManager: Update cons in [(28,39,0)]
+[INFO]	connectionManager: Update cons in [(29,39,0)]
+[INFO]	connectionManager: Update cons in [(30,39,0)]
+[INFO]	connectionManager: Update cons in [(28,37,0)]
+[INFO]	connectionManager: Update cons in [(29,37,0)]
+[INFO]	connectionManager:  unregistering nic #398
+[INFO]	connectionManager: Update cons in [(22,40,0)]
+[INFO]	connectionManager: Update cons in [(23,40,0)]
+[INFO]	connectionManager: Update cons in [(21,41,0)]
+[INFO]	connectionManager: Update cons in [(22,41,0)]
+[INFO]	connectionManager: Update cons in [(23,41,0)]
+[INFO]	connectionManager: Update cons in [(21,42,0)]
+[INFO]	connectionManager: Update cons in [(22,42,0)]
+[INFO]	connectionManager: Update cons in [(23,42,0)]
+[INFO]	connectionManager: Update cons in [(21,40,0)]
+[INFO]	connectionManager:  unregistering nic #302
+[INFO]	connectionManager: Update cons in [(29,43,0)]
+[INFO]	connectionManager: Update cons in [(27,41,0)]
+[INFO]	connectionManager: Update cons in [(28,41,0)]
+[INFO]	connectionManager: Update cons in [(29,41,0)]
+[INFO]	connectionManager: Update cons in [(27,42,0)]
+[INFO]	connectionManager: Update cons in [(28,42,0)]
+[INFO]	NicEntry: disconnecting nic #632 and #302
+[INFO]	NicEntry: disconnecting nic #302 and #632
+[INFO]	connectionManager: Update cons in [(29,42,0)]
+[INFO]	connectionManager: Update cons in [(27,43,0)]
+[INFO]	NicEntry: disconnecting nic #890 and #302
+[INFO]	NicEntry: disconnecting nic #302 and #890
+[INFO]	connectionManager: Update cons in [(28,43,0)]
+[INFO]	connectionManager:  unregistering nic #1724
+[INFO]	connectionManager: Update cons in [(24,42,0)]
+[INFO]	connectionManager: Update cons in [(25,42,0)]
+[INFO]	NicEntry: disconnecting nic #1034 and #1724
+[INFO]	NicEntry: disconnecting nic #1724 and #1034
+[INFO]	connectionManager: Update cons in [(26,42,0)]
+[INFO]	connectionManager: Update cons in [(24,43,0)]
+[INFO]	connectionManager: Update cons in [(25,43,0)]
+[INFO]	connectionManager: Update cons in [(26,43,0)]
+[INFO]	connectionManager: Update cons in [(24,41,0)]
+[INFO]	connectionManager: Update cons in [(25,41,0)]
+[INFO]	connectionManager: Update cons in [(26,41,0)]
+[INFO]	connectionManager:  unregistering nic #1736
+[INFO]	connectionManager: Update cons in [(17,39,0)]
+[INFO]	connectionManager: Update cons in [(18,39,0)]
+[INFO]	NicEntry: disconnecting nic #248 and #1736
+[INFO]	NicEntry: disconnecting nic #1736 and #248
+[INFO]	connectionManager: Update cons in [(19,39,0)]
+[INFO]	connectionManager: Update cons in [(17,40,0)]
+[INFO]	connectionManager: Update cons in [(18,40,0)]
+[INFO]	connectionManager: Update cons in [(19,40,0)]
+[INFO]	connectionManager: Update cons in [(17,38,0)]
+[INFO]	connectionManager: Update cons in [(18,38,0)]
+[INFO]	connectionManager: Update cons in [(19,38,0)]
+[INFO]	connectionManager:  unregistering nic #1154
+[INFO]	connectionManager: Update cons in [(26,47,0)]
+[INFO]	connectionManager: Update cons in [(27,47,0)]
+[INFO]	connectionManager: Update cons in [(25,48,0)]
+[INFO]	connectionManager: Update cons in [(26,48,0)]
+[INFO]	connectionManager: Update cons in [(27,48,0)]
+[INFO]	connectionManager: Update cons in [(25,46,0)]
+[INFO]	connectionManager: Update cons in [(26,46,0)]
+[INFO]	connectionManager: Update cons in [(27,46,0)]
+[INFO]	connectionManager: Update cons in [(25,47,0)]
+[INFO]	connectionManager:  unregistering nic #1316
+[INFO]	connectionManager: Update cons in [(45,37,0)]
+[INFO]	connectionManager: Update cons in [(46,37,0)]
+[INFO]	connectionManager: Update cons in [(44,38,0)]
+[INFO]	connectionManager: Update cons in [(45,38,0)]
+[INFO]	connectionManager: Update cons in [(46,38,0)]
+[INFO]	connectionManager: Update cons in [(44,36,0)]
+[INFO]	connectionManager: Update cons in [(45,36,0)]
+[INFO]	connectionManager: Update cons in [(46,36,0)]
+[INFO]	connectionManager: Update cons in [(44,37,0)]
+[INFO]	connectionManager:  unregistering nic #1544
+[INFO]	connectionManager: Update cons in [(24,45,0)]
+[INFO]	connectionManager: Update cons in [(25,45,0)]
+[INFO]	connectionManager: Update cons in [(23,46,0)]
+[INFO]	NicEntry: disconnecting nic #956 and #1544
+[INFO]	NicEntry: disconnecting nic #1544 and #956
+[INFO]	connectionManager: Update cons in [(24,46,0)]
+[INFO]	connectionManager: Update cons in [(25,46,0)]
+[INFO]	connectionManager: Update cons in [(23,47,0)]
+[INFO]	connectionManager: Update cons in [(24,47,0)]
+[INFO]	connectionManager: Update cons in [(25,47,0)]
+[INFO]	connectionManager: Update cons in [(23,45,0)]
+[INFO]	connectionManager:  unregistering nic #806
+[INFO]	connectionManager: Update cons in [(45,51,0)]
+[INFO]	connectionManager: Update cons in [(46,51,0)]
+[INFO]	connectionManager: Update cons in [(44,52,0)]
+[INFO]	connectionManager: Update cons in [(45,52,0)]
+[INFO]	connectionManager: Update cons in [(46,52,0)]
+[INFO]	NicEntry: disconnecting nic #578 and #806
+[INFO]	NicEntry: disconnecting nic #806 and #578
+[INFO]	connectionManager: Update cons in [(44,53,0)]
+[INFO]	connectionManager: Update cons in [(45,53,0)]
+[INFO]	connectionManager: Update cons in [(46,53,0)]
+[INFO]	connectionManager: Update cons in [(44,51,0)]
+[INFO]	connectionManager:  unregistering nic #1760
+[INFO]	connectionManager: Update cons in [(36,29,0)]
+[INFO]	connectionManager: Update cons in [(37,29,0)]
+[INFO]	connectionManager: Update cons in [(35,30,0)]
+[INFO]	connectionManager: Update cons in [(36,30,0)]
+[INFO]	connectionManager: Update cons in [(37,30,0)]
+[INFO]	connectionManager: Update cons in [(35,31,0)]
+[INFO]	connectionManager: Update cons in [(36,31,0)]
+[INFO]	connectionManager: Update cons in [(37,31,0)]
+[INFO]	connectionManager: Update cons in [(35,29,0)]
+[INFO]	connectionManager:  unregistering nic #1124
+[INFO]	connectionManager: Update cons in [(28,32,0)]
+[INFO]	connectionManager: Update cons in [(26,33,0)]
+[INFO]	connectionManager: Update cons in [(27,33,0)]
+[INFO]	connectionManager: Update cons in [(28,33,0)]
+[INFO]	connectionManager: Update cons in [(26,31,0)]
+[INFO]	connectionManager: Update cons in [(27,31,0)]
+[INFO]	connectionManager: Update cons in [(28,31,0)]
+[INFO]	connectionManager: Update cons in [(26,32,0)]
+[INFO]	connectionManager: Update cons in [(27,32,0)]
+[INFO]	connectionManager:  unregistering nic #836
+[INFO]	connectionManager: Update cons in [(10,39,0)]
+[INFO]	connectionManager: Update cons in [(8,37,0)]
+[INFO]	connectionManager: Update cons in [(9,37,0)]
+[INFO]	connectionManager: Update cons in [(10,37,0)]
+[INFO]	connectionManager: Update cons in [(8,38,0)]
+[INFO]	connectionManager: Update cons in [(9,38,0)]
+[INFO]	connectionManager: Update cons in [(10,38,0)]
+[INFO]	connectionManager: Update cons in [(8,39,0)]
+[INFO]	connectionManager: Update cons in [(9,39,0)]
+[INFO]	connectionManager:  unregistering nic #512
+[INFO]	connectionManager: Update cons in [(20,41,0)]
+[INFO]	connectionManager: Update cons in [(21,41,0)]
+[INFO]	connectionManager: Update cons in [(19,42,0)]
+[INFO]	connectionManager: Update cons in [(20,42,0)]
+[INFO]	connectionManager: Update cons in [(21,42,0)]
+[INFO]	connectionManager: Update cons in [(19,43,0)]
+[INFO]	connectionManager: Update cons in [(20,43,0)]
+[INFO]	connectionManager: Update cons in [(21,43,0)]
+[INFO]	connectionManager: Update cons in [(19,41,0)]
+[INFO]	connectionManager:  unregistering nic #782
+[INFO]	connectionManager: Update cons in [(24,45,0)]
+[INFO]	connectionManager: Update cons in [(25,45,0)]
+[INFO]	connectionManager: Update cons in [(23,46,0)]
+[INFO]	connectionManager: Update cons in [(24,46,0)]
+[INFO]	connectionManager: Update cons in [(25,46,0)]
+[INFO]	connectionManager: Update cons in [(23,44,0)]
+[INFO]	connectionManager: Update cons in [(24,44,0)]
+[INFO]	connectionManager: Update cons in [(25,44,0)]
+[INFO]	connectionManager: Update cons in [(23,45,0)]
+[INFO]	connectionManager:  unregistering nic #662
+[INFO]	connectionManager: Update cons in [(20,35,0)]
+[INFO]	connectionManager: Update cons in [(21,35,0)]
+[INFO]	connectionManager: Update cons in [(19,33,0)]
+[INFO]	connectionManager: Update cons in [(20,33,0)]
+[INFO]	connectionManager: Update cons in [(21,33,0)]
+[INFO]	connectionManager: Update cons in [(19,34,0)]
+[INFO]	connectionManager: Update cons in [(20,34,0)]
+[INFO]	connectionManager: Update cons in [(21,34,0)]
+[INFO]	connectionManager: Update cons in [(19,35,0)]
+[INFO]	connectionManager:  unregistering nic #128
+[INFO]	connectionManager: Update cons in [(33,36,0)]
+[INFO]	connectionManager: Update cons in [(34,36,0)]
+[INFO]	connectionManager: Update cons in [(32,37,0)]
+[INFO]	connectionManager: Update cons in [(33,37,0)]
+[INFO]	connectionManager: Update cons in [(34,37,0)]
+[INFO]	connectionManager: Update cons in [(32,38,0)]
+[INFO]	connectionManager: Update cons in [(33,38,0)]
+[INFO]	connectionManager: Update cons in [(34,38,0)]
+[INFO]	connectionManager: Update cons in [(32,36,0)]
+[INFO]	connectionManager:  unregistering nic #1388
+[INFO]	connectionManager: Update cons in [(26,30,0)]
+[INFO]	connectionManager: Update cons in [(24,31,0)]
+[INFO]	connectionManager: Update cons in [(25,31,0)]
+[INFO]	connectionManager: Update cons in [(26,31,0)]
+[INFO]	connectionManager: Update cons in [(24,29,0)]
+[INFO]	connectionManager: Update cons in [(25,29,0)]
+[INFO]	connectionManager: Update cons in [(26,29,0)]
+[INFO]	connectionManager: Update cons in [(24,30,0)]
+[INFO]	connectionManager: Update cons in [(25,30,0)]
+[INFO]	connectionManager:  unregistering nic #914
+[INFO]	connectionManager: Update cons in [(18,33,0)]
+[INFO]	connectionManager: Update cons in [(19,33,0)]
+[INFO]	NicEntry: disconnecting nic #1244 and #914
+[INFO]	NicEntry: disconnecting nic #914 and #1244
+[INFO]	connectionManager: Update cons in [(20,33,0)]
+[INFO]	connectionManager: Update cons in [(18,31,0)]
+[INFO]	connectionManager: Update cons in [(19,31,0)]
+[INFO]	connectionManager: Update cons in [(20,31,0)]
+[INFO]	connectionManager: Update cons in [(18,32,0)]
+[INFO]	connectionManager: Update cons in [(19,32,0)]
+[INFO]	connectionManager: Update cons in [(20,32,0)]
+[INFO]	connectionManager:  unregistering nic #248
+[INFO]	connectionManager: Update cons in [(17,39,0)]
+[INFO]	connectionManager: Update cons in [(18,39,0)]
+[INFO]	connectionManager: Update cons in [(19,39,0)]
+[INFO]	connectionManager: Update cons in [(17,40,0)]
+[INFO]	connectionManager: Update cons in [(18,40,0)]
+[INFO]	connectionManager: Update cons in [(19,40,0)]
+[INFO]	connectionManager: Update cons in [(17,38,0)]
+[INFO]	connectionManager: Update cons in [(18,38,0)]
+[INFO]	connectionManager: Update cons in [(19,38,0)]
+[INFO]	connectionManager:  unregistering nic #998
+[INFO]	connectionManager: Update cons in [(28,32,0)]
+[INFO]	connectionManager: Update cons in [(26,33,0)]
+[INFO]	connectionManager: Update cons in [(27,33,0)]
+[INFO]	connectionManager: Update cons in [(28,33,0)]
+[INFO]	connectionManager: Update cons in [(26,34,0)]
+[INFO]	connectionManager: Update cons in [(27,34,0)]
+[INFO]	NicEntry: disconnecting nic #668 and #998
+[INFO]	NicEntry: disconnecting nic #998 and #668
+[INFO]	connectionManager: Update cons in [(28,34,0)]
+[INFO]	connectionManager: Update cons in [(26,32,0)]
+[INFO]	connectionManager: Update cons in [(27,32,0)]
+[INFO]	connectionManager:  unregistering nic #272
+[INFO]	connectionManager: Update cons in [(34,44,0)]
+[INFO]	connectionManager: Update cons in [(35,44,0)]
+[INFO]	connectionManager: Update cons in [(36,44,0)]
+[INFO]	connectionManager: Update cons in [(34,42,0)]
+[INFO]	connectionManager: Update cons in [(35,42,0)]
+[INFO]	connectionManager: Update cons in [(36,42,0)]
+[INFO]	connectionManager: Update cons in [(34,43,0)]
+[INFO]	connectionManager: Update cons in [(35,43,0)]
+[INFO]	connectionManager: Update cons in [(36,43,0)]
+[INFO]	connectionManager:  unregistering nic #206
+[INFO]	connectionManager: Update cons in [(27,38,0)]
+[INFO]	connectionManager: Update cons in [(25,39,0)]
+[INFO]	connectionManager: Update cons in [(26,39,0)]
+[INFO]	NicEntry: disconnecting nic #1808 and #206
+[INFO]	NicEntry: disconnecting nic #206 and #1808
+[INFO]	connectionManager: Update cons in [(27,39,0)]
+[INFO]	connectionManager: Update cons in [(25,40,0)]
+[INFO]	connectionManager: Update cons in [(26,40,0)]
+[INFO]	connectionManager: Update cons in [(27,40,0)]
+[INFO]	connectionManager: Update cons in [(25,38,0)]
+[INFO]	connectionManager: Update cons in [(26,38,0)]
+[INFO]	connectionManager:  unregistering nic #326
+[INFO]	connectionManager: Update cons in [(33,53,0)]
+[INFO]	connectionManager: Update cons in [(34,53,0)]
+[INFO]	connectionManager: Update cons in [(32,54,0)]
+[INFO]	connectionManager: Update cons in [(33,54,0)]
+[INFO]	connectionManager: Update cons in [(34,54,0)]
+[INFO]	connectionManager: Update cons in [(32,55,0)]
+[INFO]	connectionManager: Update cons in [(33,55,0)]
+[INFO]	connectionManager: Update cons in [(34,55,0)]
+[INFO]	connectionManager: Update cons in [(32,53,0)]
+[INFO]	connectionManager:  unregistering nic #704
+[INFO]	connectionManager: Update cons in [(34,61,0)]
+[INFO]	connectionManager: Update cons in [(32,59,0)]
+[INFO]	connectionManager: Update cons in [(33,59,0)]
+[INFO]	connectionManager: Update cons in [(34,59,0)]
+[INFO]	connectionManager: Update cons in [(32,60,0)]
+[INFO]	connectionManager: Update cons in [(33,60,0)]
+[INFO]	connectionManager: Update cons in [(34,60,0)]
+[INFO]	connectionManager: Update cons in [(32,61,0)]
+[INFO]	connectionManager: Update cons in [(33,61,0)]
+[INFO]	connectionManager:  unregistering nic #734
+[INFO]	connectionManager: Update cons in [(24,25,0)]
+[INFO]	connectionManager: Update cons in [(25,25,0)]
+[INFO]	connectionManager: Update cons in [(26,25,0)]
+[INFO]	connectionManager: Update cons in [(24,26,0)]
+[INFO]	connectionManager: Update cons in [(25,26,0)]
+[INFO]	connectionManager: Update cons in [(26,26,0)]
+[INFO]	connectionManager: Update cons in [(24,24,0)]
+[INFO]	connectionManager: Update cons in [(25,24,0)]
+[INFO]	connectionManager: Update cons in [(26,24,0)]
+[INFO]	connectionManager:  unregistering nic #578
+[INFO]	connectionManager: Update cons in [(45,51,0)]
+[INFO]	connectionManager: Update cons in [(46,51,0)]
+[INFO]	connectionManager: Update cons in [(47,51,0)]
+[INFO]	connectionManager: Update cons in [(45,52,0)]
+[INFO]	connectionManager: Update cons in [(46,52,0)]
+[INFO]	connectionManager: Update cons in [(47,52,0)]
+[INFO]	connectionManager: Update cons in [(45,53,0)]
+[INFO]	connectionManager: Update cons in [(46,53,0)]
+[INFO]	connectionManager: Update cons in [(47,53,0)]
+[INFO]	connectionManager:  unregistering nic #1034
+[INFO]	connectionManager: Update cons in [(24,42,0)]
+[INFO]	connectionManager: Update cons in [(25,42,0)]
+[INFO]	connectionManager: Update cons in [(26,42,0)]
+[INFO]	connectionManager: Update cons in [(24,43,0)]
+[INFO]	connectionManager: Update cons in [(25,43,0)]
+[INFO]	connectionManager: Update cons in [(26,43,0)]
+[INFO]	connectionManager: Update cons in [(24,41,0)]
+[INFO]	connectionManager: Update cons in [(25,41,0)]
+[INFO]	connectionManager: Update cons in [(26,41,0)]
+[INFO]	connectionManager:  unregistering nic #1838
+[INFO]	connectionManager: Update cons in [(36,49,0)]
+[INFO]	connectionManager: Update cons in [(37,49,0)]
+[INFO]	connectionManager: Update cons in [(35,50,0)]
+[INFO]	connectionManager: Update cons in [(36,50,0)]
+[INFO]	connectionManager: Update cons in [(37,50,0)]
+[INFO]	connectionManager: Update cons in [(35,51,0)]
+[INFO]	connectionManager: Update cons in [(36,51,0)]
+[INFO]	connectionManager: Update cons in [(37,51,0)]
+[INFO]	connectionManager: Update cons in [(35,49,0)]
+[INFO]	connectionManager:  unregistering nic #602
+[INFO]	connectionManager: Update cons in [(25,39,0)]
+[INFO]	connectionManager: Update cons in [(23,37,0)]
+[INFO]	connectionManager: Update cons in [(24,37,0)]
+[INFO]	connectionManager: Update cons in [(25,37,0)]
+[INFO]	connectionManager: Update cons in [(23,38,0)]
+[INFO]	connectionManager: Update cons in [(24,38,0)]
+[INFO]	connectionManager: Update cons in [(25,38,0)]
+[INFO]	connectionManager: Update cons in [(23,39,0)]
+[INFO]	connectionManager: Update cons in [(24,39,0)]
+[INFO]	connectionManager:  unregistering nic #1622
+[INFO]	connectionManager: Update cons in [(35,52,0)]
+[INFO]	connectionManager: Update cons in [(36,52,0)]
+[INFO]	connectionManager: Update cons in [(34,53,0)]
+[INFO]	connectionManager: Update cons in [(35,53,0)]
+[INFO]	connectionManager: Update cons in [(36,53,0)]
+[INFO]	connectionManager: Update cons in [(34,54,0)]
+[INFO]	connectionManager: Update cons in [(35,54,0)]
+[INFO]	connectionManager: Update cons in [(36,54,0)]
+[INFO]	connectionManager: Update cons in [(34,52,0)]
+[INFO]	connectionManager:  unregistering nic #884
+[INFO]	connectionManager: Update cons in [(28,32,0)]
+[INFO]	connectionManager: Update cons in [(29,32,0)]
+[INFO]	connectionManager: Update cons in [(27,30,0)]
+[INFO]	connectionManager: Update cons in [(28,30,0)]
+[INFO]	connectionManager: Update cons in [(29,30,0)]
+[INFO]	connectionManager: Update cons in [(27,31,0)]
+[INFO]	connectionManager: Update cons in [(28,31,0)]
+[INFO]	connectionManager: Update cons in [(29,31,0)]
+[INFO]	connectionManager: Update cons in [(27,32,0)]
+[INFO]	connectionManager:  unregistering nic #1244
+[INFO]	connectionManager: Update cons in [(18,33,0)]
+[INFO]	connectionManager: Update cons in [(19,33,0)]
+[INFO]	connectionManager: Update cons in [(20,33,0)]
+[INFO]	connectionManager: Update cons in [(18,34,0)]
+[INFO]	connectionManager: Update cons in [(19,34,0)]
+[INFO]	connectionManager: Update cons in [(20,34,0)]
+[INFO]	connectionManager: Update cons in [(18,32,0)]
+[INFO]	connectionManager: Update cons in [(19,32,0)]
+[INFO]	connectionManager: Update cons in [(20,32,0)]
+[INFO]	connectionManager:  unregistering nic #1478
+[INFO]	connectionManager: Update cons in [(47,59,0)]
+[INFO]	connectionManager: Update cons in [(45,57,0)]
+[INFO]	connectionManager: Update cons in [(46,57,0)]
+[INFO]	connectionManager: Update cons in [(47,57,0)]
+[INFO]	connectionManager: Update cons in [(45,58,0)]
+[INFO]	connectionManager: Update cons in [(46,58,0)]
+[INFO]	connectionManager: Update cons in [(47,58,0)]
+[INFO]	connectionManager: Update cons in [(45,59,0)]
+[INFO]	connectionManager: Update cons in [(46,59,0)]
+[INFO]	connectionManager:  unregistering nic #1454
+[INFO]	connectionManager: Update cons in [(45,34,0)]
+[INFO]	connectionManager: Update cons in [(46,34,0)]
+[INFO]	connectionManager: Update cons in [(44,32,0)]
+[INFO]	connectionManager: Update cons in [(45,32,0)]
+[INFO]	connectionManager: Update cons in [(46,32,0)]
+[INFO]	connectionManager: Update cons in [(44,33,0)]
+[INFO]	connectionManager: Update cons in [(45,33,0)]
+[INFO]	connectionManager: Update cons in [(46,33,0)]
+[INFO]	connectionManager: Update cons in [(44,34,0)]
+[INFO]	connectionManager:  unregistering nic #278
+[INFO]	connectionManager: Update cons in [(47,36,0)]
+[INFO]	connectionManager: Update cons in [(45,37,0)]
+[INFO]	connectionManager: Update cons in [(46,37,0)]
+[INFO]	connectionManager: Update cons in [(47,37,0)]
+[INFO]	connectionManager: Update cons in [(45,38,0)]
+[INFO]	connectionManager: Update cons in [(46,38,0)]
+[INFO]	connectionManager: Update cons in [(47,38,0)]
+[INFO]	connectionManager: Update cons in [(45,36,0)]
+[INFO]	connectionManager: Update cons in [(46,36,0)]
+[INFO]	connectionManager:  unregistering nic #404
+[INFO]	connectionManager: Update cons in [(42,41,0)]
+[INFO]	connectionManager: Update cons in [(40,42,0)]
+[INFO]	connectionManager: Update cons in [(41,42,0)]
+[INFO]	connectionManager: Update cons in [(42,42,0)]
+[INFO]	connectionManager: Update cons in [(40,43,0)]
+[INFO]	connectionManager: Update cons in [(41,43,0)]
+[INFO]	connectionManager: Update cons in [(42,43,0)]
+[INFO]	connectionManager: Update cons in [(40,41,0)]
+[INFO]	connectionManager: Update cons in [(41,41,0)]
+[INFO]	connectionManager:  unregistering nic #1352
+[INFO]	connectionManager: Update cons in [(19,24,0)]
+[INFO]	connectionManager: Update cons in [(20,24,0)]
+[INFO]	connectionManager: Update cons in [(18,22,0)]
+[INFO]	connectionManager: Update cons in [(19,22,0)]
+[INFO]	NicEntry: disconnecting nic #1844 and #1352
+[INFO]	NicEntry: disconnecting nic #1352 and #1844
+[INFO]	connectionManager: Update cons in [(20,22,0)]
+[INFO]	connectionManager: Update cons in [(18,23,0)]
+[INFO]	connectionManager: Update cons in [(19,23,0)]
+[INFO]	connectionManager: Update cons in [(20,23,0)]
+[INFO]	connectionManager: Update cons in [(18,24,0)]
+[INFO]	connectionManager:  unregistering nic #1274
+[INFO]	connectionManager: Update cons in [(16,11,0)]
+[INFO]	connectionManager: Update cons in [(14,12,0)]
+[INFO]	connectionManager: Update cons in [(15,12,0)]
+[INFO]	connectionManager: Update cons in [(16,12,0)]
+[INFO]	connectionManager: Update cons in [(14,10,0)]
+[INFO]	connectionManager: Update cons in [(15,10,0)]
+[INFO]	connectionManager: Update cons in [(16,10,0)]
+[INFO]	connectionManager: Update cons in [(14,11,0)]
+[INFO]	connectionManager: Update cons in [(15,11,0)]
+[INFO]	connectionManager:  unregistering nic #1214
+[INFO]	connectionManager: Update cons in [(21,46,0)]
+[INFO]	connectionManager: Update cons in [(22,46,0)]
+[INFO]	connectionManager: Update cons in [(20,44,0)]
+[INFO]	connectionManager: Update cons in [(21,44,0)]
+[INFO]	connectionManager: Update cons in [(22,44,0)]
+[INFO]	connectionManager: Update cons in [(20,45,0)]
+[INFO]	connectionManager: Update cons in [(21,45,0)]
+[INFO]	connectionManager: Update cons in [(22,45,0)]
+[INFO]	connectionManager: Update cons in [(20,46,0)]
+[INFO]	connectionManager:  unregistering nic #1130
+[INFO]	connectionManager: Update cons in [(43,52,0)]
+[INFO]	connectionManager: Update cons in [(44,52,0)]
+[INFO]	connectionManager: Update cons in [(42,50,0)]
+[INFO]	connectionManager: Update cons in [(43,50,0)]
+[INFO]	connectionManager: Update cons in [(44,50,0)]
+[INFO]	connectionManager: Update cons in [(42,51,0)]
+[INFO]	NicEntry: disconnecting nic #1598 and #1130
+[INFO]	NicEntry: disconnecting nic #1130 and #1598
+[INFO]	connectionManager: Update cons in [(43,51,0)]
+[INFO]	connectionManager: Update cons in [(44,51,0)]
+[INFO]	connectionManager: Update cons in [(42,52,0)]
+[INFO]	connectionManager:  unregistering nic #1874
+[INFO]	connectionManager: Update cons in [(43,32,0)]
+[INFO]	connectionManager: Update cons in [(41,33,0)]
+[INFO]	connectionManager: Update cons in [(42,33,0)]
+[INFO]	connectionManager: Update cons in [(43,33,0)]
+[INFO]	connectionManager: Update cons in [(41,34,0)]
+[INFO]	connectionManager: Update cons in [(42,34,0)]
+[INFO]	connectionManager: Update cons in [(43,34,0)]
+[INFO]	connectionManager: Update cons in [(41,32,0)]
+[INFO]	connectionManager: Update cons in [(42,32,0)]
+[INFO]	connectionManager:  unregistering nic #956
+[INFO]	connectionManager: Update cons in [(24,45,0)]
+[INFO]	connectionManager: Update cons in [(22,46,0)]
+[INFO]	connectionManager: Update cons in [(23,46,0)]
+[INFO]	connectionManager: Update cons in [(24,46,0)]
+[INFO]	connectionManager: Update cons in [(22,47,0)]
+[INFO]	connectionManager: Update cons in [(23,47,0)]
+[INFO]	connectionManager: Update cons in [(24,47,0)]
+[INFO]	connectionManager: Update cons in [(22,45,0)]
+[INFO]	connectionManager: Update cons in [(23,45,0)]
+[INFO]	connectionManager:  unregistering nic #788
+[INFO]	connectionManager: Update cons in [(43,49,0)]
+[INFO]	connectionManager: Update cons in [(41,50,0)]
+[INFO]	connectionManager: Update cons in [(42,50,0)]
+[INFO]	connectionManager: Update cons in [(43,50,0)]
+[INFO]	connectionManager: Update cons in [(41,48,0)]
+[INFO]	connectionManager: Update cons in [(42,48,0)]
+[INFO]	connectionManager: Update cons in [(43,48,0)]
+[INFO]	connectionManager: Update cons in [(41,49,0)]
+[INFO]	NicEntry: disconnecting nic #710 and #788
+[INFO]	NicEntry: disconnecting nic #788 and #710
+[INFO]	connectionManager: Update cons in [(42,49,0)]
+[INFO]	connectionManager:  unregistering nic #1322
+[INFO]	connectionManager: Update cons in [(29,46,0)]
+[INFO]	connectionManager: Update cons in [(27,47,0)]
+[INFO]	connectionManager: Update cons in [(28,47,0)]
+[INFO]	connectionManager: Update cons in [(29,47,0)]
+[INFO]	connectionManager: Update cons in [(27,45,0)]
+[INFO]	connectionManager: Update cons in [(28,45,0)]
+[INFO]	connectionManager: Update cons in [(29,45,0)]
+[INFO]	connectionManager: Update cons in [(27,46,0)]
+[INFO]	connectionManager: Update cons in [(28,46,0)]
+[INFO]	connectionManager:  unregistering nic #1802
+[INFO]	connectionManager: Update cons in [(20,21,0)]
+[INFO]	connectionManager: Update cons in [(18,19,0)]
+[INFO]	connectionManager: Update cons in [(19,19,0)]
+[INFO]	connectionManager: Update cons in [(20,19,0)]
+[INFO]	connectionManager: Update cons in [(18,20,0)]
+[INFO]	connectionManager: Update cons in [(19,20,0)]
+[INFO]	connectionManager: Update cons in [(20,20,0)]
+[INFO]	connectionManager: Update cons in [(18,21,0)]
+[INFO]	connectionManager: Update cons in [(19,21,0)]
+[INFO]	connectionManager:  unregistering nic #1670
+[INFO]	connectionManager: Update cons in [(35,38,0)]
+[INFO]	connectionManager: Update cons in [(36,38,0)]
+[INFO]	connectionManager: Update cons in [(34,39,0)]
+[INFO]	connectionManager: Update cons in [(35,39,0)]
+[INFO]	connectionManager: Update cons in [(36,39,0)]
+[INFO]	connectionManager: Update cons in [(34,37,0)]
+[INFO]	connectionManager: Update cons in [(35,37,0)]
+[INFO]	connectionManager: Update cons in [(36,37,0)]
+[INFO]	connectionManager: Update cons in [(34,38,0)]
+[INFO]	connectionManager:  unregistering nic #1508
+[INFO]	connectionManager: Update cons in [(19,30,0)]
+[INFO]	connectionManager: Update cons in [(17,28,0)]
+[INFO]	connectionManager: Update cons in [(18,28,0)]
+[INFO]	connectionManager: Update cons in [(19,28,0)]
+[INFO]	connectionManager: Update cons in [(17,29,0)]
+[INFO]	connectionManager: Update cons in [(18,29,0)]
+[INFO]	connectionManager: Update cons in [(19,29,0)]
+[INFO]	connectionManager: Update cons in [(17,30,0)]
+[INFO]	connectionManager: Update cons in [(18,30,0)]
+[INFO]	connectionManager:  unregistering nic #632
+[INFO]	connectionManager: Update cons in [(29,43,0)]
+[INFO]	connectionManager: Update cons in [(27,41,0)]
+[INFO]	connectionManager: Update cons in [(28,41,0)]
+[INFO]	connectionManager: Update cons in [(29,41,0)]
+[INFO]	connectionManager: Update cons in [(27,42,0)]
+[INFO]	connectionManager: Update cons in [(28,42,0)]
+[INFO]	connectionManager: Update cons in [(29,42,0)]
+[INFO]	connectionManager: Update cons in [(27,43,0)]
+[INFO]	NicEntry: disconnecting nic #890 and #632
+[INFO]	NicEntry: disconnecting nic #632 and #890
+[INFO]	connectionManager: Update cons in [(28,43,0)]
+[INFO]	connectionManager:  unregistering nic #668
+[INFO]	connectionManager: Update cons in [(28,35,0)]
+[INFO]	connectionManager: Update cons in [(26,33,0)]
+[INFO]	connectionManager: Update cons in [(27,33,0)]
+[INFO]	connectionManager: Update cons in [(28,33,0)]
+[INFO]	connectionManager: Update cons in [(26,34,0)]
+[INFO]	connectionManager: Update cons in [(27,34,0)]
+[INFO]	connectionManager: Update cons in [(28,34,0)]
+[INFO]	connectionManager: Update cons in [(26,35,0)]
+[INFO]	connectionManager: Update cons in [(27,35,0)]
+[INFO]	connectionManager:  unregistering nic #1064
+[INFO]	connectionManager: Update cons in [(33,36,0)]
+[INFO]	connectionManager: Update cons in [(31,34,0)]
+[INFO]	connectionManager: Update cons in [(32,34,0)]
+[INFO]	connectionManager: Update cons in [(33,34,0)]
+[INFO]	connectionManager: Update cons in [(31,35,0)]
+[INFO]	connectionManager: Update cons in [(32,35,0)]
+[INFO]	connectionManager: Update cons in [(33,35,0)]
+[INFO]	connectionManager: Update cons in [(31,36,0)]
+[INFO]	connectionManager: Update cons in [(32,36,0)]
+[INFO]	connectionManager:  unregistering nic #1040
+[INFO]	connectionManager: Update cons in [(28,49,0)]
+[INFO]	connectionManager: Update cons in [(26,50,0)]
+[INFO]	connectionManager: Update cons in [(27,50,0)]
+[INFO]	connectionManager: Update cons in [(28,50,0)]
+[INFO]	connectionManager: Update cons in [(26,51,0)]
+[INFO]	connectionManager: Update cons in [(27,51,0)]
+[INFO]	connectionManager: Update cons in [(28,51,0)]
+[INFO]	connectionManager: Update cons in [(26,49,0)]
+[INFO]	connectionManager: Update cons in [(27,49,0)]
+[INFO]	connectionManager:  unregistering nic #1592
+[INFO]	connectionManager: Update cons in [(42,61,0)]
+[INFO]	connectionManager: Update cons in [(40,59,0)]
+[INFO]	connectionManager: Update cons in [(41,59,0)]
+[INFO]	connectionManager: Update cons in [(42,59,0)]
+[INFO]	connectionManager: Update cons in [(40,60,0)]
+[INFO]	connectionManager: Update cons in [(41,60,0)]
+[INFO]	connectionManager: Update cons in [(42,60,0)]
+[INFO]	connectionManager: Update cons in [(40,61,0)]
+[INFO]	connectionManager: Update cons in [(41,61,0)]
+[INFO]	connectionManager:  unregistering nic #1184
+[INFO]	connectionManager: Update cons in [(20,35,0)]
+[INFO]	connectionManager: Update cons in [(21,35,0)]
+[INFO]	connectionManager: Update cons in [(19,36,0)]
+[INFO]	connectionManager: Update cons in [(20,36,0)]
+[INFO]	connectionManager: Update cons in [(21,36,0)]
+[INFO]	connectionManager: Update cons in [(19,34,0)]
+[INFO]	connectionManager: Update cons in [(20,34,0)]
+[INFO]	connectionManager: Update cons in [(21,34,0)]
+[INFO]	connectionManager: Update cons in [(19,35,0)]
+[INFO]	connectionManager:  unregistering nic #158
+[INFO]	connectionManager: Update cons in [(35,55,0)]
+[INFO]	connectionManager: Update cons in [(33,56,0)]
+[INFO]	connectionManager: Update cons in [(34,56,0)]
+[INFO]	connectionManager: Update cons in [(35,56,0)]
+[INFO]	connectionManager: Update cons in [(33,54,0)]
+[INFO]	connectionManager: Update cons in [(34,54,0)]
+[INFO]	connectionManager: Update cons in [(35,54,0)]
+[INFO]	connectionManager: Update cons in [(33,55,0)]
+[INFO]	connectionManager: Update cons in [(34,55,0)]
+[INFO]	connectionManager:  unregistering nic #182
+[INFO]	connectionManager: Update cons in [(43,52,0)]
+[INFO]	connectionManager: Update cons in [(41,53,0)]
+[INFO]	connectionManager: Update cons in [(42,53,0)]
+[INFO]	connectionManager: Update cons in [(43,53,0)]
+[INFO]	connectionManager: Update cons in [(41,51,0)]
+[INFO]	connectionManager: Update cons in [(42,51,0)]
+[INFO]	connectionManager: Update cons in [(43,51,0)]
+[INFO]	connectionManager: Update cons in [(41,52,0)]
+[INFO]	connectionManager: Update cons in [(42,52,0)]
+[INFO]	connectionManager:  unregistering nic #1484
+[INFO]	connectionManager: Update cons in [(14,29,0)]
+[INFO]	connectionManager: Update cons in [(12,30,0)]
+[INFO]	connectionManager: Update cons in [(13,30,0)]
+[INFO]	connectionManager: Update cons in [(14,30,0)]
+[INFO]	connectionManager: Update cons in [(12,28,0)]
+[INFO]	connectionManager: Update cons in [(13,28,0)]
+[INFO]	connectionManager: Update cons in [(14,28,0)]
+[INFO]	connectionManager: Update cons in [(12,29,0)]
+[INFO]	connectionManager: Update cons in [(13,29,0)]
+[INFO]	connectionManager:  unregistering nic #350
+[INFO]	connectionManager: Update cons in [(38,54,0)]
+[INFO]	connectionManager: Update cons in [(39,54,0)]
+[INFO]	connectionManager: Update cons in [(37,55,0)]
+[INFO]	connectionManager: Update cons in [(38,55,0)]
+[INFO]	connectionManager: Update cons in [(39,55,0)]
+[INFO]	connectionManager: Update cons in [(37,56,0)]
+[INFO]	connectionManager: Update cons in [(38,56,0)]
+[INFO]	connectionManager: Update cons in [(39,56,0)]
+[INFO]	connectionManager: Update cons in [(37,54,0)]
+[INFO]	connectionManager:  unregistering nic #1394
+[INFO]	connectionManager: Update cons in [(13,38,0)]
+[INFO]	connectionManager: Update cons in [(14,38,0)]
+[INFO]	connectionManager: Update cons in [(12,39,0)]
+[INFO]	connectionManager: Update cons in [(13,39,0)]
+[INFO]	connectionManager: Update cons in [(14,39,0)]
+[INFO]	connectionManager: Update cons in [(12,40,0)]
+[INFO]	connectionManager: Update cons in [(13,40,0)]
+[INFO]	connectionManager: Update cons in [(14,40,0)]
+[INFO]	connectionManager: Update cons in [(12,38,0)]
+[INFO]	connectionManager:  unregistering nic #1730
+[INFO]	connectionManager: Update cons in [(46,31,0)]
+[INFO]	connectionManager: Update cons in [(47,31,0)]
+[INFO]	connectionManager: Update cons in [(45,32,0)]
+[INFO]	connectionManager: Update cons in [(46,32,0)]
+[INFO]	connectionManager: Update cons in [(47,32,0)]
+[INFO]	connectionManager: Update cons in [(45,33,0)]
+[INFO]	connectionManager: Update cons in [(46,33,0)]
+[INFO]	connectionManager: Update cons in [(47,33,0)]
+[INFO]	connectionManager: Update cons in [(45,31,0)]
+[INFO]	connectionManager:  unregistering nic #710
+[INFO]	connectionManager: Update cons in [(41,50,0)]
+[INFO]	connectionManager: Update cons in [(42,50,0)]
+[INFO]	connectionManager: Update cons in [(40,48,0)]
+[INFO]	connectionManager: Update cons in [(41,48,0)]
+[INFO]	connectionManager: Update cons in [(42,48,0)]
+[INFO]	connectionManager: Update cons in [(40,49,0)]
+[INFO]	connectionManager: Update cons in [(41,49,0)]
+[INFO]	connectionManager: Update cons in [(42,49,0)]
+[INFO]	connectionManager: Update cons in [(40,50,0)]
+[INFO]	connectionManager:  unregistering nic #38
+[INFO]	connectionManager: Update cons in [(28,35,0)]
+[INFO]	connectionManager: Update cons in [(29,35,0)]
+[INFO]	connectionManager: Update cons in [(27,36,0)]
+[INFO]	connectionManager: Update cons in [(28,36,0)]
+[INFO]	connectionManager: Update cons in [(29,36,0)]
+[INFO]	connectionManager: Update cons in [(27,34,0)]
+[INFO]	connectionManager: Update cons in [(28,34,0)]
+[INFO]	connectionManager: Update cons in [(29,34,0)]
+[INFO]	connectionManager: Update cons in [(27,35,0)]
+[INFO]	connectionManager:  unregistering nic #1160
+[INFO]	connectionManager: Update cons in [(24,42,0)]
+[INFO]	connectionManager: Update cons in [(25,42,0)]
+[INFO]	connectionManager: Update cons in [(23,40,0)]
+[INFO]	connectionManager: Update cons in [(24,40,0)]
+[INFO]	connectionManager: Update cons in [(25,40,0)]
+[INFO]	connectionManager: Update cons in [(23,41,0)]
+[INFO]	connectionManager: Update cons in [(24,41,0)]
+[INFO]	connectionManager: Update cons in [(25,41,0)]
+[INFO]	connectionManager: Update cons in [(23,42,0)]
+[INFO]	connectionManager:  unregistering nic #1844
+[INFO]	connectionManager: Update cons in [(20,21,0)]
+[INFO]	connectionManager: Update cons in [(18,22,0)]
+[INFO]	connectionManager: Update cons in [(19,22,0)]
+[INFO]	connectionManager: Update cons in [(20,22,0)]
+[INFO]	connectionManager: Update cons in [(18,23,0)]
+[INFO]	connectionManager: Update cons in [(19,23,0)]
+[INFO]	connectionManager: Update cons in [(20,23,0)]
+[INFO]	connectionManager: Update cons in [(18,21,0)]
+[INFO]	connectionManager: Update cons in [(19,21,0)]
+[INFO]	connectionManager:  unregistering nic #242
+[INFO]	connectionManager: Update cons in [(25,39,0)]
+[INFO]	connectionManager: Update cons in [(23,40,0)]
+[INFO]	connectionManager: Update cons in [(24,40,0)]
+[INFO]	connectionManager: Update cons in [(25,40,0)]
+[INFO]	connectionManager: Update cons in [(23,41,0)]
+[INFO]	connectionManager: Update cons in [(24,41,0)]
+[INFO]	connectionManager: Update cons in [(25,41,0)]
+[INFO]	connectionManager: Update cons in [(23,39,0)]
+[INFO]	connectionManager: Update cons in [(24,39,0)]
+[INFO]	connectionManager:  unregistering nic #1220
+[INFO]	connectionManager: Update cons in [(44,60,0)]
+[INFO]	connectionManager: Update cons in [(45,60,0)]
+[INFO]	connectionManager: Update cons in [(43,58,0)]
+[INFO]	connectionManager: Update cons in [(44,58,0)]
+[INFO]	connectionManager: Update cons in [(45,58,0)]
+[INFO]	connectionManager: Update cons in [(43,59,0)]
+[INFO]	connectionManager: Update cons in [(44,59,0)]
+[INFO]	connectionManager: Update cons in [(45,59,0)]
+[INFO]	connectionManager: Update cons in [(43,60,0)]
+[INFO]	connectionManager:  unregistering nic #458
+[INFO]	connectionManager: Update cons in [(46,45,0)]
+[INFO]	connectionManager: Update cons in [(44,43,0)]
+[INFO]	connectionManager: Update cons in [(45,43,0)]
+[INFO]	connectionManager: Update cons in [(46,43,0)]
+[INFO]	connectionManager: Update cons in [(44,44,0)]
+[INFO]	connectionManager: Update cons in [(45,44,0)]
+[INFO]	connectionManager: Update cons in [(46,44,0)]
+[INFO]	connectionManager: Update cons in [(44,45,0)]
+[INFO]	connectionManager: Update cons in [(45,45,0)]
+[INFO]	connectionManager:  unregistering nic #1280
+[INFO]	connectionManager: Update cons in [(15,17,0)]
+[INFO]	connectionManager: Update cons in [(16,17,0)]
+[INFO]	connectionManager: Update cons in [(17,17,0)]
+[INFO]	connectionManager: Update cons in [(15,15,0)]
+[INFO]	connectionManager: Update cons in [(16,15,0)]
+[INFO]	connectionManager: Update cons in [(17,15,0)]
+[INFO]	connectionManager: Update cons in [(15,16,0)]
+[INFO]	connectionManager: Update cons in [(16,16,0)]
+[INFO]	connectionManager: Update cons in [(17,16,0)]
+[INFO]	connectionManager:  unregistering nic #1574
+[INFO]	connectionManager: Update cons in [(22,26,0)]
+[INFO]	connectionManager: Update cons in [(20,27,0)]
+[INFO]	connectionManager: Update cons in [(21,27,0)]
+[INFO]	connectionManager: Update cons in [(22,27,0)]
+[INFO]	connectionManager: Update cons in [(20,25,0)]
+[INFO]	connectionManager: Update cons in [(21,25,0)]
+[INFO]	connectionManager: Update cons in [(22,25,0)]
+[INFO]	connectionManager: Update cons in [(20,26,0)]
+[INFO]	connectionManager: Update cons in [(21,26,0)]
+[INFO]	connectionManager:  unregistering nic #812
+[INFO]	connectionManager: Update cons in [(33,30,0)]
+[INFO]	connectionManager: Update cons in [(34,30,0)]
+[INFO]	connectionManager: Update cons in [(32,31,0)]
+[INFO]	connectionManager: Update cons in [(33,31,0)]
+[INFO]	connectionManager: Update cons in [(34,31,0)]
+[INFO]	connectionManager: Update cons in [(32,29,0)]
+[INFO]	connectionManager: Update cons in [(33,29,0)]
+[INFO]	connectionManager: Update cons in [(34,29,0)]
+[INFO]	connectionManager: Update cons in [(32,30,0)]
+[INFO]	connectionManager:  unregistering nic #1628
+[INFO]	connectionManager: Update cons in [(41,50,0)]
+[INFO]	connectionManager: Update cons in [(39,51,0)]
+[INFO]	connectionManager: Update cons in [(40,51,0)]
+[INFO]	connectionManager: Update cons in [(41,51,0)]
+[INFO]	connectionManager: Update cons in [(39,52,0)]
+[INFO]	connectionManager: Update cons in [(40,52,0)]
+[INFO]	connectionManager: Update cons in [(41,52,0)]
+[INFO]	connectionManager: Update cons in [(39,50,0)]
+[INFO]	connectionManager: Update cons in [(40,50,0)]
+[INFO]	connectionManager:  unregistering nic #104
+[INFO]	connectionManager: Update cons in [(23,31,0)]
+[INFO]	connectionManager: Update cons in [(24,31,0)]
+[INFO]	connectionManager: Update cons in [(22,32,0)]
+[INFO]	connectionManager: Update cons in [(23,32,0)]
+[INFO]	connectionManager: Update cons in [(24,32,0)]
+[INFO]	connectionManager: Update cons in [(22,33,0)]
+[INFO]	connectionManager: Update cons in [(23,33,0)]
+[INFO]	connectionManager: Update cons in [(24,33,0)]
+[INFO]	connectionManager: Update cons in [(22,31,0)]
+[INFO]	connectionManager:  unregistering nic #1358
+[INFO]	connectionManager: Update cons in [(33,36,0)]
+[INFO]	connectionManager: Update cons in [(34,36,0)]
+[INFO]	connectionManager: Update cons in [(32,34,0)]
+[INFO]	connectionManager: Update cons in [(33,34,0)]
+[INFO]	connectionManager: Update cons in [(34,34,0)]
+[INFO]	connectionManager: Update cons in [(32,35,0)]
+[INFO]	connectionManager: Update cons in [(33,35,0)]
+[INFO]	connectionManager: Update cons in [(34,35,0)]
+[INFO]	connectionManager: Update cons in [(32,36,0)]
+[INFO]	connectionManager:  unregistering nic #842
+[INFO]	connectionManager: Update cons in [(30,40,0)]
+[INFO]	connectionManager: Update cons in [(28,41,0)]
+[INFO]	connectionManager: Update cons in [(29,41,0)]
+[INFO]	connectionManager: Update cons in [(30,41,0)]
+[INFO]	connectionManager: Update cons in [(28,39,0)]
+[INFO]	connectionManager: Update cons in [(29,39,0)]
+[INFO]	connectionManager: Update cons in [(30,39,0)]
+[INFO]	connectionManager: Update cons in [(28,40,0)]
+[INFO]	connectionManager: Update cons in [(29,40,0)]
+[INFO]	connectionManager:  unregistering nic #1490
+[INFO]	connectionManager: Update cons in [(21,32,0)]
+[INFO]	connectionManager: Update cons in [(22,32,0)]
+[INFO]	connectionManager: Update cons in [(20,33,0)]
+[INFO]	connectionManager: Update cons in [(21,33,0)]
+[INFO]	connectionManager: Update cons in [(22,33,0)]
+[INFO]	connectionManager: Update cons in [(20,31,0)]
+[INFO]	connectionManager: Update cons in [(21,31,0)]
+[INFO]	connectionManager: Update cons in [(22,31,0)]
+[INFO]	connectionManager: Update cons in [(20,32,0)]
+[INFO]	connectionManager:  unregistering nic #1910
+[INFO]	connectionManager: Update cons in [(29,29,0)]
+[INFO]	connectionManager: Update cons in [(27,30,0)]
+[INFO]	connectionManager: Update cons in [(28,30,0)]
+[INFO]	connectionManager: Update cons in [(29,30,0)]
+[INFO]	connectionManager: Update cons in [(27,28,0)]
+[INFO]	connectionManager: Update cons in [(28,28,0)]
+[INFO]	connectionManager: Update cons in [(29,28,0)]
+[INFO]	connectionManager: Update cons in [(27,29,0)]
+[INFO]	connectionManager: Update cons in [(28,29,0)]
+[INFO]	connectionManager:  unregistering nic #1598
+[INFO]	connectionManager: Update cons in [(43,52,0)]
+[INFO]	connectionManager: Update cons in [(41,50,0)]
+[INFO]	connectionManager: Update cons in [(42,50,0)]
+[INFO]	connectionManager: Update cons in [(43,50,0)]
+[INFO]	connectionManager: Update cons in [(41,51,0)]
+[INFO]	connectionManager: Update cons in [(42,51,0)]
+[INFO]	connectionManager: Update cons in [(43,51,0)]
+[INFO]	connectionManager: Update cons in [(41,52,0)]
+[INFO]	connectionManager: Update cons in [(42,52,0)]
+[INFO]	connectionManager:  unregistering nic #890
+[INFO]	connectionManager: Update cons in [(27,44,0)]
+[INFO]	connectionManager: Update cons in [(28,44,0)]
+[INFO]	connectionManager: Update cons in [(26,42,0)]
+[INFO]	connectionManager: Update cons in [(27,42,0)]
+[INFO]	connectionManager: Update cons in [(28,42,0)]
+[INFO]	connectionManager: Update cons in [(26,43,0)]
+[INFO]	connectionManager: Update cons in [(27,43,0)]
+[INFO]	connectionManager: Update cons in [(28,43,0)]
+[INFO]	connectionManager: Update cons in [(26,44,0)]
+[INFO]	connectionManager:  unregistering nic #1766
+[INFO]	connectionManager: Update cons in [(40,36,0)]
+[INFO]	connectionManager: Update cons in [(38,37,0)]
+[INFO]	connectionManager: Update cons in [(39,37,0)]
+[INFO]	connectionManager: Update cons in [(40,37,0)]
+[INFO]	connectionManager: Update cons in [(38,35,0)]
+[INFO]	connectionManager: Update cons in [(39,35,0)]
+[INFO]	connectionManager: Update cons in [(40,35,0)]
+[INFO]	connectionManager: Update cons in [(38,36,0)]
+[INFO]	connectionManager: Update cons in [(39,36,0)]
+[INFO]	connectionManager:  unregistering nic #1514
+[INFO]	connectionManager: Update cons in [(42,58,0)]
+[INFO]	connectionManager: Update cons in [(43,58,0)]
+[INFO]	connectionManager: Update cons in [(44,58,0)]
+[INFO]	connectionManager: Update cons in [(42,56,0)]
+[INFO]	connectionManager: Update cons in [(43,56,0)]
+[INFO]	connectionManager: Update cons in [(44,56,0)]
+[INFO]	connectionManager: Update cons in [(42,57,0)]
+[INFO]	connectionManager: Update cons in [(43,57,0)]
+[INFO]	connectionManager: Update cons in [(44,57,0)]
+[INFO]	connectionManager:  unregistering nic #1808
+[INFO]	connectionManager: Update cons in [(27,38,0)]
+[INFO]	connectionManager: Update cons in [(25,39,0)]
+[INFO]	connectionManager: Update cons in [(26,39,0)]
+[INFO]	connectionManager: Update cons in [(27,39,0)]
+[INFO]	connectionManager: Update cons in [(25,40,0)]
+[INFO]	connectionManager: Update cons in [(26,40,0)]
+[INFO]	connectionManager: Update cons in [(27,40,0)]
+[INFO]	connectionManager: Update cons in [(25,38,0)]
+[INFO]	connectionManager: Update cons in [(26,38,0)]
+[INFO]	connectionManager:  unregistering nic #1250
+[INFO]	connectionManager: Update cons in [(27,38,0)]
+[INFO]	connectionManager: Update cons in [(25,36,0)]
+[INFO]	connectionManager: Update cons in [(26,36,0)]
+[INFO]	connectionManager: Update cons in [(27,36,0)]
+[INFO]	connectionManager: Update cons in [(25,37,0)]
+[INFO]	connectionManager: Update cons in [(26,37,0)]
+[INFO]	connectionManager: Update cons in [(27,37,0)]
+[INFO]	connectionManager: Update cons in [(25,38,0)]
+[INFO]	connectionManager: Update cons in [(26,38,0)]
+[INFO]	connectionManager:  unregistering nic #1364
+[INFO]	connectionManager: Update cons in [(34,44,0)]
+[INFO]	connectionManager: Update cons in [(32,42,0)]
+[INFO]	connectionManager: Update cons in [(33,42,0)]
+[INFO]	connectionManager: Update cons in [(34,42,0)]
+[INFO]	connectionManager: Update cons in [(32,43,0)]
+[INFO]	connectionManager: Update cons in [(33,43,0)]
+[INFO]	connectionManager: Update cons in [(34,43,0)]
+[INFO]	connectionManager: Update cons in [(32,44,0)]
+[INFO]	connectionManager: Update cons in [(33,44,0)]

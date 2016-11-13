@@ -1,0 +1,64 @@
+src/Makefile
+src/*.so
+src/**/*_m.h
+src/**/*_m.cc
+
+doc/doxy
+doc/neddoc
+
+/run
+/debug
+/memcheck
+
+/out
+
+tests/**/results
+tests/**/.tkenvrc
+tests/**/out.tmp
+tests/**/err.tmp
+
+examples/**/results
+examples/**/.tkenvrc
+examples/**/valgrind.out
+
+# Prerequisites
+*.d
+
+# Compiled Object files
+*.slo
+*.lo
+*.o
+*.obj
+
+# Precompiled Headers
+*.gch
+*.pch
+
+# Compiled Dynamic libraries
+*.so
+*.dylib
+*.dll
+
+# Fortran module files
+*.mod
+*.smod
+
+# Compiled Static libraries
+*.lai
+*.la
+*.a
+*.lib
+
+# Executables
+*.exe
+*.out
+*.app
+
+# VIM swap
+*.swp
+
+# ctags
+tags
+
+# cscope
+cscope.out
