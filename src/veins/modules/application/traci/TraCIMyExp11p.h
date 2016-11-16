@@ -40,6 +40,7 @@ class TraCIMyExp11p : public BaseWaveApplLayer {
 	public:
 		virtual void initialize(int stage);
 		virtual void receiveSignal(cComponent* source, simsignal_t signalID, cObject* obj, cObject* details);
+		virtual void finish();
 	protected:
 		TraCIMobility* mobility;
 		TraCICommandInterface* traci;
@@ -53,8 +54,19 @@ class TraCIMyExp11p : public BaseWaveApplLayer {
 		double recvDataLength;
 		double sendDataLength;
 
+		double sendNearPosibility;
+
 		BaseConnectionManager *bcm;
 		TraCIScenarioManagerLaunchd* traciSMLd;
+
+		/**
+		 * record the current neighbor count
+		 */
+		cOutVector currentNeighborCnt;
+		int prevNeighborCnt;
+
+		cMessage sendMessageSignal;
+		const static simsignalwrap_t neighborCntStatistic;
 	protected:
 		virtual void onBeacon(WaveShortMessage* wsm);
 		virtual void onData(WaveShortMessage* wsm);
@@ -62,6 +74,7 @@ class TraCIMyExp11p : public BaseWaveApplLayer {
 		virtual void handlePositionUpdate(cObject* obj);
 		virtual void handleParkingUpdate(cObject* obj);
 		virtual void sendWSM(WaveShortMessage* wsm);
+		virtual void handleSelfMsg(cMessage* msg);
 
 		Coord getMyPosition() const;
 		const NicEntry::GateList* getMyNicGateList() const;
@@ -74,6 +87,14 @@ class TraCIMyExp11p : public BaseWaveApplLayer {
 
 		static const NeighborNodeSet getNeighborNodes(const BaseConnectionManager* const bcm,
 					const cModule* host);
+
+		typedef std::vector<cModule*> NodeVector;
+
+		static NodeVector getFarNodes(TraCIScenarioManagerLaunchd* traciSMLd,
+					const BaseConnectionManager* const bcm,
+					const cModule* host);
+
+		NodeVector getHostFarNodes();
 };
 
 #endif

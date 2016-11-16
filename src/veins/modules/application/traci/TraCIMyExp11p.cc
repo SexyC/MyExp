@@ -26,6 +26,8 @@ using Veins::AnnotationManagerAccess;
 
 const simsignalwrap_t TraCIMyExp11p::parkingStateChangedSignal = simsignalwrap_t(TRACI_SIGNAL_PARKING_CHANGE_NAME);
 
+const simsignalwrap_t TraCIMyExp11p::neighborCntStatistic = simsignalwrap_t("neighborCntStatistic");
+
 Define_Module(TraCIMyExp11p);
 
 Coord TraCIMyExp11p::getMyPosition() const {
@@ -75,6 +77,30 @@ TraCIMyExp11p::getNeighborNodes(const BaseConnectionManager* const bcm,
 
 }
 
+TraCIMyExp11p::NodeVector
+TraCIMyExp11p::getFarNodes(TraCIScenarioManagerLaunchd* traciSMLd,
+			const BaseConnectionManager* const bcm,
+			const cModule* host) {
+
+	NeighborNodeSet nns = getNeighborNodes(bcm, host);
+	const std::map<std::string, cModule*> &hosts = traciSMLd->getManagedHosts();
+
+	TraCIMyExp11p::NodeVector result;
+	result.reserve(hosts.size() - nns.size());
+
+	for (auto iter = hosts.begin(); iter != hosts.end(); ++iter) {
+		if (nns.find(iter->second) == nns.end()) {
+			result.push_back(iter->second);
+		}
+	}
+
+	return result;
+}
+
+TraCIMyExp11p::NodeVector
+TraCIMyExp11p::getHostFarNodes() {
+	return getFarNodes(traciSMLd, bcm, findHost());
+}
 
 void TraCIMyExp11p::initialize(int stage) {
 	BaseWaveApplLayer::initialize(stage);
@@ -106,11 +132,23 @@ void TraCIMyExp11p::initialize(int stage) {
 		Coord pos = getMyPosition();
 		bcm->registerNic(this->getParentModule()->getSubmodule("nic"), (ChannelAccess*) this->getParentModule()->getSubmodule("nic")->getSubmodule("phy80211p"), &pos);
 
+		currentNeighborCnt.setName("neighbor_cnt");
+		prevNeighborCnt = -1;
+
+		sendNearPosibility = par("sendNearPosibility").doubleValue();
+
 		//for(auto i = hosts.begin(); i != hosts.end(); ++i) {
 		//	std::cout << i->first << " " << i->second->getName() << std::endl;
 		//}
 		//std::cout << std::endl;
+	} else if (stage == 1) {
+		scheduleAt(simTime() + 10, &sendMessageSignal);
 	}
+}
+
+void TraCIMyExp11p::finish() {
+
+	recordScalar("final_neighbor_count", prevNeighborCnt);
 }
 
 void TraCIMyExp11p::onBeacon(WaveShortMessage* wsm) {
@@ -135,6 +173,7 @@ void TraCIMyExp11p::sendMessage(std::string blockedRoadId) {
 	wsm->setWsmData(blockedRoadId.c_str());
 	sendWSM(wsm);
 }
+
 void TraCIMyExp11p::receiveSignal(cComponent* source, simsignal_t signalID, cObject* obj, cObject* details) {
 	Enter_Method_Silent();
 	if (signalID == mobilityStateChangedSignal) {
@@ -144,6 +183,10 @@ void TraCIMyExp11p::receiveSignal(cComponent* source, simsignal_t signalID, cObj
 		handleParkingUpdate(obj);
 	}
 }
+
+void TraCIMyExp11p::handleSelfMsg(cMessage* msg) {
+}
+
 void TraCIMyExp11p::handleParkingUpdate(cObject* obj) {
 	isParking = mobility->getParkingState();
 	if (sendWhileParking == false) {
@@ -156,6 +199,7 @@ void TraCIMyExp11p::handleParkingUpdate(cObject* obj) {
 		}
 	}
 }
+
 void TraCIMyExp11p::handlePositionUpdate(cObject* obj) {
 	BaseWaveApplLayer::handlePositionUpdate(obj);
 
@@ -176,22 +220,37 @@ void TraCIMyExp11p::handlePositionUpdate(cObject* obj) {
 
 	const NicEntry::GateList* gl = getMyNicGateList();
 	const cModule* host = this->getParentModule();
-	//std::cout << host->getName() << " " << gl->size() << " gl size" << std::endl;
-
-	//for(auto i = hosts.begin(); i != hosts.end(); ++i) {
-	//	std::cout << i->first << " " << getHostPosition(i->second).info() << std::endl;
-	//}
-	//std::cout << std::endl;
+//	std::cout << host->getName() << " " << gl->size() << " gl size" << std::endl;
+//
+//	for(auto i = hosts.begin(); i != hosts.end(); ++i) {
+//		std::cout << i->first << " " << getHostPosition(i->second).info() << std::endl;
+//	}
+//	std::cout << std::endl;
 	NeighborNodeSet neighborNodes = getNeighborNodes(bcm, findHost());
 
-	std::cout << "Host name: " << findHost()->getName() 
-		<< " pos: " << getMyPosition()
-		<< std::endl;
+	if ((int) neighborNodes.size() != prevNeighborCnt) {
+		currentNeighborCnt.record(neighborNodes.size());
+		prevNeighborCnt = neighborNodes.size();
+		emit(neighborCntStatistic, neighborNodes.size());
+	}
 
-	for (auto iter = neighborNodes.begin(); iter != neighborNodes.end(); ++iter) {
-		std::cout << (*iter)->getName() 
-			<< " pos: " << getHostPosition(*iter)
-			<< std::endl;
+
+
+	//std::cout << "Host name: " << findHost()->getName() 
+	//	<< " pos: " << getMyPosition()
+	//	<< std::endl;
+	
+	//for (auto iter = neighborNodes.begin(); iter != neighborNodes.end(); ++iter) {
+	//	std::cout << (*iter)->getName() 
+	//		<< " pos: " << getHostPosition(*iter)
+	//		<< std::endl;
+	//}
+	//std::cout << std::endl;
+	
+	NodeVector nv = getHostFarNodes();
+
+	for (auto iter = nv.begin(); iter != nv.end(); ++iter) {
+		std::cout << (*iter)->getName() << std::endl;
 	}
 	std::cout << std::endl;
 }

@@ -25,5 +25,9 @@ simple TraCIMyExp11p extends BaseWaveApplLayer
 {
     @class(TraCIMyExp11p);
     @display("i=block/MyExp11p");
+	@signal[neighborCntStatistic](type=unsigned long);
+	@statistic[neighborCntStatistic](record=max,mean);
     bool sendWhileParking  = default(false); //send messages when the car is parked
+	double sendNearPosibility = default(0.5);
+	double packetSentInterval = default(1);
 }
