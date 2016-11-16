@@ -27,11 +27,17 @@
 #include "veins/modules/mobility/traci/TraCICommandInterface.h"
 #include "veins/modules/mobility/traci/TraCIScenarioManagerLaunchd.h"
 
+#include "veins/modules/messages/WaveShortMessageWithDst_m.h"
+
+#include <limits>
+
 using Veins::TraCIMobility;
 using Veins::TraCICommandInterface;
 using Veins::TraCIScenarioManagerLaunchd;
 using Veins::TraCIScenarioManagerLaunchdAccess;
 using Veins::AnnotationManager;
+
+using std::vector;
 
 /**
  * Small IVC Demo using 11p
@@ -42,6 +48,34 @@ class TraCIMyExp11p : public BaseWaveApplLayer {
 		virtual void receiveSignal(cComponent* source, simsignal_t signalID, cObject* obj, cObject* details);
 		virtual void finish();
 	protected:
+		typedef std::unordered_set<cModule*> NeighborNodeSet;
+		typedef std::vector<cModule*> NodeVector;
+
+		/**
+		 * Do not access this below four vars directly
+		 * use getCachedFarNodes and getCachedNeighborNodes
+		 */
+		TraCIMyExp11p::NeighborNodeSet neighborNodes;
+		simtime_t neighborNodesUpdateTime;
+		TraCIMyExp11p::NodeVector farNodes;
+		simtime_t farNodesUpdateTime;
+
+		TraCIMyExp11p::NeighborNodeSet* getCachedNeighborNodes() {
+			if (simTime() != neighborNodesUpdateTime) {
+				neighborNodesUpdateTime = simTime();
+				neighborNodes = getNeighborNodes(bcm, findHost());
+			}
+			return &neighborNodes;
+		}
+
+		TraCIMyExp11p::NodeVector* getCachedFarNodes() {
+			if (simTime() != farNodesUpdateTime) {
+				farNodesUpdateTime = simTime();
+				farNodes = getHostFarNodes();
+			}
+			return &farNodes;
+		}
+
 		TraCIMobility* mobility;
 		TraCICommandInterface* traci;
 		TraCICommandInterface::Vehicle* traciVehicle;
@@ -55,6 +89,11 @@ class TraCIMyExp11p : public BaseWaveApplLayer {
 		double sendDataLength;
 
 		double sendNearPosibility;
+		unsigned long packetSentInterval;
+
+		int sequenceNum;
+		unsigned long packetLenMin;
+		unsigned long packetLenMax;
 
 		BaseConnectionManager *bcm;
 		TraCIScenarioManagerLaunchd* traciSMLd;
@@ -70,11 +109,20 @@ class TraCIMyExp11p : public BaseWaveApplLayer {
 	protected:
 		virtual void onBeacon(WaveShortMessage* wsm);
 		virtual void onData(WaveShortMessage* wsm);
-		void sendMessage(std::string blockedRoadId);
+		void sendMessage(int dstId, int nextHopId, std::string content);
 		virtual void handlePositionUpdate(cObject* obj);
 		virtual void handleParkingUpdate(cObject* obj);
 		virtual void sendWSM(WaveShortMessage* wsm);
+
+		virtual cModule* getDstNode();
+		virtual unsigned long getPkgLen() {
+			if (packetLenMax == packetLenMin) { return packetLenMax; }
+			return (unsigned long)(uniform(packetLenMin, packetLenMax));
+		}
+
 		virtual void handleSelfMsg(cMessage* msg);
+		virtual WaveShortMessageWithDst* prepareWSMWithDst(std::string name, int lengthBits,
+					t_channel channel, int priority, int rcvId, int serial, Coord &rcvPos);
 
 		Coord getMyPosition() const;
 		const NicEntry::GateList* getMyNicGateList() const;
@@ -83,18 +131,38 @@ class TraCIMyExp11p : public BaseWaveApplLayer {
 		static const NicEntry::GateList* getHostNicGateList(const BaseConnectionManager* const bcm,
 					const cModule* host);
 
-		typedef std::unordered_set<cModule*> NeighborNodeSet;
 
 		static const NeighborNodeSet getNeighborNodes(const BaseConnectionManager* const bcm,
 					const cModule* host);
 
-		typedef std::vector<cModule*> NodeVector;
 
-		static NodeVector getFarNodes(TraCIScenarioManagerLaunchd* traciSMLd,
+		static NodeVector getFarNodes(NeighborNodeSet* nns, TraCIScenarioManagerLaunchd* traciSMLd,
 					const BaseConnectionManager* const bcm,
 					const cModule* host);
 
 		NodeVector getHostFarNodes();
+
+		static double distSqr(Coord& c1, Coord& c2) {
+			return (c1.x - c2.x) * (c1.x - c2.x)
+				+ (c1.y - c2.y) * (c1.y - c2.y)
+				+ (c1.z - c2.z) * (c1.z - c2.z);
+		}
+
+		static int getNearestNodeToPos(NeighborNodeSet& nodes, Coord& pos) {
+			double minDistSqr = (std::numeric_limits<double>::max)();
+			int minDistNodeId = 0;
+
+			for (auto iter = nodes.begin(); iter != nodes.end(); ++iter) {
+				Coord nodePos = getHostPosition(*iter);
+				double currDistSqr = distSqr(nodePos, pos);
+				if (currDistSqr < minDistSqr) {
+					minDistSqr = currDistSqr;
+					minDistNodeId = (*iter)->getId();
+				}
+			}
+
+			return minDistNodeId;
+		}
 };
 
 #endif

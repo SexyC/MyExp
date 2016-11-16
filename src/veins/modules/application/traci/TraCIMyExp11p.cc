@@ -78,18 +78,17 @@ TraCIMyExp11p::getNeighborNodes(const BaseConnectionManager* const bcm,
 }
 
 TraCIMyExp11p::NodeVector
-TraCIMyExp11p::getFarNodes(TraCIScenarioManagerLaunchd* traciSMLd,
+TraCIMyExp11p::getFarNodes(NeighborNodeSet* nns, TraCIScenarioManagerLaunchd* traciSMLd,
 			const BaseConnectionManager* const bcm,
 			const cModule* host) {
 
-	NeighborNodeSet nns = getNeighborNodes(bcm, host);
 	const std::map<std::string, cModule*> &hosts = traciSMLd->getManagedHosts();
 
 	TraCIMyExp11p::NodeVector result;
-	result.reserve(hosts.size() - nns.size());
+	result.reserve(hosts.size() - nns->size());
 
 	for (auto iter = hosts.begin(); iter != hosts.end(); ++iter) {
-		if (nns.find(iter->second) == nns.end()) {
+		if (nns->find(iter->second) == nns->end()) {
 			result.push_back(iter->second);
 		}
 	}
@@ -97,9 +96,9 @@ TraCIMyExp11p::getFarNodes(TraCIScenarioManagerLaunchd* traciSMLd,
 	return result;
 }
 
-TraCIMyExp11p::NodeVector
-TraCIMyExp11p::getHostFarNodes() {
-	return getFarNodes(traciSMLd, bcm, findHost());
+TraCIMyExp11p::NodeVector TraCIMyExp11p::getHostFarNodes() {
+	NeighborNodeSet* nns = getCachedNeighborNodes();
+	return getFarNodes(nns, traciSMLd, bcm, findHost());
 }
 
 void TraCIMyExp11p::initialize(int stage) {
@@ -126,23 +125,49 @@ void TraCIMyExp11p::initialize(int stage) {
 			assertTrue("Could not find BaseConnectionManager module", false);
 		}
 
-		//const std::map<std::string, cModule*> &hosts = traciSMLd->getManagedHosts();
-
 		// register nic to connection manager
 		Coord pos = getMyPosition();
 		bcm->registerNic(this->getParentModule()->getSubmodule("nic"), (ChannelAccess*) this->getParentModule()->getSubmodule("nic")->getSubmodule("phy80211p"), &pos);
 
+		/**
+		 * Set neighbor node count statistics
+		 */
 		currentNeighborCnt.setName("neighbor_cnt");
 		prevNeighborCnt = -1;
 
-		sendNearPosibility = par("sendNearPosibility").doubleValue();
+		sequenceNum = 0;
 
-		//for(auto i = hosts.begin(); i != hosts.end(); ++i) {
-		//	std::cout << i->first << " " << i->second->getName() << std::endl;
-		//}
-		//std::cout << std::endl;
+		if (hasPar("sendNearPosibility")) {
+			sendNearPosibility = par("sendNearPosibility").doubleValue();
+		} else {
+			sendNearPosibility = .5;
+		}
+
+		if (hasPar("packetSentInterval")) {
+			packetSentInterval = par("packetSentInterval");
+		} else {
+			packetSentInterval = 10;
+		}
+
+		if (hasPar("packetLenMin")) {
+			packetLenMin = par("packetLenMin");
+		} else {
+			packetLenMin = 1024;
+		}
+	
+		if (hasPar("packetLenMax")) {
+			packetLenMax = par("packetLenMax");
+		} else {
+			packetLenMax = 1024;
+		}
+
+		assertTrue("packetLenMax can not be less than packetLenMin",
+					packetLenMax >= packetLenMin);
+
 	} else if (stage == 1) {
-		scheduleAt(simTime() + 10, &sendMessageSignal);
+		if (packetSentInterval > 0) {
+			scheduleAt(simTime() + packetSentInterval, &sendMessageSignal);
+		}
 	}
 }
 
@@ -156,21 +181,24 @@ void TraCIMyExp11p::onBeacon(WaveShortMessage* wsm) {
 
 void TraCIMyExp11p::onData(WaveShortMessage* wsm) {
 	cModule *host = findHost();
-	//findHost()->getDisplayString().updateWith("r=16,green");
+	findHost()->getDisplayString().updateWith("r=16,green");
 	host->getDisplayString().updateWith("r=16,green");
 	annotations->scheduleErase(1, annotations->drawLine(wsm->getSenderPos(), mobility->getPositionAt(simTime()), "blue"));
 
 	EV << wsm->getWsmData() << std::endl;
-	//if (mobility->getRoadId()[0] != ':') traciVehicle->changeRoute(wsm->getWsmData(), 9999);
-	//if (!sentMessage) sendMessage(wsm->getWsmData());
 }
 
-void TraCIMyExp11p::sendMessage(std::string blockedRoadId) {
+void TraCIMyExp11p::sendMessage(int dstId, int nextHopId, std::string content) {
 	sentMessage = true;
 
 	t_channel channel = dataOnSch ? type_SCH : type_CCH;
-	WaveShortMessage* wsm = prepareWSM("data", dataLengthBits, channel, dataPriority, -1,2);
-	wsm->setWsmData(blockedRoadId.c_str());
+
+	Coord currPos = getMyPosition();
+	WaveShortMessageWithDst* wsm = prepareWSMWithDst("data", dataLengthBits, channel, dataPriority,
+				dstId, sequenceNum++, currPos);
+
+	wsm->setNextHopId(nextHopId);
+	wsm->setWsmData(content.c_str());
 	sendWSM(wsm);
 }
 
@@ -185,6 +213,47 @@ void TraCIMyExp11p::receiveSignal(cComponent* source, simsignal_t signalID, cObj
 }
 
 void TraCIMyExp11p::handleSelfMsg(cMessage* msg) {
+	scheduleAt(simTime() + packetSentInterval, msg);
+	cModule* dstMod = getDstNode();
+	Coord dstPos = getHostPosition(dstMod);
+
+	NeighborNodeSet* nns = getCachedNeighborNodes();
+	int nextHopId = getNearestNodeToPos(*nns, dstPos);
+
+	std::stringstream ss;
+	unsigned long pkgLen = getPkgLen();
+	ss << pkgLen;
+	sendMessage(dstMod->getId(), nextHopId, ss.str());
+}
+
+WaveShortMessageWithDst* TraCIMyExp11p::prepareWSMWithDst(std::string name, int lengthBits,
+			t_channel channel, int priority, int rcvId, int serial, Coord &rcvPos) {
+	WaveShortMessageWithDst* wsm = new WaveShortMessageWithDst(name.c_str());
+	wsm->addBitLength(headerLength);
+	wsm->addBitLength(lengthBits);
+
+	switch (channel) {
+		case type_SCH: wsm->setChannelNumber(Channels::SCH1); break; //will be rewritten at Mac1609_4 to actual Service Channel. This is just so no controlInfo is needed
+		case type_CCH: wsm->setChannelNumber(Channels::CCH); break;
+	}
+	wsm->setPsid(0);
+	wsm->setPriority(priority);
+	wsm->setWsmVersion(1);
+	wsm->setTimestamp(simTime());
+	wsm->setSenderAddress(myId);
+	wsm->setRecipientAddress(rcvId);
+	wsm->setSenderPos(curPosition);
+	wsm->setSerial(serial);
+	wsm->setDstHostPos(rcvPos);
+
+	if (name == "beacon") {
+		EV << "Creating Beacon with Priority " << priority << " at Applayer at " << wsm->getTimestamp() << std::endl;
+	}
+	if (name == "data") {
+		EV << "Creating Data with Priority " << priority << " at Applayer at " << wsm->getTimestamp() << std::endl;
+	}
+
+	return wsm;
 }
 
 void TraCIMyExp11p::handleParkingUpdate(cObject* obj) {
@@ -203,59 +272,39 @@ void TraCIMyExp11p::handleParkingUpdate(cObject* obj) {
 void TraCIMyExp11p::handlePositionUpdate(cObject* obj) {
 	BaseWaveApplLayer::handlePositionUpdate(obj);
 
-	// stopped for for at least 10s?
-	if (mobility->getSpeed() < 1) {
-		if (simTime() - lastDroveAt >= 10) {
-			findHost()->getDisplayString().updateWith("r=16,red");
-			if (!sentMessage) sendMessage(mobility->getRoadId());
-		}
-	}
-	else {
-		lastDroveAt = simTime();
-	}
-	Coord pos = mobility->getCurrentPosition();
-	//EV << simTime() << " " << findHost()->getName()
-	//	<< "change position to: " << pos.info() << std::endl;
-	const std::map<std::string, cModule*> &hosts = traciSMLd->getManagedHosts();
+	NeighborNodeSet* neighborNodes = getCachedNeighborNodes();
 
-	const NicEntry::GateList* gl = getMyNicGateList();
-	const cModule* host = this->getParentModule();
-//	std::cout << host->getName() << " " << gl->size() << " gl size" << std::endl;
-//
-//	for(auto i = hosts.begin(); i != hosts.end(); ++i) {
-//		std::cout << i->first << " " << getHostPosition(i->second).info() << std::endl;
-//	}
-//	std::cout << std::endl;
-	NeighborNodeSet neighborNodes = getNeighborNodes(bcm, findHost());
-
-	if ((int) neighborNodes.size() != prevNeighborCnt) {
-		currentNeighborCnt.record(neighborNodes.size());
-		prevNeighborCnt = neighborNodes.size();
-		emit(neighborCntStatistic, neighborNodes.size());
+	if ((int) neighborNodes->size() != prevNeighborCnt) {
+		currentNeighborCnt.record(neighborNodes->size());
+		prevNeighborCnt = neighborNodes->size();
+		emit(neighborCntStatistic, neighborNodes->size());
 	}
 
-
-
-	//std::cout << "Host name: " << findHost()->getName() 
-	//	<< " pos: " << getMyPosition()
-	//	<< std::endl;
-	
-	//for (auto iter = neighborNodes.begin(); iter != neighborNodes.end(); ++iter) {
-	//	std::cout << (*iter)->getName() 
-	//		<< " pos: " << getHostPosition(*iter)
-	//		<< std::endl;
-	//}
-	//std::cout << std::endl;
-	
-	NodeVector nv = getHostFarNodes();
-
-	for (auto iter = nv.begin(); iter != nv.end(); ++iter) {
-		std::cout << (*iter)->getName() << std::endl;
-	}
-	std::cout << std::endl;
 }
 
 void TraCIMyExp11p::sendWSM(WaveShortMessage* wsm) {
 	if (isParking && !sendWhileParking) return;
 	sendDelayedDown(wsm,individualOffset);
 }
+
+cModule* TraCIMyExp11p::getDstNode() {
+	double seed = uniform(0, 1);
+
+	if (seed <= sendNearPosibility) {
+		// get dst from neighbors
+		const TraCIMyExp11p::NeighborNodeSet* nns = getCachedNeighborNodes();
+		int idx = int(uniform(0, nns->size()));
+
+		auto iter = nns->begin();
+		for(int i = 0; i < idx; ++i) {
+			++iter;
+		}
+		return (*iter);
+	} else {
+		// get dst from far nodes
+		NodeVector* nv = getCachedFarNodes();
+		int idx = int(uniform(0, nv->size()));
+		return (*nv)[idx];
+	}
+}
+

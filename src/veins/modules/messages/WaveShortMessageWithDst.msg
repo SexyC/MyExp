@@ -1,5 +1,5 @@
 //
-// Copyright (C) 2006-2011 Christoph Sommer <christoph.sommer@uibk.ac.at>
+// Copyright (C) 2011 David Eckhoff <eckhoff@cs.fau.de>
 //
 // Documentation for these modules is at http://veins.car2x.org/
 //
@@ -18,20 +18,20 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 
-package org.car2x.veins.modules.application.traci;
-import org.car2x.veins.modules.application.ieee80211p.BaseWaveApplLayer;
+cplusplus {{
+#include "WaveShortMessage_m.h"
+#include "veins/base/utils/Coord.h"
+#include <queue>
+typedef std::queue<int> PathQueue;
+}}
 
-simple TraCIMyExp11p extends BaseWaveApplLayer
-{
-    @class(TraCIMyExp11p);
-    @display("i=block/MyExp11p");
-	@signal[neighborCntStatistic](type=unsigned long);
-	@statistic[neighborCntStatistic](record=max,mean);
-    bool sendWhileParking  = default(false); //send messages when the car is parked
-	double sendNearPosibility = default(0.5);
+class noncobject Coord;
+class WaveShortMessage;
+class noncobject PathQueue;
 
-	// setting this to 0
-	int packetSentInterval;
-	int packetLenMin = default(1024);  // unit: KB
-	int packetLenMax = default(1024);  // unit: KB
+packet WaveShortMessageWithDst extends WaveShortMessage {
+	int nextHopId;
+	PathQueue pathNodes;
+	Coord dstHostPos;
 }
+
