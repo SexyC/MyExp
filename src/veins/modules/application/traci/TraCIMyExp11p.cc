@@ -36,7 +36,9 @@ Coord TraCIMyExp11p::getMyPosition() const {
 
 Coord TraCIMyExp11p::getHostPosition(cModule* const host) {
 
-	//TraCIMobility* mobility = TraCIMobilityAccess().get(host);
+//	TraCIMobility* mobility = TraCIMobilityAccess().get(host);
+//
+//	return mobility->getPositionAt(simTime());
 
 	for (cModule::SubmoduleIterator iter(host); !iter.end(); ++iter) {
 		cModule* submod = SUBMODULE_ITERATOR_TO_MODULE(iter);
@@ -45,7 +47,8 @@ Coord TraCIMyExp11p::getHostPosition(cModule* const host) {
 		if (!mm) continue;
 		return mm->getPositionAt(simTime());
 	}
-	assertTrue("TraCIMyExp11p::getHostPosition host TraCIMobility not found", false);
+	std::cout << host->getName() << std::endl;
+	//ASSERT(false);
 	return Coord();
 	//assertTrue("can not get TraCIMobility from host", mobility != NULL);
 	//return mobility->getCurrentPosition();
@@ -70,7 +73,12 @@ TraCIMyExp11p::getNeighborNodes(const BaseConnectionManager* const bcm,
 
 	for (auto iter = gl->begin(); iter != gl->end(); ++iter) {
 		cModule* host = cSimulation::getActiveSimulation()->getModule(iter->first->hostId);
-		result.insert(host);
+		/**
+		 * Do not add rsu as neighbors
+		 */
+		if (strcmp(host->getName(), "rsu") != 0) {
+			result.insert(host);
+		}
 	}
 
 	return result;
@@ -112,6 +120,8 @@ void TraCIMyExp11p::initialize(int stage) {
 
 		sentMessage = false;
 		lastDroveAt = simTime();
+		neighborNodesUpdateTime = simTime();
+		farNodesUpdateTime = simTime();
 		findHost()->subscribe(parkingStateChangedSignal, this);
 		isParking = false;
 		sendWhileParking = par("sendWhileParking").boolValue();
@@ -161,8 +171,8 @@ void TraCIMyExp11p::initialize(int stage) {
 			packetLenMax = 1024;
 		}
 
-		assertTrue("packetLenMax can not be less than packetLenMin",
-					packetLenMax >= packetLenMin);
+//		assertTrue("packetLenMax can not be less than packetLenMin",
+//					packetLenMax >= packetLenMin);
 
 	} else if (stage == 1) {
 		if (packetSentInterval > 0) {
@@ -180,12 +190,21 @@ void TraCIMyExp11p::onBeacon(WaveShortMessage* wsm) {
 }
 
 void TraCIMyExp11p::onData(WaveShortMessage* wsm) {
+	WaveShortMessageWithDst* wsmd = dynamic_cast<WaveShortMessageWithDst*>(wsm);
+	/**
+	 * Note, current RSU appl will send WaveShortMessage instead of WaveShortMessageWithDst
+	 * which will violate this assert
+	 */
+	ASSERT(wsmd != NULL);
 	cModule *host = findHost();
 	findHost()->getDisplayString().updateWith("r=16,green");
 	host->getDisplayString().updateWith("r=16,green");
 	annotations->scheduleErase(1, annotations->drawLine(wsm->getSenderPos(), mobility->getPositionAt(simTime()), "blue"));
 
-	EV << wsm->getWsmData() << std::endl;
+	if (getId() == wsmd->getNextHopId()) {
+		std::cout << wsmd->getNextHopId() << " route id " << std::endl;
+	}
+	//std::cout << wsm->getWsmData() << std::endl;
 }
 
 void TraCIMyExp11p::sendMessage(int dstId, int nextHopId, std::string content) {
@@ -257,22 +276,26 @@ WaveShortMessageWithDst* TraCIMyExp11p::prepareWSMWithDst(std::string name, int 
 }
 
 void TraCIMyExp11p::handleParkingUpdate(cObject* obj) {
-	isParking = mobility->getParkingState();
-	if (sendWhileParking == false) {
-		if (isParking == true) {
-			(FindModule<BaseConnectionManager*>::findGlobalModule())->unregisterNic(this->getParentModule()->getSubmodule("nic"));
-		}
-		else {
-			Coord pos = mobility->getCurrentPosition();
-			(FindModule<BaseConnectionManager*>::findGlobalModule())->registerNic(this->getParentModule()->getSubmodule("nic"), (ChannelAccess*) this->getParentModule()->getSubmodule("nic")->getSubmodule("phy80211p"), &pos);
-		}
-	}
+	//isParking = mobility->getParkingState();
+	//if (sendWhileParking == false) {
+	//	if (isParking == true) {
+	//		(FindModule<BaseConnectionManager*>::findGlobalModule())->unregisterNic(this->getParentModule()->getSubmodule("nic"));
+	//	}
+	//	else {
+	//		Coord pos = mobility->getCurrentPosition();
+	//		(FindModule<BaseConnectionManager*>::findGlobalModule())->registerNic(this->getParentModule()->getSubmodule("nic"), (ChannelAccess*) this->getParentModule()->getSubmodule("nic")->getSubmodule("phy80211p"), &pos);
+	//	}
+	//}
 }
 
 void TraCIMyExp11p::handlePositionUpdate(cObject* obj) {
 	BaseWaveApplLayer::handlePositionUpdate(obj);
 
 	NeighborNodeSet* neighborNodes = getCachedNeighborNodes();
+
+	for (auto iter = neighborNodes->begin(); iter != neighborNodes->end(); ++iter) {
+		Coord nodePos = getHostPosition(*iter);
+	}
 
 	if ((int) neighborNodes->size() != prevNeighborCnt) {
 		currentNeighborCnt.record(neighborNodes->size());
@@ -283,7 +306,7 @@ void TraCIMyExp11p::handlePositionUpdate(cObject* obj) {
 }
 
 void TraCIMyExp11p::sendWSM(WaveShortMessage* wsm) {
-	if (isParking && !sendWhileParking) return;
+	//if (isParking && !sendWhileParking) return;
 	sendDelayedDown(wsm,individualOffset);
 }
 
