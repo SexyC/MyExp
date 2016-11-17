@@ -109,7 +109,7 @@ class TraCIMyExp11p : public BaseWaveApplLayer {
 	protected:
 		virtual void onBeacon(WaveShortMessage* wsm);
 		virtual void onData(WaveShortMessage* wsm);
-		void sendMessage(int dstId, int nextHopId, std::string content);
+		void sendMessage(cModule* dstMod, int nextHopId, std::string content);
 		virtual void handlePositionUpdate(cObject* obj);
 		virtual void handleParkingUpdate(cObject* obj);
 		virtual void sendWSM(WaveShortMessage* wsm);

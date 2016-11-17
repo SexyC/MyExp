@@ -226,6 +226,18 @@ void TraCIMyExp11p::onData(WaveShortMessage* wsm) {
 		return;
 	}
 
+	/**
+	 * If the dst node is out of our study region
+	 * Record data and drop packet
+	 */
+	std::string dstNodeId = wsmd->getDstNodeId();
+	const std::map<std::string, cModule*> &hosts = traciSMLd->getManagedHosts();
+
+	if (hosts.find(dstNodeId) == hosts.end()) {
+		std::cout << "[Shit] " << dstNodeId << " is out of our study region" << std::endl;
+		return;
+	}
+
 	if (findHost()->getId() == wsmd->getNextHopId()) {
 		//std::cout << wsmd->getNextHopId() << " route id " << std::endl;
 		NeighborNodeSet* nns = getCachedNeighborNodes();
@@ -247,17 +259,18 @@ void TraCIMyExp11p::onData(WaveShortMessage* wsm) {
 	//std::cout << wsm->getWsmData() << std::endl;
 }
 
-void TraCIMyExp11p::sendMessage(int dstId, int nextHopId, std::string content) {
+void TraCIMyExp11p::sendMessage(cModule* dstMod, int nextHopId, std::string content) {
 	sentMessage = true;
 
 	t_channel channel = dataOnSch ? type_SCH : type_CCH;
 
 	Coord currPos = getMyPosition();
 	WaveShortMessageWithDst* wsm = prepareWSMWithDst("data", dataLengthBits, channel, dataPriority,
-				dstId, sequenceNum++, currPos);
+				dstMod->getId(), sequenceNum++, currPos);
 
 	wsm->setNextHopId(nextHopId);
 	wsm->setWsmData(content.c_str());
+	wsm->setDstNodeId(dstMod->getName());
 	sendWSM(wsm);
 }
 
@@ -283,7 +296,7 @@ void TraCIMyExp11p::handleSelfMsg(cMessage* msg) {
 	std::stringstream ss;
 	unsigned long pkgLen = getPkgLen();
 	ss << pkgLen;
-	sendMessage(dstMod->getId(), nextHopId, ss.str());
+	sendMessage(dstMod, nextHopId, ss.str());
 }
 
 WaveShortMessageWithDst* TraCIMyExp11p::prepareWSMWithDst(std::string name, int lengthBits,
