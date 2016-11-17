@@ -201,7 +201,7 @@ void TraCIMyExp11p::onData(WaveShortMessage* wsm) {
 	host->getDisplayString().updateWith("r=16,green");
 	annotations->scheduleErase(1, annotations->drawLine(wsm->getSenderPos(), mobility->getPositionAt(simTime()), "blue"));
 
-	if (getId() == wsmd->getNextHopId()) {
+	if (findHost()->getId() == wsmd->getNextHopId()) {
 		std::cout << wsmd->getNextHopId() << " route id " << std::endl;
 	}
 	//std::cout << wsm->getWsmData() << std::endl;
