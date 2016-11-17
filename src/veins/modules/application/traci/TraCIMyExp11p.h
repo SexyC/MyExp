@@ -60,16 +60,16 @@ class TraCIMyExp11p : public BaseWaveApplLayer {
 		TraCIMyExp11p::NodeVector farNodes;
 		simtime_t farNodesUpdateTime;
 
-		TraCIMyExp11p::NeighborNodeSet* getCachedNeighborNodes() {
-			if (simTime() != neighborNodesUpdateTime) {
+		TraCIMyExp11p::NeighborNodeSet* getCachedNeighborNodes(bool forceUpdate = false) {
+			if (forceUpdate || simTime() != neighborNodesUpdateTime) {
 				neighborNodesUpdateTime = simTime();
 				neighborNodes = getNeighborNodes(bcm, findHost());
 			}
 			return &neighborNodes;
 		}
 
-		TraCIMyExp11p::NodeVector* getCachedFarNodes() {
-			if (simTime() != farNodesUpdateTime) {
+		TraCIMyExp11p::NodeVector* getCachedFarNodes(bool forceUpdate = false) {
+			if (forceUpdate || simTime() != farNodesUpdateTime) {
 				farNodesUpdateTime = simTime();
 				farNodes = getHostFarNodes();
 			}
@@ -128,6 +128,7 @@ class TraCIMyExp11p : public BaseWaveApplLayer {
 		const NicEntry::GateList* getMyNicGateList() const;
 
 		static Coord getHostPosition(cModule* const host);
+		static Coord getHostPosition(int hostId);
 		static const NicEntry::GateList* getHostNicGateList(const BaseConnectionManager* const bcm,
 					const cModule* host);
 

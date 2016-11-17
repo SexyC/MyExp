@@ -47,11 +47,17 @@ Coord TraCIMyExp11p::getHostPosition(cModule* const host) {
 		if (!mm) continue;
 		return mm->getPositionAt(simTime());
 	}
-	std::cout << host->getName() << std::endl;
-	//ASSERT(false);
+	//std::cout << host->getName() << std::endl;
+	ASSERT(false);
 	return Coord();
 	//assertTrue("can not get TraCIMobility from host", mobility != NULL);
 	//return mobility->getCurrentPosition();
+}
+
+Coord TraCIMyExp11p::getHostPosition(int hostId) {
+
+	cModule* host = cSimulation::getActiveSimulation()->getModule(hostId);
+	return TraCIMyExp11p::getHostPosition(host);
 }
 
 const NicEntry::GateList* TraCIMyExp11p::getMyNicGateList() const {
@@ -176,7 +182,8 @@ void TraCIMyExp11p::initialize(int stage) {
 
 	} else if (stage == 1) {
 		if (packetSentInterval > 0) {
-			scheduleAt(simTime() + packetSentInterval, &sendMessageSignal);
+			//scheduleAt(simTime() + packetSentInterval, &sendMessageSignal);
+			scheduleAt(simTime() + packetSentInterval, new cMessage());
 		}
 	}
 }
@@ -201,8 +208,41 @@ void TraCIMyExp11p::onData(WaveShortMessage* wsm) {
 	host->getDisplayString().updateWith("r=16,green");
 	annotations->scheduleErase(1, annotations->drawLine(wsm->getSenderPos(), mobility->getPositionAt(simTime()), "blue"));
 
+	/**
+	 * I'm the dst node
+	 */
+	if (findHost()->getId() == wsmd->getRecipientAddress()) {
+		std::cout << simTime().dbl() << " " 
+			<< wsmd->getSenderAddress() << " " << wsmd->getSerial() << " packet arrived at: " << wsmd->getRecipientAddress()
+			<< std::endl;
+		PathQueue& pq = wsmd->getPathNodes();
+
+		std::cout << wsmd->getSenderAddress() << "-->";
+		while (!pq.empty()) {
+			std::cout << pq.front() << "-->";
+			pq.pop();
+		}
+		std::cout << wsmd->getRecipientAddress() << std::endl;
+		return;
+	}
+
 	if (findHost()->getId() == wsmd->getNextHopId()) {
-		std::cout << wsmd->getNextHopId() << " route id " << std::endl;
+		//std::cout << wsmd->getNextHopId() << " route id " << std::endl;
+		NeighborNodeSet* nns = getCachedNeighborNodes();
+		/**
+		 * query current dst pos
+		 */
+		Coord dstPos = getHostPosition(wsmd->getRecipientAddress());
+		int nextHopId = getNearestNodeToPos(*nns, dstPos);
+		wsmd->getPathNodes().push(wsmd->getNextHopId());
+		wsmd->setNextHopId(nextHopId);
+
+		sendWSM(wsmd->dup());
+
+	} else {
+		/**
+		 * I'm not the next hop, do nothing, just drop it
+		 */
 	}
 	//std::cout << wsm->getWsmData() << std::endl;
 }
@@ -234,6 +274,7 @@ void TraCIMyExp11p::receiveSignal(cComponent* source, simsignal_t signalID, cObj
 void TraCIMyExp11p::handleSelfMsg(cMessage* msg) {
 	scheduleAt(simTime() + packetSentInterval, msg);
 	cModule* dstMod = getDstNode();
+
 	Coord dstPos = getHostPosition(dstMod);
 
 	NeighborNodeSet* nns = getCachedNeighborNodes();
@@ -291,11 +332,11 @@ void TraCIMyExp11p::handleParkingUpdate(cObject* obj) {
 void TraCIMyExp11p::handlePositionUpdate(cObject* obj) {
 	BaseWaveApplLayer::handlePositionUpdate(obj);
 
-	NeighborNodeSet* neighborNodes = getCachedNeighborNodes();
+	NeighborNodeSet* neighborNodes = getCachedNeighborNodes(true);
 
-	for (auto iter = neighborNodes->begin(); iter != neighborNodes->end(); ++iter) {
-		Coord nodePos = getHostPosition(*iter);
-	}
+	//for (auto iter = neighborNodes->begin(); iter != neighborNodes->end(); ++iter) {
+	//	Coord nodePos = getHostPosition(*iter);
+	//}
 
 	if ((int) neighborNodes->size() != prevNeighborCnt) {
 		currentNeighborCnt.record(neighborNodes->size());

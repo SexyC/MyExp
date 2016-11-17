@@ -22,6 +22,7 @@ cplusplus {{
 #include "WaveShortMessage_m.h"
 #include "veins/base/utils/Coord.h"
 #include <queue>
+#include <string>
 typedef std::queue<int> PathQueue;
 }}
 
@@ -33,5 +34,6 @@ packet WaveShortMessageWithDst extends WaveShortMessage {
 	int nextHopId;
 	PathQueue pathNodes;
 	Coord dstHostPos;
+	string dstNodeId;
 }
 
