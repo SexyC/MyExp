@@ -763,14 +763,14 @@ void TraCIScenarioManager::processVehicleSubscription(std::string objectId, TraC
 			uint32_t count; buf >> count;
 			MYDEBUG << "TraCI reports " << count << " active vehicles." << endl;
 
-			if (count != drivingVehicleCount) {
-				EV_ERROR << "count: " << count
-					<< " drivingVehicleCount: " << drivingVehicleCount
-					<< " activeVehicleCount: " << activeVehicleCount
-					<< " parkingVehicleCount: " << parkingVehicleCount << endl
-					<< " queuedVehicles.size: " << queuedVehicles.size()
-					<< endl;
-			}
+			//if (count != drivingVehicleCount) {
+			//	std::cout << "count: " << count
+			//		<< " drivingVehicleCount: " << drivingVehicleCount
+			//		<< " activeVehicleCount: " << activeVehicleCount
+			//		<< " parkingVehicleCount: " << parkingVehicleCount << endl
+			//		<< " queuedVehicles.size: " << queuedVehicles.size()
+			//		<< endl;
+			//}
 
 			//ASSERT(count == drivingVehicleCount);
 			std::set<std::string> drivingVehicles;

@@ -40,6 +40,7 @@ Coord TraCIMyExp11p::getHostPosition(cModule* const host) {
 //
 //	return mobility->getPositionAt(simTime());
 
+	ASSERT(host != NULL);
 	for (cModule::SubmoduleIterator iter(host); !iter.end(); ++iter) {
 		cModule* submod = SUBMODULE_ITERATOR_TO_MODULE(iter);
 		TraCIMobility* mm = dynamic_cast<TraCIMobility*>(submod);
@@ -66,6 +67,7 @@ const NicEntry::GateList* TraCIMyExp11p::getMyNicGateList() const {
 
 const NicEntry::GateList* TraCIMyExp11p::getHostNicGateList(const BaseConnectionManager* const bcm,
 			const cModule* host) {
+	ASSERT(bcm != NULL && host != NULL);
 	cModule* nicSubMod = host->getSubmodule("nic");
 	return &bcm->getGateList(nicSubMod->getId());
 }
@@ -75,6 +77,7 @@ TraCIMyExp11p::getNeighborNodes(const BaseConnectionManager* const bcm,
 			const cModule* host) {
 
 	const NicEntry::GateList* gl = getHostNicGateList(bcm, host);
+	ASSERT(gl != NULL);
 	NeighborNodeSet result;
 
 	for (auto iter = gl->begin(); iter != gl->end(); ++iter) {
@@ -96,6 +99,7 @@ TraCIMyExp11p::getFarNodes(NeighborNodeSet* nns, TraCIScenarioManagerLaunchd* tr
 			const BaseConnectionManager* const bcm,
 			const cModule* host) {
 
+	ASSERT(nns != NULL && traciSMLd != NULL && bcm != NULL && host != NULL);
 	const std::map<std::string, cModule*> &hosts = traciSMLd->getManagedHosts();
 
 	TraCIMyExp11p::NodeVector result;
@@ -177,6 +181,12 @@ void TraCIMyExp11p::initialize(int stage) {
 			packetLenMax = 1024;
 		}
 
+		if (hasPar("sendNodePercent")) {
+			sendNodePercent = par("sendNodePercent");
+		} else {
+			sendNodePercent = 0.5;
+		}
+
 //		assertTrue("packetLenMax can not be less than packetLenMin",
 //					packetLenMax >= packetLenMin);
 
@@ -190,7 +200,7 @@ void TraCIMyExp11p::initialize(int stage) {
 
 void TraCIMyExp11p::finish() {
 
-	recordScalar("final_neighbor_count", prevNeighborCnt);
+	//recordScalar("final_neighbor_count", prevNeighborCnt);
 }
 
 void TraCIMyExp11p::onBeacon(WaveShortMessage* wsm) {
@@ -212,9 +222,11 @@ void TraCIMyExp11p::onData(WaveShortMessage* wsm) {
 	 * I'm the dst node
 	 */
 	if (findHost()->getId() == wsmd->getRecipientAddress()) {
+		const std::map<std::string, cModule*> &hosts = traciSMLd->getManagedHosts();
 		std::cout << simTime().dbl() << " " 
 			<< wsmd->getSenderAddress() << " " << wsmd->getSerial() << " packet arrived at: " << wsmd->getRecipientAddress()
-			<< std::endl;
+			<< std::endl
+			<< "current hosts number: " << hosts.size() << std::endl;
 		PathQueue& pq = wsmd->getPathNodes();
 
 		std::cout << wsmd->getSenderAddress() << "-->";
@@ -241,6 +253,16 @@ void TraCIMyExp11p::onData(WaveShortMessage* wsm) {
 	if (findHost()->getId() == wsmd->getNextHopId()) {
 		//std::cout << wsmd->getNextHopId() << " route id " << std::endl;
 		NeighborNodeSet* nns = getCachedNeighborNodes();
+
+		/**
+		 * Currently, no neighbor can help send msg
+		 * push to buffer
+		 */
+		if (nns->size() == 0) {
+			wsmd->getPathNodes().push(wsmd->getNextHopId());
+			msgQueue.push(wsmd->dup());
+			return;
+		}
 		/**
 		 * query current dst pos
 		 */
@@ -261,16 +283,7 @@ void TraCIMyExp11p::onData(WaveShortMessage* wsm) {
 
 void TraCIMyExp11p::sendMessage(cModule* dstMod, int nextHopId, std::string content) {
 	sentMessage = true;
-
-	t_channel channel = dataOnSch ? type_SCH : type_CCH;
-
-	Coord currPos = getMyPosition();
-	WaveShortMessageWithDst* wsm = prepareWSMWithDst("data", dataLengthBits, channel, dataPriority,
-				dstMod->getId(), sequenceNum++, currPos);
-
-	wsm->setNextHopId(nextHopId);
-	wsm->setWsmData(content.c_str());
-	wsm->setDstNodeId(dstMod->getName());
+	WaveShortMessageWithDst* wsm = prepareAndInitWSMWithDst(dstMod, nextHopId, content);
 	sendWSM(wsm);
 }
 
@@ -286,16 +299,43 @@ void TraCIMyExp11p::receiveSignal(cComponent* source, simsignal_t signalID, cObj
 
 void TraCIMyExp11p::handleSelfMsg(cMessage* msg) {
 	scheduleAt(simTime() + packetSentInterval, msg);
+
+	if (!getRandomPermit(sendNodePercent)) {
+		return;
+	}
+
 	cModule* dstMod = getDstNode();
+
+	/**
+	 * No available node for dst
+	 * Do not send anything
+	 */
+	if (!dstMod) {
+		return;
+	}
 
 	Coord dstPos = getHostPosition(dstMod);
 
 	NeighborNodeSet* nns = getCachedNeighborNodes();
-	int nextHopId = getNearestNodeToPos(*nns, dstPos);
 
 	std::stringstream ss;
 	unsigned long pkgLen = getPkgLen();
 	ss << pkgLen;
+
+	/**
+	 * if no neighbors are available for sending packets
+	 * just prepare WSM and store it in the message queue
+	 */
+	if (nns->size() == 0) {
+		WaveShortMessageWithDst* wsmd = prepareAndInitWSMWithDst(dstMod,
+					-1 /* next hop id is not sure */, ss.str());
+
+		msgQueue.push(wsmd);
+		return;
+	}
+
+	int nextHopId = getNearestNodeToPos(*nns, dstPos);
+
 	sendMessage(dstMod, nextHopId, ss.str());
 }
 
@@ -346,6 +386,7 @@ void TraCIMyExp11p::handlePositionUpdate(cObject* obj) {
 	BaseWaveApplLayer::handlePositionUpdate(obj);
 
 	NeighborNodeSet* neighborNodes = getCachedNeighborNodes(true);
+	//NeighborNodeSet* neighborNodes = getCachedNeighborNodes();
 
 	//for (auto iter = neighborNodes->begin(); iter != neighborNodes->end(); ++iter) {
 	//	Coord nodePos = getHostPosition(*iter);
@@ -357,6 +398,26 @@ void TraCIMyExp11p::handlePositionUpdate(cObject* obj) {
 		emit(neighborCntStatistic, neighborNodes->size());
 	}
 
+	/**
+	 * If there is neighbor nodes
+	 */
+	if (!neighborNodes->empty()) {
+
+		if (!msgQueue.empty()) {
+			std::cout << "neighborNodes cnt: " << neighborNodes->size() << std::endl;
+			std::cout << "msgQueue size: " << msgQueue.size() << std::endl;
+		}
+		while (!msgQueue.empty()) {
+			WaveShortMessageWithDst* wsmd = msgQueue.front();
+			msgQueue.pop();
+
+			Coord dstPos = getHostPosition(wsmd->getRecipientAddress());
+			int nextHopId = getNearestNodeToPos(*neighborNodes, dstPos);
+			wsmd->setNextHopId(nextHopId);
+			sendWSM(wsmd->dup());
+		}
+	}
+
 }
 
 void TraCIMyExp11p::sendWSM(WaveShortMessage* wsm) {
@@ -364,24 +425,67 @@ void TraCIMyExp11p::sendWSM(WaveShortMessage* wsm) {
 	sendDelayedDown(wsm,individualOffset);
 }
 
-cModule* TraCIMyExp11p::getDstNode() {
-	double seed = uniform(0, 1);
+cModule* TraCIMyExp11p::getDstNode(int option) {
+	switch (option) {
+		case NEIGHBOR_NODE:
+			{
+				const TraCIMyExp11p::NeighborNodeSet* nns = getCachedNeighborNodes();
+				if (nns->size() == 0) { return NULL; }
+				int idx = int(uniform(0, nns->size()));
+				auto iter = nns->begin();
+				for (int i = 0; i < idx; ++i) {
+					++iter;
+				}
+				return (*iter);
+			}
+			break;
+		case FAR_NODE:
+			{
+				// get dst from far nodes
+				NodeVector* nv = getCachedFarNodes();
+				if (nv->size() == 0) {
+					return NULL;
+				}
+				int idx = int(uniform(0, nv->size()));
+				return (*nv)[idx];
+			}
+			break;
+		case PICK_ONE_NODE:
+			{
+				//double seed = uniform(0, 1);
+				//if (seed <= sendNearPosibility) {
+				if (getRandomPermit(sendNearPosibility)) {
+					// get dst from neighbors
+					const TraCIMyExp11p::NeighborNodeSet* nns = getCachedNeighborNodes();
+					int idx = int(uniform(0, nns->size()));
 
-	if (seed <= sendNearPosibility) {
-		// get dst from neighbors
-		const TraCIMyExp11p::NeighborNodeSet* nns = getCachedNeighborNodes();
-		int idx = int(uniform(0, nns->size()));
+					/**
+					 * XXX: Should we retry to get newest neighbors?
+					 */
+					//if (nns->size() == 0) {
+					//	nns = getCachedNeighborNodes(true);
+					//}
 
-		auto iter = nns->begin();
-		for(int i = 0; i < idx; ++i) {
-			++iter;
-		}
-		return (*iter);
-	} else {
-		// get dst from far nodes
-		NodeVector* nv = getCachedFarNodes();
-		int idx = int(uniform(0, nv->size()));
-		return (*nv)[idx];
-	}
+					if (nns->size() != 0) {
+						auto iter = nns->begin();
+						for(int i = 0; i < idx; ++i) {
+							++iter;
+						}
+						return (*iter);
+					}
+					/**
+					 * No neighbors are available, return far node
+					 */
+					return getDstNode(FAR_NODE);
+				} else {
+					// get dst from far nodes
+					NodeVector* nv = getCachedFarNodes();
+					int idx = int(uniform(0, nv->size()));
+					return (*nv)[idx];
+				}
+			}
+			break;
+	};
+	return NULL;
 }
 

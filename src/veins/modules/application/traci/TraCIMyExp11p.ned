@@ -29,6 +29,7 @@ simple TraCIMyExp11p extends BaseWaveApplLayer
 	@statistic[neighborCntStatistic](record=max,mean);
     bool sendWhileParking  = default(false); //send messages when the car is parked
 	double sendNearPosibility = default(0.5);
+	double sendNodePercent = default(0.3);
 
 	// setting this to 0
 	int packetSentInterval;

@@ -30,6 +30,7 @@
 #include "veins/modules/messages/WaveShortMessageWithDst_m.h"
 
 #include <limits>
+#include <queue>
 
 using Veins::TraCIMobility;
 using Veins::TraCICommandInterface;
@@ -38,6 +39,7 @@ using Veins::TraCIScenarioManagerLaunchdAccess;
 using Veins::AnnotationManager;
 
 using std::vector;
+using std::queue;
 
 /**
  * Small IVC Demo using 11p
@@ -48,6 +50,7 @@ class TraCIMyExp11p : public BaseWaveApplLayer {
 		virtual void receiveSignal(cComponent* source, simsignal_t signalID, cObject* obj, cObject* details);
 		virtual void finish();
 	protected:
+		enum { NEIGHBOR_NODE, FAR_NODE, PICK_ONE_NODE };
 		typedef std::unordered_set<cModule*> NeighborNodeSet;
 		typedef std::vector<cModule*> NodeVector;
 
@@ -89,6 +92,7 @@ class TraCIMyExp11p : public BaseWaveApplLayer {
 		double sendDataLength;
 
 		double sendNearPosibility;
+		double sendNodePercent;
 		unsigned long packetSentInterval;
 
 		int sequenceNum;
@@ -104,8 +108,14 @@ class TraCIMyExp11p : public BaseWaveApplLayer {
 		cOutVector currentNeighborCnt;
 		int prevNeighborCnt;
 
-		cMessage sendMessageSignal;
+		/**
+		 * to store packets that need forwarding
+		 */
+		queue<WaveShortMessageWithDst*> msgQueue;
+
+		//cMessage sendMessageSignal;
 		const static simsignalwrap_t neighborCntStatistic;
+
 	protected:
 		virtual void onBeacon(WaveShortMessage* wsm);
 		virtual void onData(WaveShortMessage* wsm);
@@ -114,7 +124,7 @@ class TraCIMyExp11p : public BaseWaveApplLayer {
 		virtual void handleParkingUpdate(cObject* obj);
 		virtual void sendWSM(WaveShortMessage* wsm);
 
-		virtual cModule* getDstNode();
+		virtual cModule* getDstNode(int option = PICK_ONE_NODE);
 		virtual unsigned long getPkgLen() {
 			if (packetLenMax == packetLenMin) { return packetLenMax; }
 			return (unsigned long)(uniform(packetLenMin, packetLenMax));
@@ -123,6 +133,20 @@ class TraCIMyExp11p : public BaseWaveApplLayer {
 		virtual void handleSelfMsg(cMessage* msg);
 		virtual WaveShortMessageWithDst* prepareWSMWithDst(std::string name, int lengthBits,
 					t_channel channel, int priority, int rcvId, int serial, Coord &rcvPos);
+
+		virtual WaveShortMessageWithDst* prepareAndInitWSMWithDst(cModule* dstMod, int nextHopId, std::string content) {
+
+			t_channel channel = dataOnSch ? type_SCH : type_CCH;
+
+			Coord currPos = getMyPosition();
+			WaveShortMessageWithDst* wsm = prepareWSMWithDst("data", dataLengthBits, channel, dataPriority,
+						dstMod->getId(), sequenceNum++, currPos);
+
+			wsm->setNextHopId(nextHopId);
+			wsm->setWsmData(content.c_str());
+			wsm->setDstNodeId(dstMod->getName());
+			return wsm;
+		}
 
 		Coord getMyPosition() const;
 		const NicEntry::GateList* getMyNicGateList() const;
@@ -147,6 +171,11 @@ class TraCIMyExp11p : public BaseWaveApplLayer {
 			return (c1.x - c2.x) * (c1.x - c2.x)
 				+ (c1.y - c2.y) * (c1.y - c2.y)
 				+ (c1.z - c2.z) * (c1.z - c2.z);
+		}
+
+		inline bool getRandomPermit(double p) {
+			ASSERT(p >= .0 && p <= 1.0);
+			return uniform(0, 1) <= p;
 		}
 
 		static int getNearestNodeToPos(NeighborNodeSet& nodes, Coord& pos) {
