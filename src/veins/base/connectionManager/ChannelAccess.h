@@ -32,6 +32,9 @@
 
 #include "veins/base/utils/FindModule.h"
 #include "veins/base/modules/BaseMobility.h"
+
+#include "veins/modules/messages/WaveShortMessageWithDst_m.h"
+
 typedef AccessModuleWrap<BaseMobility>                ChannelMobilityAccessType;
 typedef ChannelMobilityAccessType::wrapType* ChannelMobilityPtrType;
 
@@ -95,6 +98,12 @@ protected:
 	 * send via sendDirect() or to the respective gates.
 	 **/
 	void sendToChannel(cPacket *msg);
+
+	/**
+	 * Add by yy
+	 * @brief helper function for sendToChannel when using WaveShoreMessageWithDst
+	 */
+	void sendToChannelWithNextHop(int nextHopId, cPacket* msg);
 
 public:
 	/**

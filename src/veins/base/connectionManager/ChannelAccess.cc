@@ -34,6 +34,8 @@
 #include "veins/base/modules/BaseWorldUtility.h"
 #include "veins/base/connectionManager/BaseConnectionManager.h"
 
+#include "veins/modules/messages/WaveShortMessageWithDst_m.h"
+
 using std::endl;
 
 const simsignalwrap_t ChannelAccess::mobilityStateChangedSignal = simsignalwrap_t(MIXIM_SIGNAL_MOBILITY_CHANGE_NAME);
@@ -75,6 +77,27 @@ void ChannelAccess::initialize( int stage )
 
 void ChannelAccess::sendToChannel(cPacket *msg)
 {
+
+	WaveShortMessageWithDst* wmsd = NULL;
+	int nextHopId = 0;
+	if (msg->hasEncapsulatedPacket()) {
+		cPacket* macPkt = msg->decapsulate();
+		if (macPkt && macPkt->hasEncapsulatedPacket()) {
+			wmsd = dynamic_cast<WaveShortMessageWithDst*>(macPkt->decapsulate());
+			if (wmsd) {
+				nextHopId = wmsd->getNextHopId();
+			}
+			macPkt->encapsulate(wmsd);
+		}
+		msg->encapsulate(macPkt);
+	}
+
+	if (wmsd) {
+		sendToChannelWithNextHop(nextHopId, msg);
+		return;
+	}
+
+
     const NicEntry::GateList& gateList = cc->getGateList( getParentModule()->getId());
     NicEntry::GateList::const_iterator i = gateList.begin();
 
@@ -114,6 +137,69 @@ void ChannelAccess::sendToChannel(cPacket *msg)
         if( i != gateList.end() ){
         	simtime_t delay = SIMTIME_ZERO;
             for(; i != --gateList.end(); ++i){
+            	//calculate delay (Propagation) to this receiving nic
+				delay = calculatePropagationDelay(i->first);
+
+                sendDelayed( static_cast<cPacket*>(msg->dup()),
+                             delay, i->second );
+            }
+            //calculate delay (Propagation) to this receiving nic
+			delay = calculatePropagationDelay(i->first);
+
+            sendDelayed( msg, delay, i->second );
+        }
+        else{
+            coreEV << "Nic is not connected to any gates!" << endl;
+            delete msg;
+        }
+    }
+}
+
+void ChannelAccess::sendToChannelWithNextHop(int nextHopId, cPacket* msg) {
+	//cModule* nextNodeMod = cSimulation::getActiveSimulation()->getModule(hostId);
+	
+    const NicEntry::GateList& gateList = cc->getGateList(getParentModule()->getId());
+    NicEntry::GateList::const_iterator i = gateList.begin();
+
+    if(useSendDirect){
+        // use Andras stuff
+        if( i != gateList.end() ){
+        	simtime_t delay = SIMTIME_ZERO;
+            for(; i != --gateList.end(); ++i){
+
+				if (i->first->hostId != nextHopId) {
+					continue;
+				}
+
+				//std::cout << "getNextHopId: " << nextHopId << std::endl;
+				//calculate delay (Propagation) to this receiving nic
+				delay = calculatePropagationDelay(i->first);
+
+				int radioStart = i->second->getId();
+				int radioEnd = radioStart + i->second->size();
+				for (int g = radioStart; g != --radioEnd; ++g)
+				  sendDirect(static_cast<cPacket*>(msg->dup()),
+							  delay, msg->getDuration(), i->second->getOwnerModule(), g);
+
+				sendDirect(msg, delay, msg->getDuration(), i->second->getOwnerModule(), radioEnd);
+            }
+        }
+        else{
+            coreEV << "Nic is not connected to any gates!" << endl;
+            delete msg;
+        }
+    }
+    else{
+        // use our stuff
+        coreEV <<"sendToChannel: sending to gates\n";
+        if( i != gateList.end() ){
+        	simtime_t delay = SIMTIME_ZERO;
+            for(; i != --gateList.end(); ++i){
+				if (i->first->hostId != nextHopId) {
+					continue;
+				}
+
+				//std::cout << "getNextHopId: " << nextHopId << std::endl;
             	//calculate delay (Propagation) to this receiving nic
 				delay = calculatePropagationDelay(i->first);
 
