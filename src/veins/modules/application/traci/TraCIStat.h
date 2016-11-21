@@ -18,8 +18,8 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 
-#ifndef TraCIMyExp11p_H
-#define TraCIMyExp11p_H
+#ifndef TraCIStat_H
+#define TraCIStat_H
 
 #include <unordered_set>
 #include "veins/modules/application/ieee80211p/BaseWaveApplLayer.h"
@@ -44,13 +44,12 @@ using std::queue;
 /**
  * Small IVC Demo using 11p
  */
-class TraCIMyExp11p : public BaseWaveApplLayer {
+class TraCIStat : public BaseWaveApplLayer {
 	public:
 		virtual void initialize(int stage);
 		virtual void receiveSignal(cComponent* source, simsignal_t signalID, cObject* obj, cObject* details);
 		virtual void finish();
 	protected:
-		enum { NEIGHBOR_NODE, FAR_NODE, PICK_ONE_NODE };
 		typedef std::unordered_set<cModule*> NeighborNodeSet;
 		typedef std::vector<cModule*> NodeVector;
 
@@ -58,12 +57,12 @@ class TraCIMyExp11p : public BaseWaveApplLayer {
 		 * Do not access this below four vars directly
 		 * use getCachedFarNodes and getCachedNeighborNodes
 		 */
-		TraCIMyExp11p::NeighborNodeSet neighborNodes;
+		TraCIStat::NeighborNodeSet neighborNodes;
 		simtime_t neighborNodesUpdateTime;
-		TraCIMyExp11p::NodeVector farNodes;
+		TraCIStat::NodeVector farNodes;
 		simtime_t farNodesUpdateTime;
 
-		TraCIMyExp11p::NeighborNodeSet* getCachedNeighborNodes(bool forceUpdate = false) {
+		TraCIStat::NeighborNodeSet* getCachedNeighborNodes(bool forceUpdate = false) {
 			if (forceUpdate || simTime() != neighborNodesUpdateTime) {
 				neighborNodesUpdateTime = simTime();
 				neighborNodes = getNeighborNodes(bcm, findHost());
@@ -71,7 +70,7 @@ class TraCIMyExp11p : public BaseWaveApplLayer {
 			return &neighborNodes;
 		}
 
-		TraCIMyExp11p::NodeVector* getCachedFarNodes(bool forceUpdate = false) {
+		TraCIStat::NodeVector* getCachedFarNodes(bool forceUpdate = false) {
 			if (forceUpdate || simTime() != farNodesUpdateTime) {
 				farNodesUpdateTime = simTime();
 				farNodes = getHostFarNodes();
@@ -83,21 +82,9 @@ class TraCIMyExp11p : public BaseWaveApplLayer {
 		TraCICommandInterface* traci;
 		TraCICommandInterface::Vehicle* traciVehicle;
 		AnnotationManager* annotations;
-		simtime_t lastDroveAt;
-		bool sentMessage;
-		bool isParking;
-		bool sendWhileParking;
 		static const simsignalwrap_t parkingStateChangedSignal;
-		double recvDataLength;
-		double sendDataLength;
 
-		double sendNearPosibility;
-		double sendNodePercent;
-		unsigned long packetSentInterval;
-
-		int sequenceNum;
-		unsigned long packetLenMin;
-		unsigned long packetLenMax;
+		int neighborRecordInterval;
 
 		BaseConnectionManager *bcm;
 		TraCIScenarioManagerLaunchd* traciSMLd;
@@ -108,11 +95,6 @@ class TraCIMyExp11p : public BaseWaveApplLayer {
 		cOutVector currentNeighborCnt;
 		int prevNeighborCnt;
 
-		/**
-		 * to store packets that need forwarding
-		 */
-		queue<WaveShortMessageWithDst*> msgQueue;
-
 		//cMessage sendMessageSignal;
 		const static simsignalwrap_t neighborCntStatistic;
 
@@ -122,31 +104,9 @@ class TraCIMyExp11p : public BaseWaveApplLayer {
 		void sendMessage(cModule* dstMod, int nextHopId, std::string content);
 		virtual void handlePositionUpdate(cObject* obj);
 		virtual void handleParkingUpdate(cObject* obj);
-		virtual void sendWSM(WaveShortMessage* wsm);
-
-		virtual cModule* getDstNode(int option = PICK_ONE_NODE);
-		virtual unsigned long getPkgLen() {
-			if (packetLenMax == packetLenMin) { return packetLenMax; }
-			return (unsigned long)(uniform(packetLenMin, packetLenMax));
-		}
+		//virtual void sendWSM(WaveShortMessage* wsm);
 
 		virtual void handleSelfMsg(cMessage* msg);
-		virtual WaveShortMessageWithDst* prepareWSMWithDst(std::string name, int lengthBits,
-					t_channel channel, int priority, int rcvId, int serial, Coord &rcvPos);
-
-		virtual WaveShortMessageWithDst* prepareAndInitWSMWithDst(cModule* dstMod, int nextHopId, std::string content) {
-
-			t_channel channel = dataOnSch ? type_SCH : type_CCH;
-
-			Coord currPos = getMyPosition();
-			WaveShortMessageWithDst* wsm = prepareWSMWithDst("data", dataLengthBits, channel, dataPriority,
-						dstMod->getId(), sequenceNum++, currPos);
-
-			wsm->setNextHopId(nextHopId);
-			wsm->setWsmData(content.c_str());
-			wsm->setDstNodeId(dstMod->getName());
-			return wsm;
-		}
 
 		Coord getMyPosition() const;
 		const NicEntry::GateList* getMyNicGateList() const;
@@ -155,7 +115,6 @@ class TraCIMyExp11p : public BaseWaveApplLayer {
 		static Coord getHostPosition(int hostId);
 		static const NicEntry::GateList* getHostNicGateList(const BaseConnectionManager* const bcm,
 					const cModule* host);
-
 
 		static const NeighborNodeSet getNeighborNodes(const BaseConnectionManager* const bcm,
 					const cModule* host);

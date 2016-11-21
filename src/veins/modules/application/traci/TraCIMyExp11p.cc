@@ -58,6 +58,7 @@ Coord TraCIMyExp11p::getHostPosition(cModule* const host) {
 Coord TraCIMyExp11p::getHostPosition(int hostId) {
 
 	cModule* host = cSimulation::getActiveSimulation()->getModule(hostId);
+	ASSERT(host != NULL);
 	return TraCIMyExp11p::getHostPosition(host);
 }
 
@@ -245,7 +246,8 @@ void TraCIMyExp11p::onData(WaveShortMessage* wsm) {
 	std::string dstNodeId = wsmd->getDstNodeId();
 	const std::map<std::string, cModule*> &hosts = traciSMLd->getManagedHosts();
 
-	if (hosts.find(dstNodeId) == hosts.end()) {
+	auto iter = hosts.find(dstNodeId);
+	if (iter == hosts.end()) {
 		std::cout << "[Shit] " << dstNodeId << " is out of our study region" << std::endl;
 		return;
 	}
@@ -266,7 +268,8 @@ void TraCIMyExp11p::onData(WaveShortMessage* wsm) {
 		/**
 		 * query current dst pos
 		 */
-		Coord dstPos = getHostPosition(wsmd->getRecipientAddress());
+		//Coord dstPos = getHostPosition(wsmd->getRecipientAddress());
+		Coord dstPos = getHostPosition(iter->second);
 		int nextHopId = getNearestNodeToPos(*nns, dstPos);
 		wsmd->getPathNodes().push(wsmd->getNextHopId());
 		wsmd->setNextHopId(nextHopId);
@@ -407,14 +410,30 @@ void TraCIMyExp11p::handlePositionUpdate(cObject* obj) {
 			std::cout << "neighborNodes cnt: " << neighborNodes->size() << std::endl;
 			std::cout << "msgQueue size: " << msgQueue.size() << std::endl;
 		}
+
+		std::string dstNodeId;
 		while (!msgQueue.empty()) {
 			WaveShortMessageWithDst* wsmd = msgQueue.front();
 			msgQueue.pop();
 
+			dstNodeId = wsmd->getDstNodeId();
+			const std::map<std::string, cModule*> &hosts = traciSMLd->getManagedHosts();
+
+			/**
+			 * dst node is out of study region
+			 */
+			auto iter = hosts.find(dstNodeId);
+			if (iter == hosts.end()) {
+				std::cout << "[Shit] " << dstNodeId << " is out of our study region" << std::endl;
+				delete wsmd;
+				continue;
+			}
+
 			Coord dstPos = getHostPosition(wsmd->getRecipientAddress());
 			int nextHopId = getNearestNodeToPos(*neighborNodes, dstPos);
 			wsmd->setNextHopId(nextHopId);
-			sendWSM(wsmd->dup());
+			//sendWSM(wsmd->dup());
+			sendWSM(wsmd);
 		}
 	}
 

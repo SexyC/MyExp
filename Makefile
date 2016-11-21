@@ -63,6 +63,7 @@ OBJS = \
     $O/src/veins/modules/application/traci/TraCIDemo11p.o \
     $O/src/veins/modules/application/traci/TraCIDemoRSU11p.o \
     $O/src/veins/modules/application/traci/TraCIMyExp11p.o \
+    $O/src/veins/modules/application/traci/TraCIStat.o \
     $O/src/veins/modules/application/traci/TraCITestApp.o \
     $O/src/veins/modules/mac/ieee80211p/Mac1609_4.o \
     $O/src/veins/modules/mobility/traci/TraCIBuffer.o \
@@ -307,6 +308,31 @@ $O/src/veins/base/connectionManager/NicEntryDirect.o: src/veins/base/connectionM
   src/veins/base/utils/miximkerneldefs.h \
   src/veins/modules/messages/WaveShortMessageWithDst_m.h \
   src/veins/modules/messages/WaveShortMessage_m.h
+$O/src/veins/base/messages/AirFrame_m.o: src/veins/base/messages/AirFrame_m.cc \
+  src/veins/base/messages/AirFrame_m.h \
+  src/veins/base/phyLayer/Interpolation.h \
+  src/veins/base/phyLayer/Mapping.h \
+  src/veins/base/phyLayer/MappingBase.h \
+  src/veins/base/phyLayer/MappingUtils.h \
+  src/veins/base/phyLayer/Signal_.h \
+  src/veins/base/utils/MiXiMDefs.h \
+  src/veins/base/utils/miximkerneldefs.h
+$O/src/veins/base/messages/BorderMsg_m.o: src/veins/base/messages/BorderMsg_m.cc \
+  src/veins/base/messages/BorderMsg_m.h \
+  src/veins/base/utils/Coord.h \
+  src/veins/base/utils/FWMath.h \
+  src/veins/base/utils/MiXiMDefs.h \
+  src/veins/base/utils/miximkerneldefs.h
+$O/src/veins/base/messages/ChannelSenseRequest_m.o: src/veins/base/messages/ChannelSenseRequest_m.cc \
+  src/veins/base/messages/ChannelSenseRequest_m.h \
+  src/veins/base/phyLayer/ChannelState.h \
+  src/veins/base/utils/MiXiMDefs.h \
+  src/veins/base/utils/miximkerneldefs.h
+$O/src/veins/base/messages/MacPkt_m.o: src/veins/base/messages/MacPkt_m.cc \
+  src/veins/base/messages/MacPkt_m.h \
+  src/veins/base/utils/MiXiMDefs.h \
+  src/veins/base/utils/SimpleAddress.h \
+  src/veins/base/utils/miximkerneldefs.h
 $O/src/veins/base/modules/BaseApplLayer.o: src/veins/base/modules/BaseApplLayer.cc \
   src/veins/base/modules/BaseApplLayer.h \
   src/veins/base/modules/BaseBattery.h \
@@ -774,6 +800,45 @@ $O/src/veins/modules/application/traci/TraCIMyExp11p.o: src/veins/modules/applic
   src/veins/modules/obstacle/ObstacleControl.h \
   src/veins/modules/utility/Consts80211p.h \
   src/veins/modules/world/annotations/AnnotationManager.h
+$O/src/veins/modules/application/traci/TraCIStat.o: src/veins/modules/application/traci/TraCIStat.cc \
+  src/veins/base/connectionManager/BaseConnectionManager.h \
+  src/veins/base/connectionManager/ChannelAccess.h \
+  src/veins/base/connectionManager/NicEntry.h \
+  src/veins/base/modules/BaseApplLayer.h \
+  src/veins/base/modules/BaseBattery.h \
+  src/veins/base/modules/BaseLayer.h \
+  src/veins/base/modules/BaseMobility.h \
+  src/veins/base/modules/BaseModule.h \
+  src/veins/base/modules/BaseWorldUtility.h \
+  src/veins/base/modules/BatteryAccess.h \
+  src/veins/base/utils/Coord.h \
+  src/veins/base/utils/FWMath.h \
+  src/veins/base/utils/FindModule.h \
+  src/veins/base/utils/HostState.h \
+  src/veins/base/utils/MiXiMDefs.h \
+  src/veins/base/utils/Move.h \
+  src/veins/base/utils/NetwToMacControlInfo.h \
+  src/veins/base/utils/PassedMessage.h \
+  src/veins/base/utils/SimpleAddress.h \
+  src/veins/base/utils/asserts.h \
+  src/veins/base/utils/miximkerneldefs.h \
+  src/veins/modules/application/ieee80211p/BaseWaveApplLayer.h \
+  src/veins/modules/application/traci/TraCIStat.h \
+  src/veins/modules/mac/ieee80211p/WaveAppToMac1609_4Interface.h \
+  src/veins/modules/messages/WaveShortMessageWithDst_m.h \
+  src/veins/modules/messages/WaveShortMessage_m.h \
+  src/veins/modules/mobility/traci/TraCIBuffer.h \
+  src/veins/modules/mobility/traci/TraCIColor.h \
+  src/veins/modules/mobility/traci/TraCICommandInterface.h \
+  src/veins/modules/mobility/traci/TraCIConnection.h \
+  src/veins/modules/mobility/traci/TraCICoord.h \
+  src/veins/modules/mobility/traci/TraCIMobility.h \
+  src/veins/modules/mobility/traci/TraCIScenarioManager.h \
+  src/veins/modules/mobility/traci/TraCIScenarioManagerLaunchd.h \
+  src/veins/modules/obstacle/Obstacle.h \
+  src/veins/modules/obstacle/ObstacleControl.h \
+  src/veins/modules/utility/Consts80211p.h \
+  src/veins/modules/world/annotations/AnnotationManager.h
 $O/src/veins/modules/application/traci/TraCITestApp.o: src/veins/modules/application/traci/TraCITestApp.cc \
   src/veins/base/connectionManager/BaseConnectionManager.h \
   src/veins/base/connectionManager/NicEntry.h \
@@ -862,6 +927,37 @@ $O/src/veins/modules/mac/ieee80211p/Mac1609_4.o: src/veins/modules/mac/ieee80211
   src/veins/modules/phy/SNRThresholdDecider.h \
   src/veins/modules/utility/Consts80211p.h \
   src/veins/modules/utility/ConstsPhy.h
+$O/src/veins/modules/messages/AirFrame11p_m.o: src/veins/modules/messages/AirFrame11p_m.cc \
+  src/veins/base/messages/AirFrame_m.h \
+  src/veins/base/phyLayer/Interpolation.h \
+  src/veins/base/phyLayer/Mapping.h \
+  src/veins/base/phyLayer/MappingBase.h \
+  src/veins/base/phyLayer/MappingUtils.h \
+  src/veins/base/phyLayer/Signal_.h \
+  src/veins/base/utils/MiXiMDefs.h \
+  src/veins/base/utils/miximkerneldefs.h \
+  src/veins/modules/messages/AirFrame11p_m.h
+$O/src/veins/modules/messages/Mac80211Pkt_m.o: src/veins/modules/messages/Mac80211Pkt_m.cc \
+  src/veins/base/messages/MacPkt_m.h \
+  src/veins/base/utils/MiXiMDefs.h \
+  src/veins/base/utils/SimpleAddress.h \
+  src/veins/base/utils/miximkerneldefs.h \
+  src/veins/modules/messages/Mac80211Pkt_m.h
+$O/src/veins/modules/messages/PhyControlMessage_m.o: src/veins/modules/messages/PhyControlMessage_m.cc \
+  src/veins/modules/messages/PhyControlMessage_m.h
+$O/src/veins/modules/messages/WaveShortMessageWithDst_m.o: src/veins/modules/messages/WaveShortMessageWithDst_m.cc \
+  src/veins/base/utils/Coord.h \
+  src/veins/base/utils/FWMath.h \
+  src/veins/base/utils/MiXiMDefs.h \
+  src/veins/base/utils/miximkerneldefs.h \
+  src/veins/modules/messages/WaveShortMessageWithDst_m.h \
+  src/veins/modules/messages/WaveShortMessage_m.h
+$O/src/veins/modules/messages/WaveShortMessage_m.o: src/veins/modules/messages/WaveShortMessage_m.cc \
+  src/veins/base/utils/Coord.h \
+  src/veins/base/utils/FWMath.h \
+  src/veins/base/utils/MiXiMDefs.h \
+  src/veins/base/utils/miximkerneldefs.h \
+  src/veins/modules/messages/WaveShortMessage_m.h
 $O/src/veins/modules/mobility/traci/TraCIBuffer.o: src/veins/modules/mobility/traci/TraCIBuffer.cc \
   src/veins/base/utils/MiXiMDefs.h \
   src/veins/base/utils/miximkerneldefs.h \
