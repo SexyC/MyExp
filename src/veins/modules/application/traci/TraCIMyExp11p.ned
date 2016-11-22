@@ -33,6 +33,7 @@ simple TraCIMyExp11p extends BaseWaveApplLayer
 
 	// setting this to 0
 	int packetSentInterval;
+	int packetSentIntervalBeg;
 	int packetLenMin = default(1024);  // unit: KB
 	int packetLenMax = default(1024);  // unit: KB
 }

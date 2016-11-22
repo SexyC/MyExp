@@ -90,10 +90,12 @@ class TraCIMyExp11p : public BaseWaveApplLayer {
 		static const simsignalwrap_t parkingStateChangedSignal;
 		double recvDataLength;
 		double sendDataLength;
+		double forwardDataLength;
 
 		double sendNearPosibility;
 		double sendNodePercent;
 		unsigned long packetSentInterval;
+		unsigned long packetSentIntervalBeg;
 
 		int sequenceNum;
 		unsigned long packetLenMin;
@@ -106,6 +108,8 @@ class TraCIMyExp11p : public BaseWaveApplLayer {
 		 * record the current neighbor count
 		 */
 		cOutVector currentNeighborCnt;
+		cOutVector packetDelay;
+		cOutVector packetPathLen;
 		int prevNeighborCnt;
 
 		/**
@@ -119,7 +123,7 @@ class TraCIMyExp11p : public BaseWaveApplLayer {
 	protected:
 		virtual void onBeacon(WaveShortMessage* wsm);
 		virtual void onData(WaveShortMessage* wsm);
-		void sendMessage(cModule* dstMod, int nextHopId, std::string content);
+		void sendMessage(cModule* dstMod, int nextHopId, std::string content, unsigned long pkgLen);
 		virtual void handlePositionUpdate(cObject* obj);
 		virtual void handleParkingUpdate(cObject* obj);
 		virtual void sendWSM(WaveShortMessage* wsm);
@@ -134,7 +138,8 @@ class TraCIMyExp11p : public BaseWaveApplLayer {
 		virtual WaveShortMessageWithDst* prepareWSMWithDst(std::string name, int lengthBits,
 					t_channel channel, int priority, int rcvId, int serial, Coord &rcvPos);
 
-		virtual WaveShortMessageWithDst* prepareAndInitWSMWithDst(cModule* dstMod, int nextHopId, std::string content) {
+		virtual WaveShortMessageWithDst* prepareAndInitWSMWithDst(cModule* dstMod, int nextHopId, std::string content,
+					unsigned long pkgLen) {
 
 			t_channel channel = dataOnSch ? type_SCH : type_CCH;
 
@@ -142,6 +147,7 @@ class TraCIMyExp11p : public BaseWaveApplLayer {
 			WaveShortMessageWithDst* wsm = prepareWSMWithDst("data", dataLengthBits, channel, dataPriority,
 						dstMod->getId(), sequenceNum++, currPos);
 
+			wsm->setByteLength(pkgLen);
 			wsm->setNextHopId(nextHopId);
 			wsm->setWsmData(content.c_str());
 			wsm->setDstNodeId(dstMod->getName());
