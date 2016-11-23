@@ -1,3 +1,5 @@
+Makefile
+
 src/Makefile
 src/*.so
 src/**/*_m.h
