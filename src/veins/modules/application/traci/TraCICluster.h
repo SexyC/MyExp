@@ -170,6 +170,7 @@ class TraCICluster : public BaseWaveApplLayer {
 
 		virtual void sendClusterHello();
 		virtual void sendClusterJoinRequest();
+		virtual void sendClusterJoinResponse();
 		virtual void sendClusterStatus();
 		virtual void handleClusterBeaconSelfMsg(cMessage* msg);
 		virtual void handleSendPacketSelfMsg(cMessage* msg);

@@ -394,6 +394,11 @@ void TraCICluster::sendClusterJoinRequest() {
 	sendWSM(wsmcb);
 }
 
+void TraCICluster::sendClusterJoinResponse() {
+	WaveShortMessageClusterBeacon* wsmcb = prepareWSMCB(JOIN_RESPONSE, headerLength);
+	sendWSM(wsmcb);
+}
+
 void TraCICluster::sendClusterStatus() {
 	WaveShortMessageClusterBeacon* wsmcb = prepareWSMCB(CLUSTER_STATUS, headerLength);
 	sendWSM(wsmcb);
