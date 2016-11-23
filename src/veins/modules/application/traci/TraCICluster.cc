@@ -96,7 +96,6 @@ TraCICluster::getNeighborNodes(const BaseConnectionManager* const bcm,
 	}
 
 	return result;
-
 }
 
 TraCICluster::NodeVector
@@ -130,16 +129,10 @@ void TraCICluster::initialize(int stage) {
 		mobility = TraCIMobilityAccess().get(getParentModule());
 		traci = mobility->getCommandInterface();
 		traciVehicle = mobility->getVehicleCommandInterface();
-		annotations = AnnotationManagerAccess().getIfExists();
-		ASSERT(annotations);
 
-		sentMessage = false;
-		lastDroveAt = simTime();
 		neighborNodesUpdateTime = simTime();
 		farNodesUpdateTime = simTime();
 		findHost()->subscribe(parkingStateChangedSignal, this);
-		isParking = false;
-		sendWhileParking = par("sendWhileParking").boolValue();
 		recvDataLength = .0;
 		sendDataLength = .0;
 		forwardDataLength = .0;
@@ -161,9 +154,6 @@ void TraCICluster::initialize(int stage) {
 		currentNeighborCnt.setName("neighbor_cnt");
 		packetDelay.setName("packet_delay");
 		packetPathLen.setName("packet_path_length");
-		prevNeighborCnt = -1;
-
-		sequenceNum = 0;
 
 		if (hasPar("sendNearPosibility")) {
 			sendNearPosibility = par("sendNearPosibility").doubleValue();
@@ -198,23 +188,35 @@ void TraCICluster::initialize(int stage) {
 		packetSentIntervalBeg = hasPar("packetSentIntervalBeg") ?
 			par("packetSentIntervalBeg") : 100;
 
-//		assertTrue("packetLenMax can not be less than packetLenMin",
-//					packetLenMax >= packetLenMin);
+		clusterMaxSize = hasPar("clusterMaxSize") ?
+			par("clusterMaxSize") : 0;
+
+		clusterBeaconInterval = hasPar("clusterBeaconInterval") ?
+			par("clusterBeaconInterval") : 5;
+
+		clusterRole = SINGLE;
+		clusterNodeData.hd = NULL;
+
+		ASSERT(packetLenMax >= packetLenMin);
 
 	} else if (stage == 1) {
 		if (packetSentInterval > 0) {
-			//scheduleAt(simTime() + packetSentInterval, &sendMessageSignal);
-			scheduleAt(simTime() + packetSentIntervalBeg + uniform(0, packetSentInterval), new cMessage());
+			packetSendSelfMsg = new cMessage();
+			//scheduleAt(simTime() + packetSentIntervalBeg + uniform(0, packetSentInterval), new cMessage());
+			clusterBeaconSelfMsg = new cMessage();
+			scheduleAt(simTime() + clusterBeaconInterval, clusterBeaconSelfMsg);
 		}
 	}
 }
 
 void TraCICluster::finish() {
 
-	//recordScalar("final_neighbor_count", prevNeighborCnt);
 	recordScalar("recv_data_len", recvDataLength);
 	recordScalar("forward_data_len", forwardDataLength);
 	recordScalar("send_data_len", sendDataLength);
+
+	delete packetSendSelfMsg;
+	delete clusterBeaconSelfMsg;
 }
 
 void TraCICluster::onBeacon(WaveShortMessage* wsm) {
@@ -230,7 +232,6 @@ void TraCICluster::onData(WaveShortMessage* wsm) {
 	cModule *host = findHost();
 	findHost()->getDisplayString().updateWith("r=16,green");
 	host->getDisplayString().updateWith("r=16,green");
-	annotations->scheduleErase(1, annotations->drawLine(wsm->getSenderPos(), mobility->getPositionAt(simTime()), "blue"));
 
 	/**
 	 * I'm the dst node
@@ -310,7 +311,6 @@ void TraCICluster::onData(WaveShortMessage* wsm) {
 }
 
 void TraCICluster::sendMessage(cModule* dstMod, int nextHopId, std::string content, unsigned long pkgLen) {
-	sentMessage = true;
 	WaveShortMessageWithDst* wsm = prepareAndInitWSMWithDst(dstMod, nextHopId, content, pkgLen);
 	sendWSM(wsm);
 }
@@ -325,7 +325,107 @@ void TraCICluster::receiveSignal(cComponent* source, simsignal_t signalID, cObje
 	}
 }
 
-void TraCICluster::handleSelfMsg(cMessage* msg) {
+WaveShortMessageClusterBeacon* TraCICluster::prepareWSMCB(int type, unsigned long pkgLen) {
+	static unsigned long beaconSeqNum = 0;
+	t_channel channel = dataOnSch ? type_SCH : type_CCH;
+
+	WaveShortMessageClusterBeacon* wsmcb = new WaveShortMessageClusterBeacon("beacon");
+	wsmcb->setByteLength(pkgLen);
+
+	switch (channel) {
+		case type_SCH: wsmcb->setChannelNumber(Channels::SCH1); break; //will be rewritten at Mac1609_4 to actual Service Channel. This is just so no controlInfo is needed
+		case type_CCH: wsmcb->setChannelNumber(Channels::CCH); break;
+	}
+
+	wsmcb->setPsid(0);
+	wsmcb->setPriority(beaconPriority);
+	wsmcb->setWsmVersion(1);
+	wsmcb->setTimestamp(simTime());
+	wsmcb->setSenderAddress(myId);
+
+	/**
+	 * For one-hop broadcasting
+	 */
+	wsmcb->setRecipientAddress(-1);
+	wsmcb->setSenderPos(curPosition);
+	wsmcb->setSerial(beaconSeqNum++);
+	wsmcb->setClusterBeaconType(type);
+	wsmcb->setSenderRole(clusterRole);
+
+	return wsmcb;
+}
+
+namespace {
+	inline unsigned long getGateWayDataSize(GateWayData& gwd) {
+		return gwd.connectedClusters.size() * sizeof(int) * 2;
+	}
+
+	inline unsigned long getHeadDataSize(HeadData& hd) {
+		unsigned long ret = sizeof(int);
+
+		ret += hd.memberIds.size() * sizeof(int);
+		ret += hd.gateWayIds.size() * sizeof(int);
+		ret += hd.gateWayInfo.size() * sizeof(int);
+
+		for (auto iter = hd.gateWayInfo.begin(); iter != hd.gateWayInfo.end();
+					++iter) {
+			ret += iter->second.size() * sizeof(int);
+		}
+		return ret;
+	}
+};
+
+void TraCICluster::sendClusterHello() {
+	WaveShortMessageClusterBeacon* wsmcb = prepareWSMCB(HELLO, headerLength);
+
+	if (clusterRole == GATEWAY || clusterRole == GATEWAY_BAK) {
+		/**
+		 * Attach gateway info to packet
+		 */
+		wsmcb->addBitLength(getGateWayDataSize(*clusterNodeData.gwd) * 8);
+		wsmcb->setNodeData(clusterNodeData);
+	}
+
+	sendWSM(wsmcb);
+}
+
+void TraCICluster::sendClusterJoinRequest() {
+	WaveShortMessageClusterBeacon* wsmcb = prepareWSMCB(JOIN_REQUEST, headerLength);
+	sendWSM(wsmcb);
+}
+
+void TraCICluster::sendClusterStatus() {
+	WaveShortMessageClusterBeacon* wsmcb = prepareWSMCB(CLUSTER_STATUS, headerLength);
+	sendWSM(wsmcb);
+}
+
+void TraCICluster::handleClusterBeaconSelfMsg(cMessage* msg) {
+	scheduleAt(simTime() + clusterBeaconInterval, msg);
+
+	sendClusterHello();
+	//switch (clusterRole) {
+	//	case SINGLE:
+	//		sendClusterHello();
+	//		break;
+	//	case HEAD:
+	//	case HEAD_BAK: /* Fall through */
+	//		sendClusterStatus();
+	//		break;
+	//	case GATEWAY:
+	//	case GATEWAY_BAK: /* Fall through */
+	//		sendClusterHello();
+	//		break;
+	//	case MEMBER:
+	//		sendClusterHello();
+	//		break;
+	//	default:
+	//		ASSERT(false);
+	//		break;
+	//}
+
+}
+
+void TraCICluster::handleSendPacketSelfMsg(cMessage* msg) {
 	scheduleAt(simTime() + packetSentIntervalBeg + uniform(0, packetSentInterval), msg);
 
 	if (!getRandomPermit(sendNodePercent)) {
@@ -367,6 +467,18 @@ void TraCICluster::handleSelfMsg(cMessage* msg) {
 
 	sendDataLength += pkgLen;
 	sendMessage(dstMod, nextHopId, /*ss.str()*/ "", pkgLen);
+}
+
+void TraCICluster::handleSelfMsg(cMessage* msg) {
+
+	if (msg == packetSendSelfMsg) {
+		handleSendPacketSelfMsg(msg);
+	} else if (msg == clusterBeaconSelfMsg) {
+		handleClusterBeaconSelfMsg(msg);
+	} else {
+		ASSERT(false);
+	}
+
 }
 
 WaveShortMessageWithDst* TraCICluster::prepareWSMWithDst(std::string name, int lengthBits,
@@ -421,12 +533,6 @@ void TraCICluster::handlePositionUpdate(cObject* obj) {
 	//for (auto iter = neighborNodes->begin(); iter != neighborNodes->end(); ++iter) {
 	//	Coord nodePos = getHostPosition(*iter);
 	//}
-
-	if ((int) neighborNodes->size() != prevNeighborCnt) {
-		currentNeighborCnt.record(neighborNodes->size());
-		prevNeighborCnt = neighborNodes->size();
-		emit(neighborCntStatistic, neighborNodes->size());
-	}
 
 	/**
 	 * If there is neighbor nodes

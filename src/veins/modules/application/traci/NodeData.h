@@ -18,28 +18,47 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 
-package org.car2x.veins.modules.application.traci;
-import org.car2x.veins.modules.application.ieee80211p.BaseWaveApplLayer;
+#ifndef NodeData_H
+#define NodeData_H
 
-simple TraCICluster extends BaseWaveApplLayer
-{
-    @class(TraCICluster);
-    @display("i=block/MyExp11p");
-	@signal[neighborCntStatistic](type=unsigned long);
-	@statistic[neighborCntStatistic](record=max,mean);
-    bool sendWhileParking  = default(false); //send messages when the car is parked
-	double sendNearPosibility = default(0.5);
-	double sendNodePercent = default(0.3);
+#include <limits>
+#include <queue>
+#include <unordered_map>
+#include <unordered_set>
 
-	// setting this to 0
-	int packetSentInterval;
-	int packetSentIntervalBeg;
-	int packetLenMin = default(1024);  // unit: KB
-	int packetLenMax = default(1024);  // unit: KB
+using std::unordered_map;
+using std::unordered_set;
+using std::vector;
+using std::queue;
 
-	// cluster related param
-	// setting to 0 indicate to no limit
-	int clusterMaxSize = default(0);
+/**
+ * Node Stored Data structure
+ */
+class HeadData {
+	public:
+		int degree;
+		unordered_set<int> memberIds;
+		unordered_set<int> gateWayIds;
+		// cluster id -- [gateway id1, id2, ...]
+		unordered_map<int, unordered_set<int> > gateWayInfo;
+};
 
-	int clusterBeaconInterval = default(5);
-}
+class GateWayData {
+	public:
+		// cluster id -- connection degree
+		unordered_map<int, int> connectedClusters;
+};
+
+class MemberData {
+	public:
+		// Major heads and back up heads
+		vector<int> headIds;
+};
+
+union NodeData {
+	HeadData* hd;
+	GateWayData* gwd;
+	MemberData* md;
+};
+
+#endif

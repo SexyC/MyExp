@@ -21,6 +21,9 @@ examples/**/results
 examples/**/.tkenvrc
 examples/**/valgrind.out
 
+# analysis out-put file
+*.csv
+
 # Prerequisites
 *.d
 

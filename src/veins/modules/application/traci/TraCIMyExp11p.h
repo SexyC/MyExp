@@ -143,6 +143,10 @@ class TraCIMyExp11p : public BaseWaveApplLayer {
 
 			t_channel channel = dataOnSch ? type_SCH : type_CCH;
 
+			/**
+			 * FIXME: This is a fucking bug
+			 * Should fill in with dst pos instead of src pos
+			 */
 			Coord currPos = getMyPosition();
 			WaveShortMessageWithDst* wsm = prepareWSMWithDst("data", dataLengthBits, channel, dataPriority,
 						dstMod->getId(), sequenceNum++, currPos);

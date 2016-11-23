@@ -18,28 +18,24 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 //
 
-package org.car2x.veins.modules.application.traci;
-import org.car2x.veins.modules.application.ieee80211p.BaseWaveApplLayer;
+#include "veins/base/utils/asserts.h"
+#include "veins/modules/application/traci/ClusterManager.h"
 
-simple TraCICluster extends BaseWaveApplLayer
-{
-    @class(TraCICluster);
-    @display("i=block/MyExp11p");
-	@signal[neighborCntStatistic](type=unsigned long);
-	@statistic[neighborCntStatistic](record=max,mean);
-    bool sendWhileParking  = default(false); //send messages when the car is parked
-	double sendNearPosibility = default(0.5);
-	double sendNodePercent = default(0.3);
+using Veins::TraCIMobilityAccess;
+using Veins::AnnotationManagerAccess;
 
-	// setting this to 0
-	int packetSentInterval;
-	int packetSentIntervalBeg;
-	int packetLenMin = default(1024);  // unit: KB
-	int packetLenMax = default(1024);  // unit: KB
+using std::endl;
 
-	// cluster related param
-	// setting to 0 indicate to no limit
-	int clusterMaxSize = default(0);
+#define expEV std::cout
 
-	int clusterBeaconInterval = default(5);
+ClusterManager::ClusterManager() {
 }
+
+ClusterManager::~ClusterManager() {
+}
+
+ClusterManager& ClusterManager::getClusterManager() {
+	static ClusterManager cm;
+	return cm;
+}
+

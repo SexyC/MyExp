@@ -21,16 +21,19 @@
 #ifndef TraCICluster_H
 #define TraCICluster_H
 
-#include <unordered_set>
 #include "veins/modules/application/ieee80211p/BaseWaveApplLayer.h"
 #include "veins/modules/mobility/traci/TraCIMobility.h"
 #include "veins/modules/mobility/traci/TraCICommandInterface.h"
 #include "veins/modules/mobility/traci/TraCIScenarioManagerLaunchd.h"
 
 #include "veins/modules/messages/WaveShortMessageWithDst_m.h"
+#include "veins/modules/messages/WaveShortMessageClusterBeacon_m.h"
+#include "veins/modules/application/traci/NodeData.h"
 
 #include <limits>
 #include <queue>
+#include <unordered_map>
+#include <unordered_set>
 
 using Veins::TraCIMobility;
 using Veins::TraCICommandInterface;
@@ -38,6 +41,8 @@ using Veins::TraCIScenarioManagerLaunchd;
 using Veins::TraCIScenarioManagerLaunchdAccess;
 using Veins::AnnotationManager;
 
+using std::unordered_map;
+using std::unordered_set;
 using std::vector;
 using std::queue;
 
@@ -49,8 +54,25 @@ class TraCICluster : public BaseWaveApplLayer {
 		virtual void initialize(int stage);
 		virtual void receiveSignal(cComponent* source, simsignal_t signalID, cObject* obj, cObject* details);
 		virtual void finish();
+
+
 	protected:
 		enum { NEIGHBOR_NODE, FAR_NODE, PICK_ONE_NODE };
+		enum NodeRole {
+			SINGLE,
+			HEAD,
+			HEAD_BAK,
+			GATEWAY,
+			GATEWAY_BAK,
+			MEMBER
+		};
+		enum ClusterBeaconType {
+			HELLO,
+			HELLO_REPLY,
+			CLUSTER_STATUS,
+			JOIN_REQUEST,
+			JOIN_RESPONSE
+		};
 		typedef std::unordered_set<cModule*> NeighborNodeSet;
 		typedef std::vector<cModule*> NodeVector;
 
@@ -82,11 +104,11 @@ class TraCICluster : public BaseWaveApplLayer {
 		TraCIMobility* mobility;
 		TraCICommandInterface* traci;
 		TraCICommandInterface::Vehicle* traciVehicle;
-		AnnotationManager* annotations;
-		simtime_t lastDroveAt;
-		bool sentMessage;
-		bool isParking;
-		bool sendWhileParking;
+		//AnnotationManager* annotations;
+		//simtime_t lastDroveAt;
+		//bool sentMessage;
+		//bool isParking;
+		//bool sendWhileParking;
 		static const simsignalwrap_t parkingStateChangedSignal;
 		double recvDataLength;
 		double sendDataLength;
@@ -97,7 +119,6 @@ class TraCICluster : public BaseWaveApplLayer {
 		unsigned long packetSentInterval;
 		unsigned long packetSentIntervalBeg;
 
-		int sequenceNum;
 		unsigned long packetLenMin;
 		unsigned long packetLenMax;
 
@@ -110,7 +131,6 @@ class TraCICluster : public BaseWaveApplLayer {
 		cOutVector currentNeighborCnt;
 		cOutVector packetDelay;
 		cOutVector packetPathLen;
-		int prevNeighborCnt;
 
 		/**
 		 * to store packets that need forwarding
@@ -119,6 +139,20 @@ class TraCICluster : public BaseWaveApplLayer {
 
 		//cMessage sendMessageSignal;
 		const static simsignalwrap_t neighborCntStatistic;
+
+		cMessage* packetSendSelfMsg;
+
+		/**
+		 * Cluster information related
+		 */
+		int clusterId;
+		NodeRole clusterRole;
+		NodeData clusterNodeData;
+
+		// setting to 0 indicate to no limit
+		int clusterMaxSize;
+		int clusterBeaconInterval;
+		cMessage* clusterBeaconSelfMsg;
 
 	protected:
 		virtual void onBeacon(WaveShortMessage* wsm);
@@ -134,12 +168,22 @@ class TraCICluster : public BaseWaveApplLayer {
 			return (unsigned long)(uniform(packetLenMin, packetLenMax));
 		}
 
+		virtual void sendClusterHello();
+		virtual void sendClusterJoinRequest();
+		virtual void sendClusterStatus();
+		virtual void handleClusterBeaconSelfMsg(cMessage* msg);
+		virtual void handleSendPacketSelfMsg(cMessage* msg);
 		virtual void handleSelfMsg(cMessage* msg);
+
+		virtual WaveShortMessageClusterBeacon* prepareWSMCB(int type, unsigned long pkgLen);
+
 		virtual WaveShortMessageWithDst* prepareWSMWithDst(std::string name, int lengthBits,
 					t_channel channel, int priority, int rcvId, int serial, Coord &rcvPos);
 
 		virtual WaveShortMessageWithDst* prepareAndInitWSMWithDst(cModule* dstMod, int nextHopId, std::string content,
 					unsigned long pkgLen) {
+
+			static unsigned long sequenceNum = 0;
 
 			t_channel channel = dataOnSch ? type_SCH : type_CCH;
 
