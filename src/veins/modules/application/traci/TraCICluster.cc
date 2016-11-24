@@ -194,8 +194,8 @@ void TraCICluster::initialize(int stage) {
 		clusterBeaconInterval = hasPar("clusterBeaconInterval") ?
 			par("clusterBeaconInterval") : 5;
 
-		clusterRole = SINGLE;
-		clusterNodeData.hd = NULL;
+		setClusterRole(SINGLE);
+		getClusterNodeData().hd = NULL;
 
 		ASSERT(packetLenMax >= packetLenMin);
 
@@ -350,64 +350,45 @@ WaveShortMessageClusterBeacon* TraCICluster::prepareWSMCB(int type, unsigned lon
 	wsmcb->setSenderPos(curPosition);
 	wsmcb->setSerial(beaconSeqNum++);
 	wsmcb->setClusterBeaconType(type);
-	wsmcb->setSenderRole(clusterRole);
+	wsmcb->setSenderRole(getClusterRole());
 
 	return wsmcb;
 }
 
-namespace {
-	inline unsigned long getGateWayDataSize(GateWayData& gwd) {
-		return gwd.connectedClusters.size() * sizeof(int) * 2;
-	}
 
-	inline unsigned long getHeadDataSize(HeadData& hd) {
-		unsigned long ret = sizeof(int);
-
-		ret += hd.memberIds.size() * sizeof(int);
-		ret += hd.gateWayIds.size() * sizeof(int);
-		ret += hd.gateWayInfo.size() * sizeof(int);
-
-		for (auto iter = hd.gateWayInfo.begin(); iter != hd.gateWayInfo.end();
-					++iter) {
-			ret += iter->second.size() * sizeof(int);
-		}
-		return ret;
-	}
-};
-
-void TraCICluster::sendClusterHello() {
-	WaveShortMessageClusterBeacon* wsmcb = prepareWSMCB(HELLO, headerLength);
-
-	if (clusterRole == GATEWAY || clusterRole == GATEWAY_BAK) {
-		/**
-		 * Attach gateway info to packet
-		 */
-		wsmcb->addBitLength(getGateWayDataSize(*clusterNodeData.gwd) * 8);
-		wsmcb->setNodeData(clusterNodeData);
-	}
-
-	sendWSM(wsmcb);
-}
-
-void TraCICluster::sendClusterJoinRequest() {
-	WaveShortMessageClusterBeacon* wsmcb = prepareWSMCB(JOIN_REQUEST, headerLength);
-	sendWSM(wsmcb);
-}
-
-void TraCICluster::sendClusterJoinResponse() {
-	WaveShortMessageClusterBeacon* wsmcb = prepareWSMCB(JOIN_RESPONSE, headerLength);
-	sendWSM(wsmcb);
-}
-
-void TraCICluster::sendClusterStatus() {
-	WaveShortMessageClusterBeacon* wsmcb = prepareWSMCB(CLUSTER_STATUS, headerLength);
-	sendWSM(wsmcb);
-}
+//void TraCICluster::sendClusterHello() {
+//	WaveShortMessageClusterBeacon* wsmcb = prepareWSMCB(HELLO, headerLength);
+//
+//	if (clusterRole == GATEWAY || clusterRole == GATEWAY_BAK) {
+//		/**
+//		 * Attach gateway info to packet
+//		 */
+//		wsmcb->addBitLength(getGateWayDataSize(*clusterNodeData.gwd) * 8);
+//		wsmcb->setNodeData(clusterNodeData);
+//	}
+//
+//	sendWSM(wsmcb);
+//}
+//
+//void TraCICluster::sendClusterJoinRequest() {
+//	WaveShortMessageClusterBeacon* wsmcb = prepareWSMCB(JOIN_REQUEST, headerLength);
+//	sendWSM(wsmcb);
+//}
+//
+//void TraCICluster::sendClusterJoinResponse() {
+//	WaveShortMessageClusterBeacon* wsmcb = prepareWSMCB(JOIN_RESPONSE, headerLength);
+//	sendWSM(wsmcb);
+//}
+//
+//void TraCICluster::sendClusterStatus() {
+//	WaveShortMessageClusterBeacon* wsmcb = prepareWSMCB(CLUSTER_STATUS, headerLength);
+//	sendWSM(wsmcb);
+//}
 
 void TraCICluster::handleClusterBeaconSelfMsg(cMessage* msg) {
 	scheduleAt(simTime() + clusterBeaconInterval, msg);
 
-	sendClusterHello();
+	getNodeStrategy()->sendClusterHello(this);
 	//switch (clusterRole) {
 	//	case SINGLE:
 	//		sendClusterHello();

@@ -29,6 +29,8 @@
 #include "veins/modules/messages/WaveShortMessageWithDst_m.h"
 #include "veins/modules/messages/WaveShortMessageClusterBeacon_m.h"
 #include "veins/modules/application/traci/NodeData.h"
+#include "veins/modules/application/traci/NodeClusterRole.h"
+#include "veins/modules/application/traci/NodeStrategy.h"
 
 #include <limits>
 #include <queue>
@@ -46,33 +48,43 @@ using std::unordered_set;
 using std::vector;
 using std::queue;
 
+namespace yy {
+	inline unsigned long getGateWayDataSize(GateWayData& gwd) {
+		return gwd.connectedClusters.size() * sizeof(int) * 2;
+	}
+
+	inline unsigned long getHeadDataSize(HeadData& hd) {
+		unsigned long ret = sizeof(int);
+
+		ret += hd.memberIds.size() * sizeof(int);
+		ret += hd.gateWayIds.size() * sizeof(int);
+		ret += hd.gateWayInfo.size() * sizeof(int);
+
+		for (auto iter = hd.gateWayInfo.begin(); iter != hd.gateWayInfo.end();
+					++iter) {
+			ret += iter->second.size() * sizeof(int);
+		}
+		return ret;
+	}
+};
+
 /**
  * Small IVC Demo using 11p
  */
-class TraCICluster : public BaseWaveApplLayer {
+class TraCICluster : public BaseWaveApplLayer, public NodeClusterRole {
 	public:
 		virtual void initialize(int stage);
 		virtual void receiveSignal(cComponent* source, simsignal_t signalID, cObject* obj, cObject* details);
 		virtual void finish();
 
+		friend class NodeStrategy;
+		friend class SingleNodeStrategy;
+		friend class HeadNodeStrategy;
+		friend class GateWayNodeStrategy;
+		friend class MemberNodeStrategy;
 
 	protected:
 		enum { NEIGHBOR_NODE, FAR_NODE, PICK_ONE_NODE };
-		enum NodeRole {
-			SINGLE,
-			HEAD,
-			HEAD_BAK,
-			GATEWAY,
-			GATEWAY_BAK,
-			MEMBER
-		};
-		enum ClusterBeaconType {
-			HELLO,
-			HELLO_REPLY,
-			CLUSTER_STATUS,
-			JOIN_REQUEST,
-			JOIN_RESPONSE
-		};
 		typedef std::unordered_set<cModule*> NeighborNodeSet;
 		typedef std::vector<cModule*> NodeVector;
 
@@ -146,8 +158,6 @@ class TraCICluster : public BaseWaveApplLayer {
 		 * Cluster information related
 		 */
 		int clusterId;
-		NodeRole clusterRole;
-		NodeData clusterNodeData;
 
 		// setting to 0 indicate to no limit
 		int clusterMaxSize;
@@ -168,10 +178,10 @@ class TraCICluster : public BaseWaveApplLayer {
 			return (unsigned long)(uniform(packetLenMin, packetLenMax));
 		}
 
-		virtual void sendClusterHello();
-		virtual void sendClusterJoinRequest();
-		virtual void sendClusterJoinResponse();
-		virtual void sendClusterStatus();
+		//virtual void sendClusterHello();
+		//virtual void sendClusterJoinRequest();
+		//virtual void sendClusterJoinResponse();
+		//virtual void sendClusterStatus();
 		virtual void handleClusterBeaconSelfMsg(cMessage* msg);
 		virtual void handleSendPacketSelfMsg(cMessage* msg);
 		virtual void handleSelfMsg(cMessage* msg);
@@ -246,5 +256,146 @@ class TraCICluster : public BaseWaveApplLayer {
 			return minDistNodeId;
 		}
 };
+
+
+
+class SingleNodeStrategy : public NodeStrategy {
+	public:
+		virtual void sendClusterHello(TraCICluster* tc) const {
+			/**
+			 * single node do not send hello
+			 */
+			ASSERT(false);
+			//WaveShortMessageClusterBeacon* wsmcb = tc->prepareWSMCB(NodeClusterRole::HELLO, tc->headerLength);
+			//tc->sendWSM(wsmcb);
+		}
+
+		virtual void sendClusterJoinRequest(TraCICluster* tc, int headId) const {
+			/**
+			 * unicast to head node
+			 */
+			WaveShortMessageClusterBeacon* wsmcb = tc->prepareWSMCB(NodeClusterRole::JOIN_REQUEST, tc->headerLength);
+			wsmcb->setRecipientAddress(headId);
+			tc->sendWSM(wsmcb);
+		}
+
+		virtual void sendClusterJoinResponse(TraCICluster* tc, int hostId, int result) const {
+			/**
+			 * single node can not send join response
+			 */
+			ASSERT(false);
+		}
+
+		virtual void sendClusterStatus(TraCICluster* tc, int hostId) const {
+			/**
+			 * single node can not send cluster status
+			 */
+			ASSERT(false);
+		}
+
+		virtual void onClusterHello(TraCICluster* tc, WaveShortMessageClusterBeacon* msg) const {
+		}
+
+		virtual void onClusterJoinRequest(TraCICluster* tc, WaveShortMessageClusterBeacon* msg) const {
+		}
+
+		virtual void onClusterJoinResponse(TraCICluster* tc, WaveShortMessageClusterBeacon* msg) const {
+		}
+
+		virtual void onClusterStatus(TraCICluster* tc, WaveShortMessageClusterBeacon* msg) const {
+		}
+};
+
+class HeadNodeStrategy : public NodeStrategy {
+	public:
+		virtual void sendClusterHello(TraCICluster* tc) const {
+			WaveShortMessageClusterBeacon* wsmcb = tc->prepareWSMCB(NodeClusterRole::HELLO, tc->headerLength);
+			tc->sendWSM(wsmcb);
+		}
+		virtual void sendClusterJoinRequest(TraCICluster* tc, int headId) const {
+			/**
+			 * head id want to join other cluster
+			 */
+			WaveShortMessageClusterBeacon* wsmcb = tc->prepareWSMCB(NodeClusterRole::JOIN_REQUEST, tc->headerLength);
+			wsmcb->setNodeData(tc->getClusterNodeData());
+			wsmcb->addByteLength(yy::getHeadDataSize(*tc->getClusterNodeData().hd));
+			tc->sendWSM(wsmcb);
+		}
+		virtual void sendClusterJoinResponse(TraCICluster* tc, int hostId,  int result) const {
+			ASSERT(result == NodeClusterRole::JOIN_ACC || result == NodeClusterRole::JOIN_REJ);
+			const char* content = (result == NodeClusterRole::JOIN_ACC ? "y" : "n");
+			WaveShortMessageClusterBeacon* wsmcb = tc->prepareWSMCB(NodeClusterRole::JOIN_REQUEST, tc->headerLength);
+			wsmcb->setWsmData(content);
+		}
+		virtual void sendClusterStatus(TraCICluster* tc, int hostId) const {
+			/**
+			 * currently do not support cluster status query
+			 */
+			ASSERT(false);
+		}
+
+		virtual void onClusterHello(TraCICluster* tc, WaveShortMessageClusterBeacon* msg) const {
+		}
+
+		virtual void onClusterJoinRequest(TraCICluster* tc, WaveShortMessageClusterBeacon* msg) const {
+		}
+
+		virtual void onClusterJoinResponse(TraCICluster* tc, WaveShortMessageClusterBeacon* msg) const {
+		}
+
+		virtual void onClusterStatus(TraCICluster* tc, WaveShortMessageClusterBeacon* msg) const {
+		}
+};
+
+class GateWayNodeStrategy : public NodeStrategy {
+	public:
+		virtual void sendClusterHello(TraCICluster* tc) const {
+			WaveShortMessageClusterBeacon* wsmcb = tc->prepareWSMCB(NodeClusterRole::HELLO, tc->headerLength);
+		}
+		virtual void sendClusterJoinRequest(TraCICluster* tc, int headId) const {
+		}
+		virtual void sendClusterJoinResponse(TraCICluster* tc, int hostId, int result) const {
+		}
+		virtual void sendClusterStatus(TraCICluster* tc, int hostId) const {
+		}
+
+		virtual void onClusterHello(TraCICluster* tc, WaveShortMessageClusterBeacon* msg) const {
+		}
+
+		virtual void onClusterJoinRequest(TraCICluster* tc, WaveShortMessageClusterBeacon* msg) const {
+		}
+
+		virtual void onClusterJoinResponse(TraCICluster* tc, WaveShortMessageClusterBeacon* msg) const {
+		}
+
+		virtual void onClusterStatus(TraCICluster* tc, WaveShortMessageClusterBeacon* msg) const {
+		}
+};
+
+class MemberNodeStrategy : public NodeStrategy {
+	public:
+		virtual void sendClusterHello(TraCICluster* tc) const {
+			WaveShortMessageClusterBeacon* wsmcb = tc->prepareWSMCB(NodeClusterRole::HELLO, tc->headerLength);
+		}
+		virtual void sendClusterJoinRequest(TraCICluster* tc, int headId) const {
+		}
+		virtual void sendClusterJoinResponse(TraCICluster* tc, int hostId, int result) const {
+		}
+		virtual void sendClusterStatus(TraCICluster* tc, int hostId) const {
+		}
+
+		virtual void onClusterHello(TraCICluster* tc, WaveShortMessageClusterBeacon* msg) const {
+		}
+
+		virtual void onClusterJoinRequest(TraCICluster* tc, WaveShortMessageClusterBeacon* msg) const {
+		}
+
+		virtual void onClusterJoinResponse(TraCICluster* tc, WaveShortMessageClusterBeacon* msg) const {
+		}
+
+		virtual void onClusterStatus(TraCICluster* tc, WaveShortMessageClusterBeacon* msg) const {
+		}
+};
+
 
 #endif
