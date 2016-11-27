@@ -21,6 +21,11 @@
 #include "veins/base/utils/asserts.h"
 #include "veins/modules/application/traci/TraCICluster.h"
 
+SingleNodeStrategy NodeClusterRole::singleNodeSt;
+HeadNodeStrategy NodeClusterRole::headNodeSt;
+GateWayNodeStrategy NodeClusterRole::gateWayNodeSt;
+MemberNodeStrategy NodeClusterRole::memberNodeSt;
+
 using Veins::TraCIMobilityAccess;
 using Veins::AnnotationManagerAccess;
 

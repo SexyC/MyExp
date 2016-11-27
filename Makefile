@@ -1,12 +1,12 @@
 #
-# OMNeT++/OMNEST Makefile for libveins-veins-4.4
+# OMNeT++/OMNEST Makefile for libveins
 #
 # This file was generated with the command:
-#  opp_makemake -f --deep --make-so -O out --no-deep-includes -I/home/yy/veins/veins-veins-4.4/src
+#  opp_makemake -f --deep --make-so -O out --no-deep-includes -I/Users/user/projects/veins/src
 #
 
 # Name of target to be created (-o option)
-TARGET = libveins-veins-4.4$(SHARED_LIB_SUFFIX)
+TARGET = libveins$(SHARED_LIB_SUFFIX)
 
 # C++ include paths (with -I)
 INCLUDE_PATH = -Isrc
@@ -190,10 +190,9 @@ smheaders: $(SMFILES:.sm=_sm.h)
 clean:
 	$(qecho) Cleaning...
 	$(Q)-rm -rf $O
-	$(Q)-rm -f veins-veins-4.4 veins-veins-4.4.exe libveins-veins-4.4.so libveins-veins-4.4.a libveins-veins-4.4.dll libveins-veins-4.4.dylib
+	$(Q)-rm -f veins veins.exe libveins.so libveins.a libveins.dll libveins.dylib
 	$(Q)-rm -f ./*_m.cc ./*_m.h ./*_sm.cc ./*_sm.h
 	$(Q)-rm -f doc/*_m.cc doc/*_m.h doc/*_sm.cc doc/*_sm.h
-	$(Q)-rm -f doc/doxy/*_m.cc doc/doxy/*_m.h doc/doxy/*_sm.cc doc/doxy/*_sm.h
 	$(Q)-rm -f examples/*_m.cc examples/*_m.h examples/*_sm.cc examples/*_sm.h
 	$(Q)-rm -f examples/TAPASCologne-0.17.0/*_m.cc examples/TAPASCologne-0.17.0/*_m.h examples/TAPASCologne-0.17.0/*_sm.cc examples/TAPASCologne-0.17.0/*_sm.h
 	$(Q)-rm -f examples/TAPASCologne-0.17.0/results/*_m.cc examples/TAPASCologne-0.17.0/results/*_m.h examples/TAPASCologne-0.17.0/results/*_sm.cc examples/TAPASCologne-0.17.0/results/*_sm.h
@@ -235,7 +234,7 @@ cleanall: clean
 
 depend:
 	$(qecho) Creating dependencies...
-	$(Q)$(MAKEDEPEND) $(INCLUDE_PATH) -f Makefile -P\$$O/ -- $(MSG_CC_FILES) $(SM_CC_FILES)  ./*.cc doc/*.cc doc/doxy/*.cc examples/*.cc examples/TAPASCologne-0.17.0/*.cc examples/TAPASCologne-0.17.0/results/*.cc examples/veins/*.cc examples/veins/results/*.cc images/*.cc images/status/*.cc src/*.cc src/scripts/*.cc src/veins/*.cc src/veins/base/*.cc src/veins/base/connectionManager/*.cc src/veins/base/messages/*.cc src/veins/base/modules/*.cc src/veins/base/phyLayer/*.cc src/veins/base/utils/*.cc src/veins/modules/*.cc src/veins/modules/analogueModel/*.cc src/veins/modules/application/*.cc src/veins/modules/application/ieee80211p/*.cc src/veins/modules/application/traci/*.cc src/veins/modules/mac/*.cc src/veins/modules/mac/ieee80211p/*.cc src/veins/modules/messages/*.cc src/veins/modules/mobility/*.cc src/veins/modules/mobility/traci/*.cc src/veins/modules/nic/*.cc src/veins/modules/obstacle/*.cc src/veins/modules/phy/*.cc src/veins/modules/utility/*.cc src/veins/modules/world/*.cc src/veins/modules/world/annotations/*.cc src/veins/nodes/*.cc tests/*.cc tests/traci/*.cc
+	$(Q)$(MAKEDEPEND) $(INCLUDE_PATH) -f Makefile -P\$$O/ -- $(MSG_CC_FILES) $(SM_CC_FILES)  ./*.cc doc/*.cc examples/*.cc examples/TAPASCologne-0.17.0/*.cc examples/TAPASCologne-0.17.0/results/*.cc examples/veins/*.cc examples/veins/results/*.cc images/*.cc images/status/*.cc src/*.cc src/scripts/*.cc src/veins/*.cc src/veins/base/*.cc src/veins/base/connectionManager/*.cc src/veins/base/messages/*.cc src/veins/base/modules/*.cc src/veins/base/phyLayer/*.cc src/veins/base/utils/*.cc src/veins/modules/*.cc src/veins/modules/analogueModel/*.cc src/veins/modules/application/*.cc src/veins/modules/application/ieee80211p/*.cc src/veins/modules/application/traci/*.cc src/veins/modules/mac/*.cc src/veins/modules/mac/ieee80211p/*.cc src/veins/modules/messages/*.cc src/veins/modules/mobility/*.cc src/veins/modules/mobility/traci/*.cc src/veins/modules/nic/*.cc src/veins/modules/obstacle/*.cc src/veins/modules/phy/*.cc src/veins/modules/utility/*.cc src/veins/modules/world/*.cc src/veins/modules/world/annotations/*.cc src/veins/nodes/*.cc tests/*.cc tests/traci/*.cc
 
 # DO NOT DELETE THIS LINE -- make depend depends on it.
 $O/src/veins/base/connectionManager/BaseConnectionManager.o: src/veins/base/connectionManager/BaseConnectionManager.cc \
@@ -312,31 +311,6 @@ $O/src/veins/base/connectionManager/NicEntryDirect.o: src/veins/base/connectionM
   src/veins/base/utils/miximkerneldefs.h \
   src/veins/modules/messages/WaveShortMessageWithDst_m.h \
   src/veins/modules/messages/WaveShortMessage_m.h
-$O/src/veins/base/messages/AirFrame_m.o: src/veins/base/messages/AirFrame_m.cc \
-  src/veins/base/messages/AirFrame_m.h \
-  src/veins/base/phyLayer/Interpolation.h \
-  src/veins/base/phyLayer/Mapping.h \
-  src/veins/base/phyLayer/MappingBase.h \
-  src/veins/base/phyLayer/MappingUtils.h \
-  src/veins/base/phyLayer/Signal_.h \
-  src/veins/base/utils/MiXiMDefs.h \
-  src/veins/base/utils/miximkerneldefs.h
-$O/src/veins/base/messages/BorderMsg_m.o: src/veins/base/messages/BorderMsg_m.cc \
-  src/veins/base/messages/BorderMsg_m.h \
-  src/veins/base/utils/Coord.h \
-  src/veins/base/utils/FWMath.h \
-  src/veins/base/utils/MiXiMDefs.h \
-  src/veins/base/utils/miximkerneldefs.h
-$O/src/veins/base/messages/ChannelSenseRequest_m.o: src/veins/base/messages/ChannelSenseRequest_m.cc \
-  src/veins/base/messages/ChannelSenseRequest_m.h \
-  src/veins/base/phyLayer/ChannelState.h \
-  src/veins/base/utils/MiXiMDefs.h \
-  src/veins/base/utils/miximkerneldefs.h
-$O/src/veins/base/messages/MacPkt_m.o: src/veins/base/messages/MacPkt_m.cc \
-  src/veins/base/messages/MacPkt_m.h \
-  src/veins/base/utils/MiXiMDefs.h \
-  src/veins/base/utils/SimpleAddress.h \
-  src/veins/base/utils/miximkerneldefs.h
 $O/src/veins/base/modules/BaseApplLayer.o: src/veins/base/modules/BaseApplLayer.cc \
   src/veins/base/modules/BaseApplLayer.h \
   src/veins/base/modules/BaseBattery.h \
@@ -764,6 +738,9 @@ $O/src/veins/modules/application/traci/TraCICluster.o: src/veins/modules/applica
   src/veins/base/utils/asserts.h \
   src/veins/base/utils/miximkerneldefs.h \
   src/veins/modules/application/ieee80211p/BaseWaveApplLayer.h \
+  src/veins/modules/application/traci/NodeClusterRole.h \
+  src/veins/modules/application/traci/NodeData.h \
+  src/veins/modules/application/traci/NodeStrategy.h \
   src/veins/modules/application/traci/TraCICluster.h \
   src/veins/modules/mac/ieee80211p/WaveAppToMac1609_4Interface.h \
   src/veins/modules/messages/WaveShortMessageClusterBeacon_m.h \
@@ -1010,37 +987,6 @@ $O/src/veins/modules/mac/ieee80211p/Mac1609_4.o: src/veins/modules/mac/ieee80211
   src/veins/modules/phy/SNRThresholdDecider.h \
   src/veins/modules/utility/Consts80211p.h \
   src/veins/modules/utility/ConstsPhy.h
-$O/src/veins/modules/messages/AirFrame11p_m.o: src/veins/modules/messages/AirFrame11p_m.cc \
-  src/veins/base/messages/AirFrame_m.h \
-  src/veins/base/phyLayer/Interpolation.h \
-  src/veins/base/phyLayer/Mapping.h \
-  src/veins/base/phyLayer/MappingBase.h \
-  src/veins/base/phyLayer/MappingUtils.h \
-  src/veins/base/phyLayer/Signal_.h \
-  src/veins/base/utils/MiXiMDefs.h \
-  src/veins/base/utils/miximkerneldefs.h \
-  src/veins/modules/messages/AirFrame11p_m.h
-$O/src/veins/modules/messages/Mac80211Pkt_m.o: src/veins/modules/messages/Mac80211Pkt_m.cc \
-  src/veins/base/messages/MacPkt_m.h \
-  src/veins/base/utils/MiXiMDefs.h \
-  src/veins/base/utils/SimpleAddress.h \
-  src/veins/base/utils/miximkerneldefs.h \
-  src/veins/modules/messages/Mac80211Pkt_m.h
-$O/src/veins/modules/messages/PhyControlMessage_m.o: src/veins/modules/messages/PhyControlMessage_m.cc \
-  src/veins/modules/messages/PhyControlMessage_m.h
-$O/src/veins/modules/messages/WaveShortMessageWithDst_m.o: src/veins/modules/messages/WaveShortMessageWithDst_m.cc \
-  src/veins/base/utils/Coord.h \
-  src/veins/base/utils/FWMath.h \
-  src/veins/base/utils/MiXiMDefs.h \
-  src/veins/base/utils/miximkerneldefs.h \
-  src/veins/modules/messages/WaveShortMessageWithDst_m.h \
-  src/veins/modules/messages/WaveShortMessage_m.h
-$O/src/veins/modules/messages/WaveShortMessage_m.o: src/veins/modules/messages/WaveShortMessage_m.cc \
-  src/veins/base/utils/Coord.h \
-  src/veins/base/utils/FWMath.h \
-  src/veins/base/utils/MiXiMDefs.h \
-  src/veins/base/utils/miximkerneldefs.h \
-  src/veins/modules/messages/WaveShortMessage_m.h
 $O/src/veins/modules/mobility/traci/TraCIBuffer.o: src/veins/modules/mobility/traci/TraCIBuffer.cc \
   src/veins/base/utils/MiXiMDefs.h \
   src/veins/base/utils/miximkerneldefs.h \
