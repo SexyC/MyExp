@@ -204,6 +204,8 @@ class TraCICluster : public BaseWaveApplLayer, public NodeClusterRole {
 		 */
 		int clusterId;
 
+		int clusterHeadId;
+
 		// setting to 0 indicate to no limit
 		int clusterMaxSize;
 		int clusterBeaconInterval;
@@ -221,6 +223,46 @@ class TraCICluster : public BaseWaveApplLayer, public NodeClusterRole {
 		 * value -- [node's NeighborClusterInfo]
 		 */
 		unordered_map<int, list<NeighborClusterInfo> > neighborClusters;
+
+		void updateLastHeartBeat(WaveShortMessageClusterBeacon* msg) {
+			NeighborClusterInfo nci = {
+				.nodeId = msg->getSenderAddress(),
+				.neighborClusterId = msg->getSenderClusterId(),
+				.timeStamp = msg->getTimestamp()
+			};
+
+			TraCICluster* tc = this;
+
+			auto iter = tc->neighborClusters.find(nci.neighborClusterId);
+			/**
+			 * First node in the cluster
+			 */
+			if (iter == tc->neighborClusters.end()) {
+				tc->neighborClusters[nci.neighborClusterId] = list<TraCICluster::NeighborClusterInfo>();
+				tc->neighborClusters[nci.neighborClusterId].push_front(nci);
+			} else {
+				auto i = TraCICluster::findClusterNodeInfo(iter->second, nci);
+				/**
+				 * Found the node in the cluster
+				 */
+				if (i == iter->second.end()) {
+					auto insertPos = TraCICluster::findClusterNodeInfoInsertPos(iter->second, nci);
+					iter->second.insert(insertPos, nci);
+				} else {
+					/**
+					 * update only when the packet is a newer packet
+					 */
+					if (nci.timeStamp > i->timeStamp) {
+						iter->second.erase(i);
+						/**
+						 * insert after all the newer info
+						 */
+						auto insertPos = TraCICluster::findClusterNodeInfoInsertPos(iter->second, nci);
+						iter->second.insert(insertPos, nci);
+					}
+				}
+			}
+		}
 
 	protected:
 		virtual void onBeacon(WaveShortMessage* wsm);
@@ -352,41 +394,7 @@ class SingleNodeStrategy : public NodeStrategy {
 		}
 
 		virtual void onClusterHello(TraCICluster* tc, WaveShortMessageClusterBeacon* msg) const {
-			TraCICluster::NeighborClusterInfo nci = {
-				.nodeId = msg->getSenderAddress(),
-				.neighborClusterId = msg->getSenderClusterId(),
-				.timeStamp = msg->getTimestamp()
-			};
-
-			auto iter = tc->neighborClusters.find(nci.neighborClusterId);
-			/**
-			 * First node in the cluster
-			 */
-			if (iter == tc->neighborClusters.end()) {
-				tc->neighborClusters[nci.neighborClusterId] = list<TraCICluster::NeighborClusterInfo>();
-				tc->neighborClusters[nci.neighborClusterId].push_front(nci);
-			} else {
-				auto i = TraCICluster::findClusterNodeInfo(iter->second, nci);
-				/**
-				 * Found the node in the cluster
-				 */
-				if (i == iter->second.end()) {
-					auto insertPos = TraCICluster::findClusterNodeInfoInsertPos(iter->second, nci);
-					iter->second.insert(insertPos, nci);
-				} else {
-					/**
-					 * update only when the packet is a newer packet
-					 */
-					if (nci.timeStamp > i->timeStamp) {
-						iter->second.erase(i);
-						/**
-						 * insert after all the newer info
-						 */
-						auto insertPos = TraCICluster::findClusterNodeInfoInsertPos(iter->second, nci);
-						iter->second.insert(insertPos, nci);
-					}
-				}
-			}
+			tc->updateLastHeartBeat(msg);
 		}
 
 		virtual void onClusterJoinRequest(TraCICluster* tc, WaveShortMessageClusterBeacon* msg) const {
@@ -397,6 +405,7 @@ class SingleNodeStrategy : public NodeStrategy {
 			const char* result = msg->getWsmData();
 			if (strcmp(result, "y") == 0) {
 				tc->clusterId = msg->getSenderClusterId();
+				tc->clusterHeadId = msg->getSenderAddress();
 				tc->setClusterRole(NodeClusterRole::MEMBER);
 				/**
 				 * TODO: Cancel self elect timer
@@ -422,40 +431,123 @@ class HeadNodeStrategy : public NodeStrategy {
 	public:
 		virtual void sendClusterHello(TraCICluster* tc) const {
 			WaveShortMessageClusterBeacon* wsmcb = tc->prepareWSMCB(NodeClusterRole::HELLO, tc->headerLength);
+			wsmcb->setNodeData(tc->getClusterNodeData());
 			tc->sendWSM(wsmcb);
 		}
 		virtual void sendClusterJoinRequest(TraCICluster* tc, int headId) const {
 			/**
 			 * head id want to join other cluster
+			 * TODO: More actions may be added
 			 */
 			WaveShortMessageClusterBeacon* wsmcb = tc->prepareWSMCB(NodeClusterRole::JOIN_REQUEST, tc->headerLength);
 			wsmcb->setNodeData(tc->getClusterNodeData());
 			wsmcb->addByteLength(yy::getHeadDataSize(*tc->getClusterNodeData().hd));
 			tc->sendWSM(wsmcb);
 		}
-		virtual void sendClusterJoinResponse(TraCICluster* tc, int hostId,  int result) const {
+		virtual void sendClusterJoinResponse(TraCICluster* tc, int hostId, int result) const {
 			ASSERT(result == NodeClusterRole::JOIN_ACC || result == NodeClusterRole::JOIN_REJ);
 			const char* content = (result == NodeClusterRole::JOIN_ACC ? "y" : "n");
 			WaveShortMessageClusterBeacon* wsmcb = tc->prepareWSMCB(NodeClusterRole::JOIN_REQUEST, tc->headerLength);
+			wsmcb->setRecipientAddress(hostId);
 			wsmcb->setWsmData(content);
 		}
 		virtual void sendClusterStatus(TraCICluster* tc, int hostId) const {
 			/**
-			 * currently do not support cluster status query
+			 * TODO: Currently do not support cluster status query
 			 */
 			ASSERT(false);
 		}
 
 		virtual void onClusterHello(TraCICluster* tc, WaveShortMessageClusterBeacon* msg) const {
+
+			tc->updateLastHeartBeat(msg);
+			/**
+			 * hello from other clusters, just update neighbor info
+			 */
+			if (msg->getSenderClusterId() != tc->clusterId) {
+				return;
+			}
+
+			switch(msg->getSenderRole()) {
+				case NodeClusterRole::SINGLE:
+					/**
+					 * SINGLE node do not send hello
+					 */
+					ASSERT(false);
+					break;
+				case NodeClusterRole::HEAD:
+				case NodeClusterRole::HEAD_BAK:
+					/**
+					 * TODO: current only one head in one cluster
+					 */
+					ASSERT(false);
+					break;
+				case NodeClusterRole::GATEWAY:
+				case NodeClusterRole::GATEWAY_BAK: /* Fall through */
+					{
+						HeadData* hd = tc->getClusterNodeData().hd;
+						GateWayData* gwd = msg->getNodeData().gwd;
+						int hostId = msg->getSenderAddress();
+						hd->gateWayIds.insert(hostId);
+						for (auto iter = gwd->connectedClusters.begin();
+									iter != gwd->connectedClusters.end(); ++iter) {
+							int clusterId = iter->first;
+							int degree = iter->second;
+
+							/**
+							 * Never attach to this cluster before
+							 */
+							if (hd->gateWayInfo.find(clusterId) == hd->gateWayInfo.end()) {
+								hd->gateWayInfo[clusterId] = unordered_map<int, int>();
+							}
+							hd->gateWayInfo[clusterId][hostId] = degree;
+						}
+					}
+					break;
+				case NodeClusterRole::MEMBER:
+					{
+						HeadData* hd = tc->getClusterNodeData().hd;
+						hd->memberIds.insert(msg->getSenderAddress());
+					}
+					break;
+				default:
+					ASSERT(false);
+					break;
+
+			}
 		}
 
 		virtual void onClusterJoinRequest(TraCICluster* tc, WaveShortMessageClusterBeacon* msg) const {
+			HeadData* hd = tc->getClusterNodeData().hd;
+			int result = NodeClusterRole::JOIN_ACC;
+			/**
+			 * Reach cluster size limitation
+			 */
+			if (tc->clusterMaxSize &&
+					hd->gateWayIds.size() + hd->memberIds.size() + 1 >= tc->clusterMaxSize) {
+				result = NodeClusterRole::JOIN_REJ;
+			}
+
+			sendClusterJoinResponse(tc, msg->getSenderAddress(), result);
 		}
 
 		virtual void onClusterJoinResponse(TraCICluster* tc, WaveShortMessageClusterBeacon* msg) const {
+			/**
+			 * Join other cluster
+			 */
+			int clusterId = msg->getSenderClusterId();
+			int headId = msg->getSenderAddress();
+
+			tc->setClusterRole(NodeClusterRole::MEMBER);
+			tc->clusterId = clusterId;
+			tc->clusterHeadId = headId;
 		}
 
 		virtual void onClusterStatus(TraCICluster* tc, WaveShortMessageClusterBeacon* msg) const {
+			/**
+			 * Not implemented
+			 */
+			ASSERT(false);
 		}
 };
 
@@ -463,8 +555,18 @@ class GateWayNodeStrategy : public NodeStrategy {
 	public:
 		virtual void sendClusterHello(TraCICluster* tc) const {
 			WaveShortMessageClusterBeacon* wsmcb = tc->prepareWSMCB(NodeClusterRole::HELLO, tc->headerLength);
+			wsmcb->setNodeData(tc->getClusterNodeData());
+			tc->sendWSM(wsmcb);
 		}
 		virtual void sendClusterJoinRequest(TraCICluster* tc, int headId) const {
+			/**
+			 * Gateway node want to join other cluster
+			 * TODO: More actions may be added
+			 */
+			WaveShortMessageClusterBeacon* wsmcb = tc->prepareWSMCB(NodeClusterRole::JOIN_REQUEST, tc->headerLength);
+			wsmcb->setNodeData(tc->getClusterNodeData());
+			wsmcb->addByteLength(yy::getHeadDataSize(*tc->getClusterNodeData().hd));
+			tc->sendWSM(wsmcb);
 		}
 		virtual void sendClusterJoinResponse(TraCICluster* tc, int hostId, int result) const {
 		}
@@ -488,6 +590,8 @@ class MemberNodeStrategy : public NodeStrategy {
 	public:
 		virtual void sendClusterHello(TraCICluster* tc) const {
 			WaveShortMessageClusterBeacon* wsmcb = tc->prepareWSMCB(NodeClusterRole::HELLO, tc->headerLength);
+			wsmcb->setNodeData(tc->getClusterNodeData());
+			tc->sendWSM(wsmcb);
 		}
 		virtual void sendClusterJoinRequest(TraCICluster* tc, int headId) const {
 		}

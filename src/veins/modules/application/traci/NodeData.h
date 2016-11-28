@@ -39,8 +39,8 @@ class HeadData {
 		int degree;
 		unordered_set<int> memberIds;
 		unordered_set<int> gateWayIds;
-		// cluster id -- [gateway id1, id2, ...]
-		unordered_map<int, unordered_set<int> > gateWayInfo;
+		// cluster id -- [gateway id1 degree, id2 degree, ...]
+		unordered_map<int, unordered_map<int, int> > gateWayInfo;
 };
 
 class GateWayData {

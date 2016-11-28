@@ -60,6 +60,44 @@ class NodeClusterRole {
 			return clusterRole;
 		}
 		void setClusterRole(NodeRole nr) {
+			if (clusterRole != nr) {
+				switch (clusterRole) {
+					case HEAD:
+					case HEAD_BAK:
+						delete clusterNodeData.hd;
+						clusterNodeData.hd = NULL;
+						break;
+					case GATEWAY:
+					case GATEWAY_BAK:
+						delete clusterNodeData.gwd;
+						clusterNodeData.gwd = NULL;
+						break;
+					case MEMBER:
+						delete clusterNodeData.md;
+						clusterNodeData.md = NULL;
+						break;
+					default:
+						//ASSERT(false);
+						break;
+				}
+				switch (nr) {
+					case HEAD:
+					case HEAD_BAK:
+						clusterNodeData.hd = new HeadData;
+						break;
+					case GATEWAY:
+					case GATEWAY_BAK:
+						clusterNodeData.gwd = new GateWayData;
+						break;
+					case MEMBER:
+						clusterNodeData.md = new MemberData;
+						break;
+					default:
+						//ASSERT(false);
+						break;
+				}
+			}
+
 			switch (nr) {
 				case SINGLE:
 					st = (NodeStrategy*)&singleNodeSt;
