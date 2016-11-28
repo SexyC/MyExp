@@ -36,6 +36,7 @@
 #include <queue>
 #include <unordered_map>
 #include <unordered_set>
+#include <list>
 
 using Veins::TraCIMobility;
 using Veins::TraCICommandInterface;
@@ -47,6 +48,7 @@ using std::unordered_map;
 using std::unordered_set;
 using std::vector;
 using std::queue;
+using std::list;
 
 namespace yy {
 	inline unsigned long getGateWayDataSize(GateWayData& gwd) {
@@ -66,6 +68,7 @@ namespace yy {
 		}
 		return ret;
 	}
+
 };
 
 /**
@@ -82,6 +85,48 @@ class TraCICluster : public BaseWaveApplLayer, public NodeClusterRole {
 		friend class HeadNodeStrategy;
 		friend class GateWayNodeStrategy;
 		friend class MemberNodeStrategy;
+
+		class NeighborClusterInfo {
+			public:
+				int nodeId;
+				int neighborClusterId;
+				simtime_t timeStamp;
+		};
+
+		class NeighborClusterInfoGreatComp {
+			public:
+				bool operator() (NeighborClusterInfo& n1, NeighborClusterInfo& n2) {
+					return n1.timeStamp > n2.timeStamp;
+				}
+		};
+
+		class NeighborClusterInfoLessComp {
+			public:
+				bool operator() (NeighborClusterInfo& n1, NeighborClusterInfo& n2) {
+					return n1.timeStamp < n2.timeStamp;
+				}
+		};
+		static inline list<NeighborClusterInfo>::iterator findClusterNodeInfo(list<NeighborClusterInfo>& l, NeighborClusterInfo& n) {
+			for(auto iter = l.begin(); iter != l.end(); ++iter) {
+				if (iter->nodeId == n.nodeId && iter->neighborClusterId == n.neighborClusterId) {
+					return iter;
+				}
+			}
+			return l.end();
+		}
+
+		static inline list<NeighborClusterInfo>::iterator 
+		findClusterNodeInfoInsertPos(list<NeighborClusterInfo>& l, NeighborClusterInfo& n) {
+			for (auto iter = l.begin(); iter != l.end(); ++iter) {
+				/**
+				 * Find info earlier than this one
+				 */
+				if (iter->timeStamp <= n.timeStamp) {
+					return iter;
+				}
+			}
+			return l.end();
+		}
 
 	protected:
 		enum { NEIGHBOR_NODE, FAR_NODE, PICK_ONE_NODE };
@@ -163,6 +208,19 @@ class TraCICluster : public BaseWaveApplLayer, public NodeClusterRole {
 		int clusterMaxSize;
 		int clusterBeaconInterval;
 		cMessage* clusterBeaconSelfMsg;
+
+		/**
+		 * Min-heap, easy access to the earlist info
+		 */
+		//unordered_map<int, priority_queue<NeighborClusterInfo, vector<NeighborClusterInfo>
+		//	, NeighborClusterInfoGreatComp> neighborClusters;
+
+		/**
+		 * easy implement using list
+		 * key -- cluster id
+		 * value -- [node's NeighborClusterInfo]
+		 */
+		unordered_map<int, list<NeighborClusterInfo> > neighborClusters;
 
 	protected:
 		virtual void onBeacon(WaveShortMessage* wsm);
@@ -294,15 +352,69 @@ class SingleNodeStrategy : public NodeStrategy {
 		}
 
 		virtual void onClusterHello(TraCICluster* tc, WaveShortMessageClusterBeacon* msg) const {
+			TraCICluster::NeighborClusterInfo nci = {
+				.nodeId = msg->getSenderAddress(),
+				.neighborClusterId = msg->getSenderClusterId(),
+				.timeStamp = msg->getTimestamp()
+			};
+
+			auto iter = tc->neighborClusters.find(nci.neighborClusterId);
+			/**
+			 * First node in the cluster
+			 */
+			if (iter == tc->neighborClusters.end()) {
+				tc->neighborClusters[nci.neighborClusterId] = list<TraCICluster::NeighborClusterInfo>();
+				tc->neighborClusters[nci.neighborClusterId].push_front(nci);
+			} else {
+				auto i = TraCICluster::findClusterNodeInfo(iter->second, nci);
+				/**
+				 * Found the node in the cluster
+				 */
+				if (i == iter->second.end()) {
+					auto insertPos = TraCICluster::findClusterNodeInfoInsertPos(iter->second, nci);
+					iter->second.insert(insertPos, nci);
+				} else {
+					/**
+					 * update only when the packet is a newer packet
+					 */
+					if (nci.timeStamp > i->timeStamp) {
+						iter->second.erase(i);
+						/**
+						 * insert after all the newer info
+						 */
+						auto insertPos = TraCICluster::findClusterNodeInfoInsertPos(iter->second, nci);
+						iter->second.insert(insertPos, nci);
+					}
+				}
+			}
 		}
 
 		virtual void onClusterJoinRequest(TraCICluster* tc, WaveShortMessageClusterBeacon* msg) const {
+			// drop
 		}
 
 		virtual void onClusterJoinResponse(TraCICluster* tc, WaveShortMessageClusterBeacon* msg) const {
+			const char* result = msg->getWsmData();
+			if (strcmp(result, "y") == 0) {
+				tc->clusterId = msg->getSenderClusterId();
+				tc->setClusterRole(NodeClusterRole::MEMBER);
+				/**
+				 * TODO: Cancel self elect timer
+				 */
+			} else if (strcmp(result, "n") == 0) {
+				/**
+				 * TODO: Add statistic code
+				 */
+			} else {
+				ASSERT(false);
+			}
 		}
 
 		virtual void onClusterStatus(TraCICluster* tc, WaveShortMessageClusterBeacon* msg) const {
+			/**
+			 * Not implemented
+			 */
+			ASSERT(false);
 		}
 };
 
