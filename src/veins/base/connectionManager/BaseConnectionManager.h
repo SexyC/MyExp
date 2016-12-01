@@ -196,6 +196,9 @@ private:
 		unsigned getmaxSize() { return maxSize; }
 	};
 
+public:
+	double getMaxInterferenceDistance() { return maxInterferenceDistance; }
+
 protected:
 	/** @brief Type for map from nic-module id to nic-module pointer.*/
 	typedef std::map<int, NicEntry*> NicEntries;
