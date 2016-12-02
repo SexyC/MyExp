@@ -26,6 +26,8 @@
 #include <map>
 
 #include "veins/modules/messages/MdmacControlMessage_m.h"
+#include "veins/modules/messages/WaveShortMessageWithDst_m.h"
+#include "veins/modules/messages/TestMessage_m.h"
 #include "veins/modules/application/ieee80211p/BaseWaveApplLayer.h"
 #include "veins/modules/mobility/traci/TraCIMobility.h"
 #include "veins/modules/mobility/traci/TraCICommandInterface.h"
@@ -33,7 +35,8 @@
 
 #include "ClusterAlgorithm.h"
 
-#define BEAT_LENGTH	0.25	// measured in second.
+//#define BEAT_LENGTH	0.25	// measured in second.
+#define BEAT_LENGTH	1	// measured in second.
 
 using Veins::AnnotationManager;
 using Veins::TraCIMobility;

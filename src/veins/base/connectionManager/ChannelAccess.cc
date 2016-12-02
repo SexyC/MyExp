@@ -83,11 +83,12 @@ void ChannelAccess::sendToChannel(cPacket *msg)
 	if (msg->hasEncapsulatedPacket()) {
 		cPacket* macPkt = msg->decapsulate();
 		if (macPkt && macPkt->hasEncapsulatedPacket()) {
-			wmsd = dynamic_cast<WaveShortMessageWithDst*>(macPkt->decapsulate());
+			cPacket* applPkt = macPkt->decapsulate();
+			wmsd = dynamic_cast<WaveShortMessageWithDst*>(applPkt);
 			if (wmsd) {
 				nextHopId = wmsd->getNextHopId();
 			}
-			macPkt->encapsulate(wmsd);
+			macPkt->encapsulate(applPkt);
 		}
 		msg->encapsulate(macPkt);
 	}

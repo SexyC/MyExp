@@ -64,14 +64,10 @@ void MdmacNetworkLayer::initialize(int stage)
     	// set up self-messages
     	mSendHelloMessage = new cMessage();
     	scheduleAt( simTime() + mBeaconInterval * float(rand()) / RAND_MAX, mSendHelloMessage );
-    	//scheduleAt( simTime() + mBeaconInterval * float(rand()) / RAND_MAX, new cMessage("HELLO") );
     	mFirstInitMessage = new cMessage();
     	scheduleAt( simTime(), mFirstInitMessage );
-    	//scheduleAt( simTime(), new cMessage("INIT") );
     	mBeatMessage = new cMessage();
     	scheduleAt( simTime() + BEAT_LENGTH * float(rand()) / RAND_MAX, mBeatMessage );
-    	//scheduleAt( simTime() + BEAT_LENGTH * float(rand()) / RAND_MAX, new cMessage("BEAT") );
-
 
     	// set up watches
     	WATCH_SET( mClusterMembers );
@@ -82,8 +78,6 @@ void MdmacNetworkLayer::initialize(int stage)
 		mIncludeDestination = false;
 
 		mTraciManager = TraCIScenarioManagerAccess().get();
-
-		cout << "initialize finish" << endl;
 
 //     	TraCIScenarioManager *pManager = TraCIScenarioManagerAccess().get();
 //     	char strNodeName[50];
@@ -99,7 +93,6 @@ void MdmacNetworkLayer::initialize(int stage)
 
 /** @brief Cleanup*/
 void MdmacNetworkLayer::finish() {
-	cout << "finish" << endl;
 
 	if (mSendHelloMessage && mSendHelloMessage->isScheduled() )
 		cancelEvent( mSendHelloMessage );
@@ -129,8 +122,6 @@ void MdmacNetworkLayer::onBeacon(WaveShortMessage* wsm) {
     MdmacControlMessage *m = dynamic_cast<MdmacControlMessage *>(wsm);
 	ASSERT(m != NULL);
     coreEV << " handling packet from " << m->getSenderAddress() << std::endl;
-
-    cout << " handling packet from " << m->getSenderAddress() << std::endl;
 
     switch( m->getKind() ) {
 
@@ -278,6 +269,31 @@ void MdmacNetworkLayer::handleSelfMsg(cMessage* msg) {
 		scheduleAt( simTime() + BEAT_LENGTH, mBeatMessage );
 
 	}
+
+	//MdmacControlMessage* m = new MdmacControlMessage("beacon");
+	//m->setChannelNumber(Channels::CCH);
+	//m->setPsid(0);
+	//m->setPriority(1);
+	//m->setWsmVersion(1);
+	//m->setTimestamp(simTime());
+	//m->setSenderAddress(myId);
+	//m->setRecipientAddress(-1);
+	
+	//TestMessage* t = new TestMessage("beacon");
+	//t->setChannelNumber(Channels::CCH);
+	//sendWSM(t);
+
+//	WaveShortMessageWithDst* wsm = new WaveShortMessageWithDst("beacon");
+//	wsm->setChannelNumber(Channels::CCH);
+//	wsm->setPsid(0);
+//	wsm->setPriority(1);
+//	wsm->setWsmVersion(1);
+//	wsm->setTimestamp(simTime());
+//	wsm->setSenderAddress(myId);
+//	wsm->setRecipientAddress(-1);
+//
+//	sendWSM(wsm);
+	//sendWSM(m);
 
 }
 
@@ -705,6 +721,7 @@ MdmacControlMessage* MdmacNetworkLayer::prepareWSMCB(int kind, int dest, int nHo
 	t_channel channel = dataOnSch ? type_SCH : type_CCH;
 
 	MdmacControlMessage* pkt = new MdmacControlMessage("beacon");
+	//MdmacControlMessage* pkt = new MdmacControlMessage("kkk");
 	int pkgLen = 432;
 
 	if ( mIncludeDestination ) {
@@ -763,7 +780,7 @@ void MdmacNetworkLayer::sendWSM(WaveShortMessage* wsm) {
 
 /** @brief Sends a given cluster message. */
 void MdmacNetworkLayer::sendClusterMessage( int kind, int dest, int nHops ) {
-	WaveShortMessage* m = prepareWSMCB(kind, dest, nHops);
+	MdmacControlMessage* m = prepareWSMCB(kind, dest, nHops);
 	sendWSM(m);
 }
 void MdmacNetworkLayer::handlePositionUpdate(cObject* obj) {}
