@@ -80,12 +80,25 @@ public:
 	void clusterDie(int id, double time);
 	void joinCluster(int clusterId, int nodeId, double time);
 	void leaveCluster(int clusterId, int nodeId, double time);
+	int getClusterIdByNodeId(int nodeId) {
+		auto iter = nodeClusterMap.find(nodeId);
+		if (iter == nodeClusterMap.end()) {
+			return -1;
+		}
+		return iter->second;
+	}
 
 	unordered_map<int, ClusterStat>::size_type
 		getClusterCount() { return clustersInfo.size(); }
 
 protected:
 	unordered_map<int, ClusterStat> clustersInfo;
+
+	/**
+	 * key -- node id
+	 * val -- cluster id
+	 */
+	unordered_map<int, int> nodeClusterMap;
 
 private:
 	ClusterManager() {}

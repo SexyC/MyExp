@@ -116,6 +116,7 @@ protected:
 	cMessage *mFirstInitMessage;			/**< Run the cluster init function for the first time. */
 	cMessage *mSendHelloMessage;			/**< Send a HELLO message. */
 	cMessage *mBeatMessage;					/**< Process the neighbour table for out-of-date node entries. */
+	cMessage *mSendData;
 
     /*@}*/
 
@@ -166,6 +167,19 @@ public:
 protected:
 	AnnotationManager* annotations;
 	BaseConnectionManager* bcm;
+
+	double recvDataLength;
+	double sendDataLength;
+	double forwardDataLength;
+
+	double sendNearPosibility;
+	double sendNodePercent;
+	unsigned long packetSentInterval;
+	unsigned long packetSentIntervalBeg;
+
+	int sequenceNum;
+	unsigned long packetLenMin;
+	unsigned long packetLenMax;
 
 	virtual void onBeacon(WaveShortMessage* wsm);
 	virtual void onData(WaveShortMessage* wsm);
@@ -242,6 +256,11 @@ protected:
     void sendClusterMessage( int, int = -1, int = -1 );
 
     /*@}*/
+
+	inline bool getRandomPermit(double p) {
+			ASSERT(p >= .0 && p <= 1.0);
+			return uniform(0, 1) <= p;
+	}
 
 };
 

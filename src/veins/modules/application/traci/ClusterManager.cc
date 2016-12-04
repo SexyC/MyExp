@@ -25,10 +25,30 @@ void ClusterManager::clusterInit(int id, int headId, double time) {
 	clustersInfo[id] = cs;
 	csEV << "cluster init, id: " << id << ", headId: " << headId
 		<< ", time: " << time << endl;
+
+	nodeClusterMap[id] = headId;
 }
 
 void ClusterManager::clusterDie(int id, double time) {
 	csEV << "cluster died, id: " << id << ", time: " << time << endl;
+
+	auto iter = clustersInfo.find(id);
+	if (iter != clustersInfo.end()) {
+		iter->second.endTime = time;
+		for (auto i = iter->second.heads.begin(); i != iter->second.heads.end();
+					++i) {
+			nodeClusterMap[*i] = -1;
+		}
+		for (auto i = iter->second.heads.begin(); i != iter->second.gateWays.end();
+					++i) {
+			nodeClusterMap[*i] = -1;
+		}
+		for (auto i = iter->second.heads.begin(); i != iter->second.members.end();
+					++i) {
+			nodeClusterMap[*i] = -1;
+		}
+	}
+
 	clustersInfo.erase(id);
 }
 
@@ -40,11 +60,15 @@ void ClusterManager::joinCluster(int clusterId, int nodeId, double time) {
 	csEV << "join cluster, id: " << clusterId << ", node id: "
 		<< nodeId << ", time: " << time << endl;
 	clustersInfo[clusterId].members.insert(nodeId);
+
+	nodeClusterMap[nodeId] = clusterId;
 }
 
 void ClusterManager::leaveCluster(int clusterId, int nodeId, double time) {
 	csEV << "leave cluster, id: " << clusterId << ", node id: "
 		<< nodeId << ", time: " << time << endl;
 	clustersInfo[clusterId].members.erase(nodeId);
+
+	nodeClusterMap[nodeId] = -1;
 }
 

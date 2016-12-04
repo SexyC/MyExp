@@ -80,6 +80,25 @@ void MdmacNetworkLayer::initialize(int stage)
 		mTraciManager = TraCIScenarioManagerAccess().get();
 		mClusterManager = ClusterManager::getClusterManager();
 
+		sequenceNum = 0;
+		sendNearPosibility = hasPar("sendNearPosibility") ?
+			par("sendNearPosibility") : .5;
+
+		sendNodePercent = hasPar("sendNodePercent") ?
+			par("sendNodePercent") : .5;
+
+		packetSentInterval = hasPar("packetSentInterval") ?
+			par("packetSentInterval") : 10;
+
+		packetSentIntervalBeg = hasPar("packetSentIntervalBeg") ?
+			par("packetSentIntervalBeg") : 100;
+
+		packetLenMin = hasPar("packetLenMin") ?
+			par("packetLenMin") : 1024;
+
+		packetLenMax = hasPar("packetLenMax") ?
+			par("packetLenMax") : 1024;
+
 //     	TraCIScenarioManager *pManager = TraCIScenarioManagerAccess().get();
 //     	char strNodeName[50];
 //     	sprintf( strNodeName, "node%i_conn", mId );
@@ -87,7 +106,13 @@ void MdmacNetworkLayer::initialize(int stage)
 //     	points.push_back( mMobility->getCurrentPosition() );
 //     	pManager->commandAddPolygon( strNodeName, "clusterConn", TraCIScenarioManager::Color( 255, 0, 0, 255 ), true, 5, points );
 
-    }
+    } else if (stage == 1) {
+		if (sendData && packetSentInterval > 0) {
+			//scheduleAt(simTime() + packetSentInterval, &sendMessageSignal);
+			mSendData = new cMessage();
+			scheduleAt(simTime() + packetSentIntervalBeg + uniform(0, packetSentInterval), mSendData);
+		}
+	}
 
 }
 
@@ -106,6 +131,11 @@ void MdmacNetworkLayer::finish() {
 	if ( mBeatMessage && mBeatMessage->isScheduled() )
 		cancelEvent( mBeatMessage );
 	delete mBeatMessage;
+
+	if ( mSendData && mSendData->isScheduled() ) {
+		cancelEvent( mSendData);
+	}
+	delete mSendData;
 
 // 	TraCIScenarioManager *pManager = TraCIScenarioManagerAccess().get();
 // 	char strNodeName[10];
@@ -271,6 +301,10 @@ void MdmacNetworkLayer::handleSelfMsg(cMessage* msg) {
 		processBeat();
 		scheduleAt( simTime() + BEAT_LENGTH, mBeatMessage );
 
+	} else if (msg == mSendData) {
+		scheduleAt(simTime() + packetSentIntervalBeg + uniform(0, packetSentInterval), mSendData);
+
+		if (!getRandomPermit(sendNodePercent)) { return ; }
 	}
 }
 
