@@ -28,7 +28,7 @@ void ClusterAlgorithm::ClusterStarted() {
 	mCurrentMaximumClusterSize = mClusterMembers.size();
 	mClusterStartTime = simTime();
 //	std::cerr << mId << ": Cluster Started!\n";
-
+	mClusterManager->clusterInit(mClusterHead, mId, mClusterStartTime.dbl());
 }
 
 
@@ -38,6 +38,8 @@ void ClusterAlgorithm::ClusterMemberAdded( int id ) {
 	mClusterMembers.insert( id );
 	mCurrentMaximumClusterSize = std::max( (int)mCurrentMaximumClusterSize, (int)mClusterMembers.size() );
 
+	mClusterManager->joinCluster(mClusterHead, id, simTime().dbl());
+
 }
 
 
@@ -45,6 +47,9 @@ void ClusterAlgorithm::ClusterMemberAdded( int id ) {
 void ClusterAlgorithm::ClusterMemberRemoved( int id ) {
 
 	mClusterMembers.erase(id);
+
+	mClusterManager->leaveCluster(mClusterHead, id, simTime().dbl());
+
 	if ( mClusterMembers.size() == GetMinimumClusterSize() ) {
 		mCurrentMaximumClusterSize += 1;
 //		std::cerr << "Cluster died of attrition! |C|=" << mCurrentMaximumClusterSize << "\n";
@@ -61,7 +66,7 @@ void ClusterAlgorithm::ClusterDied( int deathType ) {
 	if ( simTime() - mClusterStartTime > 2 ) {
 //		std::cerr << mId << ": Cluster died! L = " << simTime() - mClusterStartTime << "; S = " << mCurrentMaximumClusterSize << "\n";
 //		std::cerr << "STUB! " << simTime() - mClusterStartTime << " " << mCurrentMaximumClusterSize << "\n";
-		emit( mSigClusterLifetime, simTime() - mClusterStartTime );
+		emit( mSigClusterLifetime,(simTime() - mClusterStartTime).dbl());
 		emit( mSigClusterSize, (double)mCurrentMaximumClusterSize );
 		emit( mSigClusterDeathType, (double)deathType );
 		emit( mSigClusterDeathX, pos.x );
@@ -71,6 +76,7 @@ void ClusterAlgorithm::ClusterDied( int deathType ) {
 	mCurrentMaximumClusterSize = 0;
 	mClusterStartTime = 0;
 
+	mClusterManager->clusterDie(mClusterHead, simTime().dbl());
 }
 
 
@@ -125,6 +131,7 @@ void ClusterAlgorithm::initialize( int state ) {
 		mSigClusterDeathX = registerSignal( "sigDeathX" );
 		mSigClusterDeathY = registerSignal( "sigDeathY" );
 
+		mClusterManager = ClusterManager::getClusterManager();
 	}
 
 }

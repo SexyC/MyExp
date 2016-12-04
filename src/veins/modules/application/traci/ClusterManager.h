@@ -1,66 +1,98 @@
 //
-// Copyright (C) 2006-2011 Christoph Sommer <christoph.sommer@uibk.ac.at>
-//
-// Documentation for these modules is at http://veins.car2x.org/
-//
-// This program is free software; you can redistribute it and/or modify
-// it under the terms of the GNU General Public License as published by
-// the Free Software Foundation; either version 2 of the License, or
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
-//
+// 
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// GNU General Public License for more details.
-//
-// You should have received a copy of the GNU General Public License
-// along with this program; if not, write to the Free Software
-// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
-//
+// GNU Lesser General Public License for more details.
+// 
+// You should have received a copy of the GNU Lesser General Public License
+// along with this program.  If not, see http://www.gnu.org/licenses/.
+// 
 
-#ifndef ClusterManager_H
-#define ClusterManager_H
+#ifndef ClusterManaget_H
+#define ClusterManaget_H
 
+//#include <omnetpp.h>
+//
+//#include <MiXiMDefs.h>
+//#include <BaseNetwLayer.h>
+
+//#include <fstream>
+#include <set>
+#include <map>
+
+#include <unordered_map>
 #include <unordered_set>
+
+#include "veins/modules/messages/MdmacControlMessage_m.h"
+#include "veins/modules/messages/WaveShortMessageWithDst_m.h"
 #include "veins/modules/application/ieee80211p/BaseWaveApplLayer.h"
 #include "veins/modules/mobility/traci/TraCIMobility.h"
 #include "veins/modules/mobility/traci/TraCICommandInterface.h"
-#include "veins/modules/mobility/traci/TraCIScenarioManagerLaunchd.h"
+#include "veins/modules/mobility/traci/TraCIScenarioManager.h"
 
-#include "veins/modules/messages/WaveShortMessageWithDst_m.h"
-
-#include <limits>
-#include <unordered_map>
-#include <list>
-#include <queue>
-
-using Veins::TraCIMobility;
-using Veins::TraCICommandInterface;
-using Veins::TraCIScenarioManagerLaunchd;
-using Veins::TraCIScenarioManagerLaunchdAccess;
 using Veins::AnnotationManager;
+using Veins::TraCIMobility;
+using Veins::TraCIMobilityAccess;
+using Veins::TraCIScenarioManager;
+using Veins::TraCIScenarioManagerAccess;
+using Veins::TraCICommandInterface;
 
-using std::priority_queue;
+using std::unordered_map;
+using std::unordered_set;
+using std::cout;
+using std::endl;
+#define csEV cout
 
 /**
- * Cluster manager utility class
+ * This module implements the clustering mechanism for
+ * Modified Distributed Mobility-Aware Clustering (M-DMAC).
+ * There is a pure virtual function that must be implemented by
+ * inheriting cluster modules, which provides the weighting function
+ * for the particular cluster algorithm being tested.
  */
-class ClusterManager {
-	public:
-		struct Cluster {
-			int id;
-			cModule* head;
-			priority_queue<cModule*> headBackNodes;
-			priority_queue<cModule*> gateNodes;
-			priority_queue<cModule*> gateBackNodes;
-		};
-		static ClusterManager& getClusterManager();
-	private:
-		ClusterManager();
-		ClusterManager(const ClusterManager&) = delete;
-		const Cluster& operator=(const ClusterManager&) = delete;
-		~ClusterManager();
+class ClusterManager
+{
+
+public:
+	static ClusterManager* getClusterManager() {
+		static ClusterManager cm;
+		return &cm;
+	}
+	class ClusterStat {
+		public:
+			ClusterStat() { }
+			ClusterStat(double time) {
+				startTime = time;
+			}
+			unordered_set<int> heads;
+			unordered_set<int> gateWays;
+			unordered_set<int> members;
+			double startTime;
+			double endTime;
+	};
+
+	void clusterInit(int id, int headId, double time);
+	void clusterDie(int id, double time);
+	void joinCluster(int clusterId, int nodeId, double time);
+	void leaveCluster(int clusterId, int nodeId, double time);
+
+	unordered_map<int, ClusterStat>::size_type
+		getClusterCount() { return clustersInfo.size(); }
+
+protected:
+	unordered_map<int, ClusterStat> clustersInfo;
+
+private:
+	ClusterManager() {}
+	ClusterManager(const ClusterManager&) = delete;
+	const ClusterManager operator=(const ClusterManager&) = delete;
+	~ClusterManager() {}
+
 };
 
 #endif
-

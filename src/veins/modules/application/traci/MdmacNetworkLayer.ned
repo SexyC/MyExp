@@ -40,9 +40,14 @@ simple MdmacNetworkLayer extends BaseWaveApplLayer
 		@signal[sigOverhead](type="long");
 		@signal[sigHelloOverhead](type="long");
 		@signal[sigClusterLifetime](type="double");
-		@signal[sigClusterSize](type="int");
-		@signal[sigHeadChange](type="int");
-		@signal[sigDeathType](type="int");
+		//@signal[sigClusterSize](type="int");
+		//@signal[sigHeadChange](type="int");
+		//@signal[sigDeathType](type="int");
+		//@signal[sigClusterSize](type="long");
+		@signal[sigClusterSize](type="double");
+		@signal[sigHeadChange](type="long");
+		//@signal[sigDeathType](type="long");
+		@signal[sigDeathType](type="double");
 		@signal[sigDeathX](type="double");
 		@signal[sigDeathY](type="double");
 

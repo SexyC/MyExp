@@ -12,6 +12,7 @@
 #include "veins/modules/mobility/traci/TraCIMobility.h"
 #include "veins/modules/mobility/traci/TraCICommandInterface.h"
 #include "veins/modules/mobility/traci/TraCIScenarioManagerLaunchd.h"
+#include "veins/modules/application/traci/ClusterManager.h"
 //#include <omnetpp.h>
 //#include <MiXiMDefs.h>
 //#include <BaseNetwLayer.h>
@@ -116,6 +117,7 @@ public:
 	/*@}*/
 
 protected:
+	ClusterManager* mClusterManager;
     unsigned int mId;				/**< ID of the node. */
     int mClusterHead;               /**< ID of the CH we're associated with (initialised to -1). */
     NodeIdSet mClusterMembers;      /**< Set of CMs associated with this node (if it is a CH) */

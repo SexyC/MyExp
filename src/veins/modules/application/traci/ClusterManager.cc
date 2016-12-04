@@ -1,41 +1,50 @@
 //
-// Copyright (C) 2006-2011 Christoph Sommer <christoph.sommer@uibk.ac.at>
-//
-// Documentation for these modules is at http://veins.car2x.org/
-//
-// This program is free software; you can redistribute it and/or modify
-// it under the terms of the GNU General Public License as published by
-// the Free Software Foundation; either version 2 of the License, or
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
 // (at your option) any later version.
-//
+// 
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
 // MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// GNU General Public License for more details.
-//
-// You should have received a copy of the GNU General Public License
-// along with this program; if not, write to the Free Software
-// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
-//
+// GNU Lesser General Public License for more details.
+// 
+// You should have received a copy of the GNU Lesser General Public License
+// along with this program.  If not, see http://www.gnu.org/licenses/.
+// 
 
-#include "veins/base/utils/asserts.h"
-#include "veins/modules/application/traci/ClusterManager.h"
+#include <cassert>
+#include <iostream>
 
-using Veins::TraCIMobilityAccess;
-using Veins::AnnotationManagerAccess;
+#include "ClusterManager.h"
+using Veins::TraCIScenarioManager;
 
-using std::endl;
-
-#define expEV std::cout
-
-ClusterManager::ClusterManager() {
+void ClusterManager::clusterInit(int id, int headId, double time) {
+	ClusterStat cs(time);
+	cs.heads.insert(headId);
+	clustersInfo[id] = cs;
+	csEV << "cluster init, id: " << id << ", headId: " << headId
+		<< ", time: " << time << endl;
 }
 
-ClusterManager::~ClusterManager() {
+void ClusterManager::clusterDie(int id, double time) {
+	csEV << "cluster died, id: " << id << ", time: " << time << endl;
+	clustersInfo.erase(id);
 }
 
-ClusterManager& ClusterManager::getClusterManager() {
-	static ClusterManager cm;
-	return cm;
+void ClusterManager::joinCluster(int clusterId, int nodeId, double time) {
+	if (clustersInfo.find(clusterId) == clustersInfo.end()) {
+		csEV << "join cluster failed, cluster not exist any more" << endl;
+		return;
+	}
+	csEV << "join cluster, id: " << clusterId << ", node id: "
+		<< nodeId << ", time: " << time << endl;
+	clustersInfo[clusterId].members.insert(nodeId);
+}
+
+void ClusterManager::leaveCluster(int clusterId, int nodeId, double time) {
+	csEV << "leave cluster, id: " << clusterId << ", node id: "
+		<< nodeId << ", time: " << time << endl;
+	clustersInfo[clusterId].members.erase(nodeId);
 }
 

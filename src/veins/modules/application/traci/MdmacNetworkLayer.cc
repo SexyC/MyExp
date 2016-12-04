@@ -78,6 +78,7 @@ void MdmacNetworkLayer::initialize(int stage)
 		mIncludeDestination = false;
 
 		mTraciManager = TraCIScenarioManagerAccess().get();
+		mClusterManager = ClusterManager::getClusterManager();
 
 //     	TraCIScenarioManager *pManager = TraCIScenarioManagerAccess().get();
 //     	char strNodeName[50];
@@ -195,12 +196,14 @@ int MdmacNetworkLayer::GetMinimumClusterSize() {
 void MdmacNetworkLayer::ClusterStarted() {
 	ClusterAlgorithm::ClusterStarted();
 	mIsClusterHead = true;
+
 }
 
 
 void MdmacNetworkLayer::ClusterDied( int deathType ) {
 	ClusterAlgorithm::ClusterDied( deathType );
 	mIsClusterHead = false;
+
 	if ( deathType == CD_Attrition )
 		init();
 }
@@ -269,32 +272,6 @@ void MdmacNetworkLayer::handleSelfMsg(cMessage* msg) {
 		scheduleAt( simTime() + BEAT_LENGTH, mBeatMessage );
 
 	}
-
-	//MdmacControlMessage* m = new MdmacControlMessage("beacon");
-	//m->setChannelNumber(Channels::CCH);
-	//m->setPsid(0);
-	//m->setPriority(1);
-	//m->setWsmVersion(1);
-	//m->setTimestamp(simTime());
-	//m->setSenderAddress(myId);
-	//m->setRecipientAddress(-1);
-	
-	//TestMessage* t = new TestMessage("beacon");
-	//t->setChannelNumber(Channels::CCH);
-	//sendWSM(t);
-
-//	WaveShortMessageWithDst* wsm = new WaveShortMessageWithDst("beacon");
-//	wsm->setChannelNumber(Channels::CCH);
-//	wsm->setPsid(0);
-//	wsm->setPriority(1);
-//	wsm->setWsmVersion(1);
-//	wsm->setTimestamp(simTime());
-//	wsm->setSenderAddress(myId);
-//	wsm->setRecipientAddress(-1);
-//
-//	sendWSM(wsm);
-	//sendWSM(m);
-
 }
 
 
@@ -598,7 +575,7 @@ void MdmacNetworkLayer::receiveHelloMessage( MdmacControlMessage *m ) {
 	if ( m->getTtl() > 1 )
 		sendClusterMessage( HELLO_MESSAGE, -1, m->getTtl()-1 );
 
-	delete m;
+	//delete m;
 
 }
 
@@ -645,7 +622,7 @@ void MdmacNetworkLayer::receiveChMessage( MdmacControlMessage *m ) {
 	if ( m->getTtl() > 1 )
 		sendClusterMessage( CH_MESSAGE, -1, m->getTtl()-1 );
 
-	delete m;
+	//delete m;
 
 }
 
@@ -690,7 +667,7 @@ void MdmacNetworkLayer::receiveJoinMessage( MdmacControlMessage *m ) {
 	if ( m->getTtl() > 1 )
 		sendClusterMessage( JOIN_MESSAGE, m->getTargetNodeId(), m->getTtl()-1 );
 
-	delete m;
+	//delete m;
 
 }
 
@@ -740,6 +717,7 @@ MdmacControlMessage* MdmacNetworkLayer::prepareWSMCB(int kind, int dest, int nHo
 		case type_CCH: pkt->setChannelNumber(Channels::CCH); break;
 	}
 
+	pkt->setKind(kind);
 	pkt->setPsid(0);
 	pkt->setPriority(beaconPriority);
 	pkt->setWsmVersion(1);
