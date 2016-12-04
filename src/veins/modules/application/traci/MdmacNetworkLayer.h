@@ -24,6 +24,8 @@
 //#include <fstream>
 #include <set>
 #include <map>
+#include <list>
+using std::list;
 
 #include "veins/modules/messages/MdmacControlMessage_m.h"
 #include "veins/modules/messages/WaveShortMessageWithDst_m.h"
@@ -71,6 +73,7 @@ public:
     typedef std::list<std::string> RouteLinkList;
 
 	struct Neighbour {
+		cModule* neighborMod;
 		double mWeight;						/**< Weight of this node. */
 		Coord mPosition;					/**< Position of the Neighbour. */
 		Coord mVelocity;					/**< Velocity of the Neighbour. */
@@ -88,6 +91,80 @@ protected:
 
 	typedef std::map<unsigned int,Neighbour> NeighbourSet;
 	typedef std::map<unsigned int,Neighbour>::iterator NeighbourIterator;
+
+	typedef std::vector<cModule*> NodeVector;
+
+	/**
+	 * Do not access this below four vars directly
+	 * use getCachedFarNodes and getCachedNeighborNodes
+	 */
+	MdmacNetworkLayer::NodeVector farNodes;
+	simtime_t farNodesUpdateTime;
+
+	TraCIMobility* mobility;
+	/**
+	 * to store packets that need forwarding
+	 */
+	list<WaveShortMessageWithDst*> msgQueue;
+
+	NeighbourSet *
+	getCachedNeighborNodes(bool forceUpdate = false) {
+		return &mNeighbours;
+	}
+
+	MdmacNetworkLayer::NodeVector* getCachedFarNodes(bool forceUpdate = false) {
+		if (forceUpdate || farNodesUpdateTime < simTime()) {
+			cModule* host = findHost();
+			const std::map<std::string, cModule*> &hosts = mTraciManager->getManagedHosts();
+
+			farNodes.clear();
+			farNodes.reserve(hosts.size() - mNeighbours.size());
+
+			for (auto iter = hosts.begin(); iter != hosts.end(); ++iter) {
+				if (mNeighbours.find(iter->second->getId()) == mNeighbours.end()) {
+					farNodes.push_back(iter->second);
+				}
+			}
+		}
+		return &farNodes;
+	}
+
+	static Coord getHostPosition(cModule* const host);
+	Coord getHostPosition(int hostId);
+	virtual unsigned long getPkgLen() {
+		if (packetLenMax == packetLenMin) { return packetLenMax; }
+		return (unsigned long)(uniform(packetLenMin, packetLenMax));
+	}
+
+	virtual int getNextHopId(int dstId);
+
+	virtual WaveShortMessageWithDst* prepareWSMWithDst(std::string name, int lengthBits,
+				t_channel channel, int priority, int rcvId, int serial, Coord &rcvPos);
+
+	virtual WaveShortMessageWithDst* prepareAndInitWSMWithDst(cModule* dstMod, int nextHopId, std::string content,
+				unsigned long pkgLen) {
+
+		t_channel channel = dataOnSch ? type_SCH : type_CCH;
+
+		/**
+		 * FIXME: This is a fucking bug
+		 * Should fill in with dst pos instead of src pos
+		 */
+		Coord currPos = getMyPosition();
+		WaveShortMessageWithDst* wsm = prepareWSMWithDst("data", dataLengthBits, channel, dataPriority,
+					dstMod->getId(), sequenceNum++, currPos);
+
+		wsm->setByteLength(pkgLen);
+		wsm->setNextHopId(nextHopId);
+		wsm->setWsmData(content.c_str());
+		wsm->setDstNodeId(dstMod->getName());
+		return wsm;
+	}
+	Coord getMyPosition() const {
+		return mobility->getCurrentPosition();
+	}
+
+	void sendMessage(cModule* dstMod, int nextHopId, std::string content, unsigned long pkgLen);
 
 	//unsigned int mID;						/**< Node's unique ID. */
 	double mWeight;							/**< Weight of this node. */
@@ -257,11 +334,13 @@ protected:
 
     /*@}*/
 
+	enum { NEIGHBOR_NODE, FAR_NODE, PICK_ONE_NODE };
 	inline bool getRandomPermit(double p) {
-			ASSERT(p >= .0 && p <= 1.0);
-			return uniform(0, 1) <= p;
+		ASSERT(p >= .0 && p <= 1.0);
+		return uniform(0, 1) <= p;
 	}
 
+	virtual cModule* getDstNode(int option = PICK_ONE_NODE);
 };
 
 #endif

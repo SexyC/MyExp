@@ -37,6 +37,7 @@ void MdmacNetworkLayer::initialize(int stage)
 
     if(stage == 1) {
 
+		mobility = TraCIMobilityAccess().get(getParentModule());
     	mInitialised = false;
 
     	// set up the node.
@@ -282,6 +283,27 @@ void MdmacNetworkLayer::ClusterDied( int deathType ) {
 //
 //}
 
+Coord MdmacNetworkLayer::getHostPosition(cModule* const host) {
+
+	ASSERT(host != NULL);
+	for (cModule::SubmoduleIterator iter(host); !iter.end(); ++iter) {
+		cModule* submod = SUBMODULE_ITERATOR_TO_MODULE(iter);
+		TraCIMobility* mm = dynamic_cast<TraCIMobility*>(submod);
+
+		if (!mm) continue;
+		return mm->getPositionAt(simTime());
+	}
+	ASSERT(false);
+	return Coord();
+}
+
+Coord MdmacNetworkLayer::getHostPosition(int hostId) {
+
+	cModule* host = cSimulation::getActiveSimulation()->getModule(hostId);
+	ASSERT(host != NULL);
+	return MdmacNetworkLayer::getHostPosition(host);
+}
+
 /** @brief Handle self messages */
 void MdmacNetworkLayer::handleSelfMsg(cMessage* msg) {
 
@@ -305,10 +327,133 @@ void MdmacNetworkLayer::handleSelfMsg(cMessage* msg) {
 		scheduleAt(simTime() + packetSentIntervalBeg + uniform(0, packetSentInterval), mSendData);
 
 		if (!getRandomPermit(sendNodePercent)) { return ; }
+		cModule* dstMod = getDstNode();
+		if (!dstMod) { return; }
+
+		Coord dstPos = getHostPosition(dstMod);
+		unsigned long pkgLen = getPkgLen();
+
+		int nextHopId = getNextHopId(dstMod->getId());
+
+		/**
+		 * currently no available next hop
+		 */
+		if (nextHopId < 0) {
+			WaveShortMessageWithDst* wsmd = prepareAndInitWSMWithDst(dstMod,
+						-1 /* next hop id is not sure */, /*ss.str()*/ "", pkgLen);
+
+			sendDataLength += pkgLen;
+			msgQueue.push_back(wsmd);
+			return;
+		}
+
+		sendDataLength += pkgLen;
+		sendMessage(dstMod, nextHopId, /*ss.str()*/ "", pkgLen);
 	}
 }
 
+WaveShortMessageWithDst* MdmacNetworkLayer::prepareWSMWithDst(std::string name, int lengthBits,
+			t_channel channel, int priority, int rcvId, int serial, Coord &rcvPos) {
+	WaveShortMessageWithDst* wsm = new WaveShortMessageWithDst(name.c_str());
+	wsm->addBitLength(headerLength);
+	wsm->addBitLength(lengthBits);
 
+	switch (channel) {
+		case type_SCH: wsm->setChannelNumber(Channels::SCH1); break; //will be rewritten at Mac1609_4 to actual Service Channel. This is just so no controlInfo is needed
+		case type_CCH: wsm->setChannelNumber(Channels::CCH); break;
+	}
+	wsm->setPsid(0);
+	wsm->setPriority(priority);
+	wsm->setWsmVersion(1);
+	wsm->setTimestamp(simTime());
+	wsm->setSenderAddress(myId);
+	wsm->setRecipientAddress(rcvId);
+	wsm->setSenderPos(curPosition);
+	wsm->setSerial(serial);
+	wsm->setDstHostPos(rcvPos);
+
+	if (name == "beacon") {
+		EV << "Creating Beacon with Priority " << priority << " at Applayer at " << wsm->getTimestamp() << std::endl;
+	}
+	if (name == "data") {
+		EV << "Creating Data with Priority " << priority << " at Applayer at " << wsm->getTimestamp() << std::endl;
+	}
+
+	return wsm;
+}
+
+void MdmacNetworkLayer::sendMessage(cModule* dstMod, int nextHopId, std::string content, unsigned long pkgLen) {
+	WaveShortMessageWithDst* wsm = prepareAndInitWSMWithDst(dstMod, nextHopId, content, pkgLen);
+	sendWSM(wsm);
+}
+
+int MdmacNetworkLayer::getNextHopId(int dstId) {
+	return -1;
+}
+
+cModule* MdmacNetworkLayer::getDstNode(int option) {
+	switch (option) {
+		case NEIGHBOR_NODE:
+			{
+				if (mNeighbours.size() == 0) { return NULL; }
+				int idx = int(uniform(0, mNeighbours.size()));
+				auto iter = mNeighbours.begin();
+				for (int i = 0; i < idx; ++i) {
+					++iter;
+				}
+				return (iter->second.neighborMod);
+			}
+			break;
+		case FAR_NODE:
+			{
+				// get dst from far nodes
+				NodeVector* nv = getCachedFarNodes();
+				if (nv->size() == 0) {
+					return NULL;
+				}
+				int idx = int(uniform(0, nv->size()));
+				return (*nv)[idx];
+			}
+			break;
+		case PICK_ONE_NODE:
+			{
+				//double seed = uniform(0, 1);
+				//if (seed <= sendNearPosibility) {
+				if (getRandomPermit(sendNearPosibility)) {
+					// get dst from neighbors
+					NeighbourSet* nns = getCachedNeighborNodes();
+					int idx = int(uniform(0, nns->size()));
+
+					/**
+					 * XXX: Should we retry to get newest neighbors?
+					 */
+					//if (nns->size() == 0) {
+					//	nns = getCachedNeighborNodes(true);
+					//}
+
+					if (nns->size() != 0) {
+						auto iter = nns->begin();
+						for(int i = 0; i < idx; ++i) {
+							++iter;
+						}
+						return (iter->second.neighborMod);
+					}
+					/**
+					 * No neighbors are available, return far node
+					 */
+					return getDstNode(FAR_NODE);
+				} else {
+					// get dst from far nodes
+					NodeVector* nv = getCachedFarNodes();
+					int idx = int(uniform(0, nv->size()));
+					return (*nv)[idx];
+				}
+			}
+			break;
+	};
+	return NULL;
+
+}
 
 /** @brief decapsulate higher layer message from MdmacControlMessage */
 //cMessage* MdmacNetworkLayer::decapsMsg( MdmacControlMessage *msg ) {
@@ -709,6 +854,10 @@ void MdmacNetworkLayer::receiveJoinMessage( MdmacControlMessage *m ) {
 void MdmacNetworkLayer::updateNeighbour( MdmacControlMessage *m ) {
 
 	// update the neighbour data
+	
+	if (mNeighbours.find(m->getNodeId()) == mNeighbours.end()) {
+		mNeighbours[m->getNodeId()].neighborMod = getSimulation()->getModule(m->getNodeId());
+	}
 	mNeighbours[m->getNodeId()].mWeight = m->getWeight();
 	mNeighbours[m->getNodeId()].mIsClusterHead = m->getIsClusterHead();
 	mNeighbours[m->getNodeId()].mRoadID = m->getRoadId();
