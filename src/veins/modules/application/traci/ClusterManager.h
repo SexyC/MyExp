@@ -46,7 +46,7 @@ using std::unordered_map;
 using std::unordered_set;
 using std::cout;
 using std::endl;
-#define csEV cout
+#define csEV EV
 
 /**
  * This module implements the clustering mechanism for

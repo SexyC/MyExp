@@ -59,6 +59,16 @@ class MdmacNetworkLayer : public ClusterAlgorithm
 public:
 
 	/**
+	 * identify node role in cluster
+	 */
+	enum ClusterNodeRole {
+		SINGLE = 0,
+		HEAD = 0x1,
+		GATEWAY = 0x1 << 1,
+		MEMBER = 0x1 << 2
+	};
+
+	/**
 	 * @brief Messages used by the clustering mechanism.
 	 */
 	enum ClusterMessageKinds {
@@ -175,7 +185,10 @@ protected:
 	bool mIncludeDestination;				/**< Include the destination in the HELLO messages. */
 
 	bool mIsClusterHead;					/**< Is this node a CH? */
+	bool mIsGateWay;						/**< Is this node a GateWay */
 	NeighbourSet mNeighbours;				/**< The set of neighbours near this node. */
+
+	unordered_set<int> mNeighbourClusters; /**< neighbour clusters */
 
 	double mTransmitRangeSq;				/**< Required for the freshness calculation. Obtained from the PhyLayer module. */
 
@@ -233,6 +246,7 @@ public:
 	int GetStateCount();
 	int GetClusterState();
 	bool IsClusterHead();
+	bool IsClusterGateWay();
 	bool IsSubclusterHead();
 	bool IsHierarchical();
 	void UpdateMessageString();

@@ -47,6 +47,7 @@ void MdmacNetworkLayer::initialize(int stage)
 		mMobility = TraCIMobilityAccess().get(getParentModule());
     	mClusterHead = -1;
     	mIsClusterHead = false;
+		mIsGateWay = false;
     	mCurrentMaximumClusterSize = 0;
     	mClusterStartTime = 0;
 
@@ -62,6 +63,7 @@ void MdmacNetworkLayer::initialize(int stage)
     	mHopCount = par("hopCount").longValue();
     	mBeaconInterval = par("beaconInterval").doubleValue();
 
+		mSendData = NULL;
     	// set up self-messages
     	mSendHelloMessage = new cMessage();
     	scheduleAt( simTime() + mBeaconInterval * float(rand()) / RAND_MAX, mSendHelloMessage );
@@ -186,23 +188,36 @@ void MdmacNetworkLayer::onData(WaveShortMessage* wsm) {
 }
 
 int MdmacNetworkLayer::GetStateCount() {
-	return 3;
+	return 4;
+	//return 3;
 }
 
 int MdmacNetworkLayer::GetClusterState() {
 	if ( !IsClusterHead() ) {
-		if ( mClusterHead == -1 )
-			return 0;	// Unclustered state
-		else
-			return 1;	// Cluster Member
+		if ( mClusterHead == -1 ) {
+			return SINGLE;	// Unclustered state
+		}
+		else if (IsClusterGateWay()) {
+			return GATEWAY;
+		} else {
+			return MEMBER;	// Cluster Member
+		}
 	} else {
-		return 2;		// Cluster Head
+		if (IsClusterGateWay()) {
+			return HEAD & GATEWAY;		// Cluster Head
+		} else {
+			return GATEWAY;
+		}
 	}
 }
 
 
 bool MdmacNetworkLayer::IsClusterHead() {
 	return mIsClusterHead && ( mClusterMembers.size() > 1 );
+}
+
+bool MdmacNetworkLayer::IsClusterGateWay() {
+	return mClusterHead != -1 && mIsGateWay;
 }
 
 

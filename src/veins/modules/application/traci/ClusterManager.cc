@@ -47,9 +47,8 @@ void ClusterManager::clusterDie(int id, double time) {
 					++i) {
 			nodeClusterMap[*i] = -1;
 		}
+		clustersInfo.erase(id);
 	}
-
-	clustersInfo.erase(id);
 }
 
 void ClusterManager::joinCluster(int clusterId, int nodeId, double time) {
@@ -65,10 +64,14 @@ void ClusterManager::joinCluster(int clusterId, int nodeId, double time) {
 }
 
 void ClusterManager::leaveCluster(int clusterId, int nodeId, double time) {
+
+	if (clustersInfo.find(clusterId) == clustersInfo.end()) {
+		csEV << "leave cluster failed, cluster not exist any more" << endl;
+	} else {
+		clustersInfo[clusterId].members.erase(nodeId);
+	}
 	csEV << "leave cluster, id: " << clusterId << ", node id: "
 		<< nodeId << ", time: " << time << endl;
-	clustersInfo[clusterId].members.erase(nodeId);
-
 	nodeClusterMap[nodeId] = -1;
 }
 
