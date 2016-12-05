@@ -39,9 +39,9 @@ public:
 	ClusterAlgorithm();
 	virtual ~ClusterAlgorithm();
 
-	typedef std::pair<unsigned int,unsigned int> NodePair;
-	typedef std::set<unsigned int> NodeIdSet;
-	typedef std::vector<unsigned int> NodeIdList;
+	typedef std::pair<int,int> NodePair;
+	typedef std::set<int> NodeIdSet;
+	typedef std::vector<int> NodeIdList;
 
 	virtual int GetStateCount() = 0;
 	virtual int GetClusterState() = 0;

@@ -25,6 +25,7 @@
 #include <set>
 #include <map>
 
+#include <vector>
 #include <unordered_map>
 #include <unordered_set>
 
@@ -44,6 +45,8 @@ using Veins::TraCICommandInterface;
 
 using std::unordered_map;
 using std::unordered_set;
+using std::vector;
+using std::set;
 using std::cout;
 using std::endl;
 #define csEV EV
@@ -70,13 +73,21 @@ public:
 				startTime = time;
 			}
 			unordered_set<int> heads;
-			unordered_set<int> gateWays;
+			//unordered_set<int> gateWays;
 			unordered_set<int> members;
+			/**
+			 * key -- neighbor cluster id
+			 * val -- set of gateway node id that 
+			 *			connnect to that cluster
+			 */
+			unordered_map<int, unordered_set<int> > neighborClusters;
+
+			double neighborClusterUpdateTime;
 			double startTime;
 			double endTime;
 	};
 
-	void clusterInit(int id, int headId, double time);
+	void clusterInit(int id, int headId, set<int>& members, double time);
 	void clusterDie(int id, double time);
 	void joinCluster(int clusterId, int nodeId, double time);
 	void leaveCluster(int clusterId, int nodeId, double time);
@@ -87,9 +98,14 @@ public:
 		}
 		return iter->second;
 	}
+	void nodeNeighbourClusterInfoUpdate(int id, unordered_set<int>* s) {
+		nodeNeighbourClusterInfo[id] = s;
+	}
 
 	unordered_map<int, ClusterStat>::size_type
 		getClusterCount() { return clustersInfo.size(); }
+
+	unordered_map<int, unordered_set<int> >* getNeighborClusters(int id, double time, bool forceUpdate = false);
 
 protected:
 	unordered_map<int, ClusterStat> clustersInfo;
@@ -99,6 +115,8 @@ protected:
 	 * val -- cluster id
 	 */
 	unordered_map<int, int> nodeClusterMap;
+
+	unordered_map<int, unordered_set<int>* > nodeNeighbourClusterInfo;
 
 private:
 	ClusterManager() {}

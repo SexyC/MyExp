@@ -35,6 +35,7 @@ using std::list;
 #include "veins/modules/mobility/traci/TraCIScenarioManager.h"
 
 #include "ClusterAlgorithm.h"
+#include "ApplMapManager.h"
 
 //#define BEAT_LENGTH	0.25	// measured in second.
 #define BEAT_LENGTH	2	// measured in second.
@@ -176,6 +177,23 @@ protected:
 
 	void sendMessage(cModule* dstMod, int nextHopId, std::string content, unsigned long pkgLen);
 
+public:
+	unordered_set<int>* getNeighbourClusters(bool forceUpdate = false) {
+		if (forceUpdate || mNeighbourClustersUpdateTime < simTime()) {
+			mNeighbourClustersUpdateTime = simTime();
+			mNeighbourClusters.clear();
+			for (auto iter = mNeighbours.begin(); iter != mNeighbours.end(); ++iter) {
+				int clusterId = mClusterManager->getClusterIdByNodeId(iter->first);
+				if (clusterId != -1) {
+					mNeighbourClusters.insert(clusterId);
+				}
+			}
+			mClusterManager->nodeNeighbourClusterInfoUpdate(mId, &mNeighbourClusters);
+		}
+		return &mNeighbourClusters;
+	}
+protected:
+
 	//unsigned int mID;						/**< Node's unique ID. */
 	double mWeight;							/**< Weight of this node. */
 
@@ -188,7 +206,12 @@ protected:
 	bool mIsGateWay;						/**< Is this node a GateWay */
 	NeighbourSet mNeighbours;				/**< The set of neighbours near this node. */
 
-	unordered_set<int> mNeighbourClusters; /**< neighbour clusters */
+	/**
+	 * do not use this directly
+	 * use getNeighbourClusters
+	 */
+	unordered_set<int> mNeighbourClusters; /**< neighbour clusters, include self cluster id*/
+	simtime_t mNeighbourClustersUpdateTime;
 
 	double mTransmitRangeSq;				/**< Required for the freshness calculation. Obtained from the PhyLayer module. */
 

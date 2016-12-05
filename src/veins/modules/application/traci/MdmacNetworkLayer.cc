@@ -37,11 +37,14 @@ void MdmacNetworkLayer::initialize(int stage)
 
     if(stage == 1) {
 
+		ApplMapManager::getApplMapManager()->registerAppl(findHost()->getId(), this);
+
 		mobility = TraCIMobilityAccess().get(getParentModule());
     	mInitialised = false;
 
     	// set up the node.
-    	mId = getId();
+    	//mId = getId();
+    	mId = findHost()->getId();
     	mWeight = calculateWeight();
     	//mMobility = FindModule<BaseMobility*>::findSubModule(findHost());
 		mMobility = TraCIMobilityAccess().get(getParentModule());
@@ -123,6 +126,7 @@ void MdmacNetworkLayer::initialize(int stage)
 /** @brief Cleanup*/
 void MdmacNetworkLayer::finish() {
 
+	ApplMapManager::getApplMapManager()->unregisterAppl(myId);
 	if (mSendHelloMessage && mSendHelloMessage->isScheduled() )
 		cancelEvent( mSendHelloMessage );
 	delete mSendHelloMessage;
@@ -204,7 +208,7 @@ int MdmacNetworkLayer::GetClusterState() {
 		}
 	} else {
 		if (IsClusterGateWay()) {
-			return HEAD & GATEWAY;		// Cluster Head
+			return HEAD | GATEWAY;		// Cluster Head
 		} else {
 			return GATEWAY;
 		}
@@ -217,7 +221,8 @@ bool MdmacNetworkLayer::IsClusterHead() {
 }
 
 bool MdmacNetworkLayer::IsClusterGateWay() {
-	return mClusterHead != -1 && mIsGateWay;
+
+	return mClusterHead != -1 && getNeighbourClusters(true)->size() > 1;
 }
 
 
@@ -403,6 +408,7 @@ void MdmacNetworkLayer::sendMessage(cModule* dstMod, int nextHopId, std::string 
 }
 
 int MdmacNetworkLayer::getNextHopId(int dstId) {
+	error("MdmacNetworkLayer do not provide this, subclass it!");
 	return -1;
 }
 
@@ -888,7 +894,6 @@ void MdmacNetworkLayer::updateNeighbour( MdmacControlMessage *m ) {
 	}
 
 	calculateFreshness( m->getNodeId() );
-
 }
 
 MdmacControlMessage* MdmacNetworkLayer::prepareWSMCB(int kind, int dest, int nHops) {
@@ -915,6 +920,11 @@ MdmacControlMessage* MdmacNetworkLayer::prepareWSMCB(int kind, int dest, int nHo
 		case type_CCH: pkt->setChannelNumber(Channels::CCH); break;
 	}
 
+	if (GetClusterState() == SINGLE) {
+		pkt->setClusterId(-1);
+	}
+
+	pkt->setClusterId(mClusterHead);
 	pkt->setKind(kind);
 	pkt->setPsid(0);
 	pkt->setPriority(beaconPriority);

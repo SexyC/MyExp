@@ -19,14 +19,19 @@
 #include "ClusterManager.h"
 using Veins::TraCIScenarioManager;
 
-void ClusterManager::clusterInit(int id, int headId, double time) {
+void ClusterManager::clusterInit(int id, int headId, set<int>& members, double time) {
 	ClusterStat cs(time);
 	cs.heads.insert(headId);
+	for(auto iter = members.begin(); iter != members.end(); ++iter) {
+		cs.members.insert(*iter);
+		nodeClusterMap[*iter] = id;
+	}
+
 	clustersInfo[id] = cs;
 	csEV << "cluster init, id: " << id << ", headId: " << headId
 		<< ", time: " << time << endl;
 
-	nodeClusterMap[id] = headId;
+	nodeClusterMap[id] = id;
 }
 
 void ClusterManager::clusterDie(int id, double time) {
@@ -39,10 +44,10 @@ void ClusterManager::clusterDie(int id, double time) {
 					++i) {
 			nodeClusterMap[*i] = -1;
 		}
-		for (auto i = iter->second.heads.begin(); i != iter->second.gateWays.end();
-					++i) {
-			nodeClusterMap[*i] = -1;
-		}
+		//for (auto i = iter->second.heads.begin(); i != iter->second.gateWays.end();
+		//			++i) {
+		//	nodeClusterMap[*i] = -1;
+		//}
 		for (auto i = iter->second.heads.begin(); i != iter->second.members.end();
 					++i) {
 			nodeClusterMap[*i] = -1;
@@ -52,8 +57,16 @@ void ClusterManager::clusterDie(int id, double time) {
 }
 
 void ClusterManager::joinCluster(int clusterId, int nodeId, double time) {
+	/**
+	 * FIXME: At first, before the head node init the cluster
+	 * other nodes can call joinCluster at the same time head node init the cluster
+	 * But they were called first
+	 * This could cause there is no cluster found
+	 *
+	 * Work around: leave it, cluster init will take care
+	 */
 	if (clustersInfo.find(clusterId) == clustersInfo.end()) {
-		csEV << "join cluster failed, cluster not exist any more" << endl;
+		csEV << time << " join cluster failed, cluster:" << clusterId <<  " not exist any more" << endl;
 		return;
 	}
 	csEV << "join cluster, id: " << clusterId << ", node id: "
@@ -66,12 +79,69 @@ void ClusterManager::joinCluster(int clusterId, int nodeId, double time) {
 void ClusterManager::leaveCluster(int clusterId, int nodeId, double time) {
 
 	if (clustersInfo.find(clusterId) == clustersInfo.end()) {
-		csEV << "leave cluster failed, cluster not exist any more" << endl;
+		cout << time << " leave cluster failed, cluster:" << clusterId << " not exist any more" << endl;
 	} else {
 		clustersInfo[clusterId].members.erase(nodeId);
 	}
 	csEV << "leave cluster, id: " << clusterId << ", node id: "
 		<< nodeId << ", time: " << time << endl;
 	nodeClusterMap[nodeId] = -1;
+}
+
+unordered_map<int, unordered_set<int> >*
+ClusterManager::getNeighborClusters(int id, double time, bool forceUpdate) {
+	/**
+	 * iter->first -- cluster id
+	 * iter->second -- cluster stat
+	 */
+	auto iter = clustersInfo.find(id);
+	ASSERT(iter != clustersInfo.end());
+
+	unordered_set<int>* nodeNeighbourCluster = NULL;
+	if (forceUpdate || iter->second.neighborClusterUpdateTime < time) {
+		iter->second.neighborClusters.clear();
+
+		/**
+		 * iterate over all members in the cluster
+		 * *i -- node id
+		 */
+		for(auto i = iter->second.members.begin(); i != iter->second.members.end();
+					++i) {
+			nodeNeighbourCluster = nodeNeighbourClusterInfo[*i];
+			ASSERT(nodeNeighbourCluster != NULL);
+
+			/**
+			 * iterate over all the neighbor cluster id of one single node in this cluster
+			 */
+			for(auto cIter = nodeNeighbourCluster->begin(); cIter != nodeNeighbourCluster->end(); ++cIter) {
+				if (iter->second.neighborClusters.find(*cIter)
+							== iter->second.neighborClusters.end()) {
+					iter->second.neighborClusters[*cIter] = unordered_set<int>();
+				}
+				iter->second.neighborClusters[*cIter].insert(*i);
+			}
+		}
+
+		/**
+		 * iterate over all heads in the cluster
+		 */
+		for(auto i = iter->second.heads.begin(); i != iter->second.heads.end();
+					++i) {
+			nodeNeighbourCluster = nodeNeighbourClusterInfo[*i];
+			ASSERT(nodeNeighbourCluster != NULL);
+
+			/**
+			 * iterate over all the neighbor cluster id of one single node in this cluster
+			 */
+			for(auto cIter = nodeNeighbourCluster->begin(); cIter != nodeNeighbourCluster->end(); ++cIter) {
+				if (iter->second.neighborClusters.find(*cIter)
+							== iter->second.neighborClusters.end()) {
+					iter->second.neighborClusters[*cIter] = unordered_set<int>();
+				}
+				iter->second.neighborClusters[*cIter].insert(*i);
+			}
+		}
+	}
+	return &iter->second.neighborClusters;
 }
 

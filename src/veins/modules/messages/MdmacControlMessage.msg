@@ -30,6 +30,7 @@ class WaveShortMessage;
 packet MdmacControlMessage extends WaveShortMessage {
 
 	int nodeId;
+	int clusterId;
 	double weight;
 	bool isClusterHead;
 	double xPosition;

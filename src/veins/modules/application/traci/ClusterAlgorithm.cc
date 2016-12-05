@@ -28,7 +28,7 @@ void ClusterAlgorithm::ClusterStarted() {
 	mCurrentMaximumClusterSize = mClusterMembers.size();
 	mClusterStartTime = simTime();
 //	std::cerr << mId << ": Cluster Started!\n";
-	mClusterManager->clusterInit(mClusterHead, mId, mClusterStartTime.dbl());
+	mClusterManager->clusterInit(mClusterHead, mId, mClusterMembers, mClusterStartTime.dbl());
 }
 
 

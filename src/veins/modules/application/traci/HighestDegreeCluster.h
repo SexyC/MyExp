@@ -41,6 +41,19 @@ class HighestDegreeCluster : public MdmacNetworkLayer {
 protected:
     /** @brief Compute the CH weight for this node. */
     double calculateWeight();
+	virtual int getNextHopId(int dstId);
+	virtual int getNearestNodeToPos(const Coord& pos);
+	virtual int getNearestNodeToPos(const unordered_map<int, unordered_set<int> >& neighbors, const Coord& pos);
+	static double distSqr(const Coord& c1, const Coord& c2) {
+		return (c1.x - c2.x) * (c1.x - c2.x)
+			+ (c1.y - c2.y) * (c1.y - c2.y)
+			+ (c1.z - c2.z) * (c1.z - c2.z);
+	}
+
+	int headGateWayGetNextHopId(int dstId);
+	int headGetNextHopId(int dstId);
+	int gateWayGetNextHopId(int dstId);
+	int memberGetNextHopId(int dstId);
 
 };
 

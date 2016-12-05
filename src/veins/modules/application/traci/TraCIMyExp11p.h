@@ -190,7 +190,7 @@ class TraCIMyExp11p : public BaseWaveApplLayer {
 
 		static int getNearestNodeToPos(NeighborNodeSet& nodes, Coord& pos) {
 			double minDistSqr = (std::numeric_limits<double>::max)();
-			int minDistNodeId = 0;
+			int minDistNodeId = -1;
 
 			for (auto iter = nodes.begin(); iter != nodes.end(); ++iter) {
 				ASSERT(*iter != NULL);
