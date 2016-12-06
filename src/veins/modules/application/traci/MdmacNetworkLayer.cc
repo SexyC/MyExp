@@ -24,6 +24,8 @@ using Veins::TraCIScenarioManager;
 
 Define_Module(MdmacNetworkLayer);
 
+#define expEV cout
+
 std::ostream& operator<<( std::ostream& os, const MdmacNetworkLayer::Neighbour& n ) {
 
 	os << "Weight = " << n.mWeight << "; Pos = " << n.mPosition << "; Vel = " << n.mVelocity << "; C" << ( n.mIsClusterHead ? "H" : "M" ) << "; freshness = " << n.mFreshness;
@@ -35,16 +37,16 @@ void MdmacNetworkLayer::initialize(int stage)
 {
 	ClusterAlgorithm::initialize(stage);
 
-    if(stage == 1) {
+    if(stage == 0) {
 
-		ApplMapManager::getApplMapManager()->registerAppl(findHost()->getId(), this);
+    	mId = findHost()->getId();
+		ApplMapManager::getApplMapManager()->registerAppl(mId, this);
 
 		mobility = TraCIMobilityAccess().get(getParentModule());
     	mInitialised = false;
 
     	// set up the node.
     	//mId = getId();
-    	mId = findHost()->getId();
     	mWeight = calculateWeight();
     	//mMobility = FindModule<BaseMobility*>::findSubModule(findHost());
 		mMobility = TraCIMobilityAccess().get(getParentModule());
@@ -67,13 +69,10 @@ void MdmacNetworkLayer::initialize(int stage)
     	mBeaconInterval = par("beaconInterval").doubleValue();
 
 		mSendData = NULL;
-    	// set up self-messages
-    	mSendHelloMessage = new cMessage();
-    	scheduleAt( simTime() + mBeaconInterval * float(rand()) / RAND_MAX, mSendHelloMessage );
-    	mFirstInitMessage = new cMessage();
-    	scheduleAt( simTime(), mFirstInitMessage );
-    	mBeatMessage = new cMessage();
-    	scheduleAt( simTime() + BEAT_LENGTH * float(rand()) / RAND_MAX, mBeatMessage );
+		mSendHelloMessage = NULL;
+		mFirstInitMessage = NULL;
+		mBeatMessage = NULL;
+		mWaitSendData = new cMessage();
 
     	// set up watches
     	WATCH_SET( mClusterMembers );
@@ -105,6 +104,9 @@ void MdmacNetworkLayer::initialize(int stage)
 		packetLenMax = hasPar("packetLenMax") ?
 			par("packetLenMax") : 1024;
 
+		packetDelay.setName("packet_delay");
+		packetPathLen.setName("packet_path_length");
+
 //     	TraCIScenarioManager *pManager = TraCIScenarioManagerAccess().get();
 //     	char strNodeName[50];
 //     	sprintf( strNodeName, "node%i_conn", mId );
@@ -112,12 +114,21 @@ void MdmacNetworkLayer::initialize(int stage)
 //     	points.push_back( mMobility->getCurrentPosition() );
 //     	pManager->commandAddPolygon( strNodeName, "clusterConn", TraCIScenarioManager::Color( 255, 0, 0, 255 ), true, 5, points );
 
+		annotations = AnnotationManagerAccess().getIfExists();
+		ASSERT(annotations);
     } else if (stage == 1) {
 		if (sendData && packetSentInterval > 0) {
 			//scheduleAt(simTime() + packetSentInterval, &sendMessageSignal);
 			mSendData = new cMessage();
 			scheduleAt(simTime() + packetSentIntervalBeg + uniform(0, packetSentInterval), mSendData);
 		}
+    	// set up self-messages
+    	mSendHelloMessage = new cMessage();
+    	scheduleAt( simTime() + mBeaconInterval * float(rand()) / RAND_MAX, mSendHelloMessage );
+    	mFirstInitMessage = new cMessage();
+    	scheduleAt( simTime(), mFirstInitMessage );
+    	mBeatMessage = new cMessage();
+    	scheduleAt( simTime() + BEAT_LENGTH * float(rand()) / RAND_MAX, mBeatMessage );
 	}
 
 }
@@ -126,7 +137,8 @@ void MdmacNetworkLayer::initialize(int stage)
 /** @brief Cleanup*/
 void MdmacNetworkLayer::finish() {
 
-	ApplMapManager::getApplMapManager()->unregisterAppl(myId);
+
+	ApplMapManager::getApplMapManager()->unregisterAppl(mId);
 	if (mSendHelloMessage && mSendHelloMessage->isScheduled() )
 		cancelEvent( mSendHelloMessage );
 	delete mSendHelloMessage;
@@ -144,6 +156,16 @@ void MdmacNetworkLayer::finish() {
 	}
 	delete mSendData;
 
+	if (mWaitSendData && mWaitSendData->isScheduled()) {
+		cancelEvent(mWaitSendData);
+	}
+	delete mWaitSendData;
+	if (!msgQueue.empty()) {
+		WaveShortMessageWithDst* m = msgQueue.front();
+		delete m;
+		msgQueue.pop_front();
+	}
+
 // 	TraCIScenarioManager *pManager = TraCIScenarioManagerAccess().get();
 // 	char strNodeName[10];
 // 	sprintf( strNodeName, "node%i_conn", mId );
@@ -152,6 +174,16 @@ void MdmacNetworkLayer::finish() {
 	//std::cerr << "Node " << mId << " deleted.\n";
 	ClusterAlgorithm::finish();
 
+}
+
+bool MdmacNetworkLayer::isVehicleAlive(string id) {
+
+	const std::map<std::string, cModule*> &hosts = mTraciManager->getManagedHosts();
+	auto iter = hosts.find(id);
+	if (iter == hosts.end()) {
+		return false;
+	}
+	return true;
 }
 
 
@@ -189,6 +221,87 @@ void MdmacNetworkLayer::onBeacon(WaveShortMessage* wsm) {
 }
 
 void MdmacNetworkLayer::onData(WaveShortMessage* wsm) {
+	WaveShortMessageWithDst* wsmd = dynamic_cast<WaveShortMessageWithDst*>(wsm);
+	ASSERT(wsmd != NULL);
+
+	cModule *host = findHost();
+	findHost()->getDisplayString().updateWith("r=16,green");
+	host->getDisplayString().updateWith("r=16,green");
+	annotations->scheduleErase(1, annotations->drawLine(wsm->getSenderPos(), mobility->getPositionAt(simTime()), "blue"));
+
+	const std::map<std::string, cModule*> &hosts = mTraciManager->getManagedHosts();
+
+	/**
+	 * I'm the dst node
+	 */
+	if (findHost()->getId() == wsmd->getRecipientAddress()) {
+
+		recvDataLength += wsmd->getByteLength();
+
+		expEV << simTime().dbl() << " " 
+			<< wsmd->getSenderAddress() << " " << wsmd->getSerial() << " packet arrived at: " << wsmd->getRecipientAddress()
+			<< std::endl
+			<< "current hosts number: " << hosts.size() << std::endl;
+		PathQueue& pq = wsmd->getPathNodes();
+
+		expEV << wsmd->getSenderAddress() << "-->";
+		unsigned long len = pq.size() + 1;
+		while (!pq.empty()) {
+			expEV << pq.front() << "-->";
+			pq.pop();
+		}
+		expEV << wsmd->getRecipientAddress() << std::endl;
+		expEV << "length of path: " << len << std::endl;
+
+		packetDelay.record(simTime() - wsmd->getTimestamp());
+		packetPathLen.record(len);
+
+		return;
+	}
+
+	/**
+	 * If the dst node is out of our study region
+	 * Record data and drop packet
+	 */
+	std::string dstNodeId = wsmd->getDstNodeId();
+
+	//auto iter = hosts.find(dstNodeId);
+	//if (iter == hosts.end()) {
+	if (!isVehicleAlive(dstNodeId)) {
+		expEV << "[Shit] " << dstNodeId << " is out of our study region" << std::endl;
+		return;
+	}
+
+	if (findHost()->getId() == wsmd->getNextHopId()) {
+
+		int nextHopId = getNextHopId(wsmd->getRecipientAddress());
+
+		/**
+		 * Currently, no neighbor can help send msg
+		 * push to buffer
+		 */
+		if (nextHopId < 0) {
+			wsmd->getPathNodes().push(wsmd->getNextHopId());
+			msgQueue.push_back(wsmd->dup());
+
+			ASSERT(mWaitSendData);
+			if (!mWaitSendData->isScheduled()) {
+				scheduleAt(simTime() + 1, mWaitSendData);
+			}
+			return;
+		}
+		wsmd->getPathNodes().push(wsmd->getNextHopId());
+		wsmd->setNextHopId(nextHopId);
+
+		forwardDataLength += wsmd->getByteLength();
+
+		sendWSM(wsmd->dup());
+
+	} else {
+		/**
+		 * I'm not the next hop, do nothing, just drop it
+		 */
+	}
 }
 
 int MdmacNetworkLayer::GetStateCount() {
@@ -354,6 +467,7 @@ void MdmacNetworkLayer::handleSelfMsg(cMessage* msg) {
 		unsigned long pkgLen = getPkgLen();
 
 		int nextHopId = getNextHopId(dstMod->getId());
+		cout << mId << " send data to " << dstMod->getId() << ", next hopid: " << nextHopId << endl;
 
 		/**
 		 * currently no available next hop
@@ -364,11 +478,51 @@ void MdmacNetworkLayer::handleSelfMsg(cMessage* msg) {
 
 			sendDataLength += pkgLen;
 			msgQueue.push_back(wsmd);
+
+			ASSERT(mWaitSendData);
+			if (!mWaitSendData->isScheduled()) {
+				scheduleAt(simTime() + 1, mWaitSendData);
+			}
 			return;
 		}
 
 		sendDataLength += pkgLen;
 		sendMessage(dstMod, nextHopId, /*ss.str()*/ "", pkgLen);
+	} else if (msg == mWaitSendData) {
+		int msgQueueSize = msgQueue.size();
+		while(msgQueueSize--) {
+			WaveShortMessageWithDst* tmp = msgQueue.front();
+			msgQueue.pop_front();
+			int rcvId = tmp->getRecipientAddress();
+			std::string dstNodeId = tmp->getDstNodeId();
+
+			if (!isVehicleAlive(dstNodeId)) {
+				/**
+				 * TODO: record
+				 */
+				delete tmp;
+				tmp = NULL;
+				cout << dstNodeId << " is out of our region" << endl;
+				continue;
+			}
+
+			int nextHopId = getNextHopId(rcvId);
+			cout << mId << " resend " << rcvId << " nexthop id " << nextHopId << endl;
+
+			/**
+			 * Still not suitable to send
+			 */
+			if (nextHopId < 0) {
+				msgQueue.push_back(tmp);
+			} else {
+				tmp->setNextHopId(nextHopId);
+				sendWSM(tmp);
+			}
+		}
+		ASSERT(mWaitSendData);
+		if(!msgQueue.empty() && !mWaitSendData->isScheduled()) {
+			scheduleAt(simTime() + 1, mWaitSendData);
+		}
 	}
 }
 
@@ -386,7 +540,7 @@ WaveShortMessageWithDst* MdmacNetworkLayer::prepareWSMWithDst(std::string name, 
 	wsm->setPriority(priority);
 	wsm->setWsmVersion(1);
 	wsm->setTimestamp(simTime());
-	wsm->setSenderAddress(myId);
+	wsm->setSenderAddress(mId);
 	wsm->setRecipientAddress(rcvId);
 	wsm->setSenderPos(curPosition);
 	wsm->setSerial(serial);
@@ -930,7 +1084,7 @@ MdmacControlMessage* MdmacNetworkLayer::prepareWSMCB(int kind, int dest, int nHo
 	pkt->setPriority(beaconPriority);
 	pkt->setWsmVersion(1);
 	pkt->setTimestamp(simTime());
-	pkt->setSenderAddress(myId);
+	pkt->setSenderAddress(mId);
 
 	pkt->setRecipientAddress(-1);
 	pkt->setSerial(beaconSeqNum++);

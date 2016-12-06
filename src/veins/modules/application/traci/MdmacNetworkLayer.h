@@ -25,7 +25,9 @@
 #include <set>
 #include <map>
 #include <list>
+#include <string>
 using std::list;
+using std::string;
 
 #include "veins/modules/messages/MdmacControlMessage_m.h"
 #include "veins/modules/messages/WaveShortMessageWithDst_m.h"
@@ -40,6 +42,7 @@ using std::list;
 //#define BEAT_LENGTH	0.25	// measured in second.
 #define BEAT_LENGTH	2	// measured in second.
 
+using Veins::AnnotationManagerAccess;
 using Veins::AnnotationManager;
 using Veins::TraCIMobility;
 using Veins::TraCIMobilityAccess;
@@ -97,6 +100,10 @@ public:
 	};
 
 protected:
+	/**************statistical field****************************/
+	cOutVector packetDelay;
+	cOutVector packetPathLen;
+	/***********************************************************/
 
 	TraCIScenarioManager* mTraciManager;
 
@@ -125,14 +132,15 @@ protected:
 
 	MdmacNetworkLayer::NodeVector* getCachedFarNodes(bool forceUpdate = false) {
 		if (forceUpdate || farNodesUpdateTime < simTime()) {
-			cModule* host = findHost();
+			//cModule* host = findHost();
 			const std::map<std::string, cModule*> &hosts = mTraciManager->getManagedHosts();
 
 			farNodes.clear();
 			farNodes.reserve(hosts.size() - mNeighbours.size());
 
 			for (auto iter = hosts.begin(); iter != hosts.end(); ++iter) {
-				if (mNeighbours.find(iter->second->getId()) == mNeighbours.end()) {
+				if (iter->second->getId() != mId &&
+							mNeighbours.find(iter->second->getId()) == mNeighbours.end()) {
 					farNodes.push_back(iter->second);
 				}
 			}
@@ -230,6 +238,7 @@ protected:
 	cMessage *mSendHelloMessage;			/**< Send a HELLO message. */
 	cMessage *mBeatMessage;					/**< Process the neighbour table for out-of-date node entries. */
 	cMessage *mSendData;
+	cMessage *mWaitSendData;
 
     /*@}*/
 
@@ -378,6 +387,7 @@ protected:
 	}
 
 	virtual cModule* getDstNode(int option = PICK_ONE_NODE);
+	virtual bool isVehicleAlive(string id);
 };
 
 #endif

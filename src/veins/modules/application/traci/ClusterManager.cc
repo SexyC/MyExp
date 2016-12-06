@@ -79,7 +79,7 @@ void ClusterManager::joinCluster(int clusterId, int nodeId, double time) {
 void ClusterManager::leaveCluster(int clusterId, int nodeId, double time) {
 
 	if (clustersInfo.find(clusterId) == clustersInfo.end()) {
-		cout << time << " leave cluster failed, cluster:" << clusterId << " not exist any more" << endl;
+		csEV << time << " leave cluster failed, cluster:" << clusterId << " not exist any more" << endl;
 	} else {
 		clustersInfo[clusterId].members.erase(nodeId);
 	}
@@ -88,6 +88,10 @@ void ClusterManager::leaveCluster(int clusterId, int nodeId, double time) {
 	nodeClusterMap[nodeId] = -1;
 }
 
+/**
+ * could return NULL if the cluster is died
+ * or not init by head yet
+ */
 unordered_map<int, unordered_set<int> >*
 ClusterManager::getNeighborClusters(int id, double time, bool forceUpdate) {
 	/**
@@ -95,7 +99,13 @@ ClusterManager::getNeighborClusters(int id, double time, bool forceUpdate) {
 	 * iter->second -- cluster stat
 	 */
 	auto iter = clustersInfo.find(id);
-	ASSERT(iter != clustersInfo.end());
+	//ASSERT(iter != clustersInfo.end());
+	/**
+	 * If the cluster is not found, could be dead
+	 * or not init by the cluster head yet
+	 * return NULL
+	 */
+	if (iter == clustersInfo.end()) { return NULL; }
 
 	unordered_set<int>* nodeNeighbourCluster = NULL;
 	if (forceUpdate || iter->second.neighborClusterUpdateTime < time) {

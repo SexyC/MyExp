@@ -31,6 +31,7 @@
 //#include "ChannelAccess.h"
 
 #include "HighestDegreeCluster.h"
+#define hdcEV  EV
 
 Define_Module(HighestDegreeCluster);
 
@@ -117,7 +118,11 @@ int HighestDegreeCluster::getNextHopId(int dstId) {
 }
 
 int HighestDegreeCluster::headGateWayGetNextHopId(int dstId) {
+	hdcEV << "headGateWay get next Hop id, cluster id: " << mClusterHead << endl;
 	unordered_map<int, unordered_set<int> >* n = mClusterManager->getNeighborClusters(mClusterHead, simTime().dbl());
+
+	if (!n) { return -1; }
+
 	Coord dstPos = getHostPosition(dstId);
 	int nextClusterId = getNearestNodeToPos(*n, dstPos);
 
@@ -145,7 +150,11 @@ int HighestDegreeCluster::headGateWayGetNextHopId(int dstId) {
 }
 
 int HighestDegreeCluster::headGetNextHopId(int dstId) {
+	hdcEV << "head get next Hop id, cluster id: " << mClusterHead << endl;
 	unordered_map<int, unordered_set<int> >* n = mClusterManager->getNeighborClusters(mClusterHead, simTime().dbl());
+
+	if (!n) { return -1; }
+
 	/**
 	 * Get the most near cluster
 	 */
@@ -170,7 +179,12 @@ int HighestDegreeCluster::headGetNextHopId(int dstId) {
 }
 
 int HighestDegreeCluster::gateWayGetNextHopId(int dstId) {
+
+	hdcEV << "gateway get next Hop id, cluster id: " << mClusterHead << endl;
 	unordered_map<int, unordered_set<int> >* n = mClusterManager->getNeighborClusters(mClusterHead, simTime().dbl());
+
+	if (!n) { return -1; }
+
 	Coord dstPos = getHostPosition(dstId);
 	int nextClusterId = getNearestNodeToPos(*n, dstPos);
 	ASSERT(nextClusterId != -1);
@@ -202,6 +216,7 @@ int HighestDegreeCluster::gateWayGetNextHopId(int dstId) {
 }
 
 int HighestDegreeCluster::memberGetNextHopId(int dstId) {
+	hdcEV << "member get next Hop id, cluster id: " << mClusterHead << endl;
 	if (mNeighbours.find(dstId) == mNeighbours.end()) {
 		return dstId;
 	}
