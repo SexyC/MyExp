@@ -34,7 +34,7 @@ using std::string;
 #include "veins/modules/application/ieee80211p/BaseWaveApplLayer.h"
 #include "veins/modules/mobility/traci/TraCIMobility.h"
 #include "veins/modules/mobility/traci/TraCICommandInterface.h"
-#include "veins/modules/mobility/traci/TraCIScenarioManager.h"
+#include "veins/modules/mobility/traci/TraCIScenarioManagerLaunchd.h"
 
 #include "ClusterAlgorithm.h"
 #include "ApplMapManager.h"
@@ -48,6 +48,8 @@ using Veins::TraCIMobility;
 using Veins::TraCIMobilityAccess;
 using Veins::TraCIScenarioManager;
 using Veins::TraCIScenarioManagerAccess;
+using Veins::TraCIScenarioManagerLaunchd;
+using Veins::TraCIScenarioManagerLaunchdAccess;
 using Veins::TraCICommandInterface;
 
 /**
@@ -105,17 +107,20 @@ protected:
 	cOutVector packetPathLen;
 	/***********************************************************/
 
-	TraCIScenarioManager* mTraciManager;
+	TraCIScenarioManagerLaunchd* mTraciManager;
 
 	typedef std::map<unsigned int,Neighbour> NeighbourSet;
 	typedef std::map<unsigned int,Neighbour>::iterator NeighbourIterator;
 
+	typedef std::unordered_set<cModule*> NeighborNodeSet;
 	typedef std::vector<cModule*> NodeVector;
 
 	/**
 	 * Do not access this below four vars directly
 	 * use getCachedFarNodes and getCachedNeighborNodes
 	 */
+	NeighborNodeSet realNeighborNodes;
+	simtime_t realNeighborNodesUpdateTime;
 	MdmacNetworkLayer::NodeVector farNodes;
 	simtime_t farNodesUpdateTime;
 
@@ -125,29 +130,36 @@ protected:
 	 */
 	list<WaveShortMessageWithDst*> msgQueue;
 
-	NeighbourSet *
+	const NeighborNodeSet getRealNeighborNodes(const BaseConnectionManager* const bcm, const cModule* host);
+
+	NeighborNodeSet *
 	getCachedNeighborNodes(bool forceUpdate = false) {
-		return &mNeighbours;
+		if (forceUpdate || simTime() > realNeighborNodesUpdateTime) {
+			realNeighborNodesUpdateTime = simTime();
+			realNeighborNodes = getRealNeighborNodes(bcm, findHost());
+		}
+		return &realNeighborNodes;
+	}
+
+	static NodeVector getFarNodes(NeighborNodeSet* nns,
+				TraCIScenarioManagerLaunchd* traciSMLd,
+				const BaseConnectionManager* const bcm,
+				const cModule* host);
+
+	NodeVector getHostFarNodes() {
+		NeighborNodeSet* nns = getCachedNeighborNodes();
+		return getFarNodes(nns, mTraciManager, bcm, findHost());
 	}
 
 	MdmacNetworkLayer::NodeVector* getCachedFarNodes(bool forceUpdate = false) {
 		if (forceUpdate || farNodesUpdateTime < simTime()) {
-			//cModule* host = findHost();
-			const std::map<std::string, cModule*> &hosts = mTraciManager->getManagedHosts();
-
-			farNodes.clear();
-			farNodes.reserve(hosts.size() - mNeighbours.size());
-
-			for (auto iter = hosts.begin(); iter != hosts.end(); ++iter) {
-				if (iter->second->getId() != mId &&
-							mNeighbours.find(iter->second->getId()) == mNeighbours.end()) {
-					farNodes.push_back(iter->second);
-				}
-			}
+			farNodesUpdateTime = simTime();
+			farNodes = getHostFarNodes();
 		}
 		return &farNodes;
 	}
 
+	static const NicEntry::GateList* getHostNicGateList(const BaseConnectionManager* const bcm, const cModule* host);
 	static Coord getHostPosition(cModule* const host);
 	Coord getHostPosition(int hostId);
 	virtual unsigned long getPkgLen() {

@@ -98,6 +98,10 @@ public:
 		}
 		return iter->second;
 	}
+
+	void nodeNeighbourClusterInfoDelete(int id) {
+		nodeNeighbourClusterInfo.erase(id);
+	}
 	void nodeNeighbourClusterInfoUpdate(int id, unordered_set<int>* s) {
 		nodeNeighbourClusterInfo[id] = s;
 	}

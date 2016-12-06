@@ -17,6 +17,7 @@
 //#include "BaseNetwLayer.h"
 
 #include <cassert>
+#include <limits>
 
 //#include "NetwControlInfo.h"
 //#include "BaseMacLayer.h"
@@ -67,7 +68,13 @@ int HighestDegreeCluster::getNearestNodeToPos(const unordered_map<int, unordered
 	int minDistNodeId = -1;
 	for(auto iter = neighbors.begin(); iter != neighbors.end();
 				++iter) {
-		Coord nodePos = getHostPosition(iter->first);
+
+		cModule* host = cSimulation::getActiveSimulation()->getModule(iter->first);
+		if (!host) {
+			continue;
+		}
+
+		Coord nodePos = getHostPosition(host);
 		double currDistSqr = distSqr(nodePos, pos);
 
 		if (currDistSqr < minDistSqr) {
@@ -126,6 +133,8 @@ int HighestDegreeCluster::headGateWayGetNextHopId(int dstId) {
 	Coord dstPos = getHostPosition(dstId);
 	int nextClusterId = getNearestNodeToPos(*n, dstPos);
 
+	if (nextClusterId == -1) { return -1; }
+
 	/**
 	 * if nearest cluster is not connected to this gateway
 	 * use this node as head
@@ -160,7 +169,13 @@ int HighestDegreeCluster::headGetNextHopId(int dstId) {
 	 */
 	Coord dstPos = getHostPosition(dstId);
 	int nextClusterId = getNearestNodeToPos(*n, dstPos);
-	ASSERT(nextClusterId != -1);
+	//ASSERT(nextClusterId != -1);
+	
+	/**
+	 * if all the neighbor cluster are all died
+	 * or no neighbor cluster
+	 */
+	if (nextClusterId == -1) { return -1; }
 
 	/**
 	 * I'm in the most near cluster
@@ -187,7 +202,9 @@ int HighestDegreeCluster::gateWayGetNextHopId(int dstId) {
 
 	Coord dstPos = getHostPosition(dstId);
 	int nextClusterId = getNearestNodeToPos(*n, dstPos);
-	ASSERT(nextClusterId != -1);
+	//ASSERT(nextClusterId != -1);
+	
+	if (nextClusterId == -1) { return -1; }
 
 	if (nextClusterId == mClusterHead) {
 		return getNearestNodeToPos(dstPos);

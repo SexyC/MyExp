@@ -33,6 +33,26 @@ std::ostream& operator<<( std::ostream& os, const MdmacNetworkLayer::Neighbour& 
 
 }
 
+MdmacNetworkLayer::NodeVector
+MdmacNetworkLayer::getFarNodes(NeighborNodeSet* nns, TraCIScenarioManagerLaunchd* traciSMLd,
+			const BaseConnectionManager* const bcm,
+			const cModule* host) {
+
+	ASSERT(nns != NULL && traciSMLd != NULL && bcm != NULL && host != NULL);
+	const std::map<std::string, cModule*> &hosts = traciSMLd->getManagedHosts();
+
+	MdmacNetworkLayer::NodeVector result;
+	result.reserve(hosts.size() - nns->size());
+
+	for (auto iter = hosts.begin(); iter != hosts.end(); ++iter) {
+		if (nns->find(iter->second) == nns->end()) {
+			result.push_back(iter->second);
+		}
+	}
+
+	return result;
+}
+
 void MdmacNetworkLayer::initialize(int stage)
 {
 	ClusterAlgorithm::initialize(stage);
@@ -58,6 +78,11 @@ void MdmacNetworkLayer::initialize(int stage)
 
 		bcm = FindModule<BaseConnectionManager*>::findGlobalModule();
 		ASSERT(bcm != NULL);
+
+		// register nic to connection manager
+		Coord pos = mobility->getCurrentPosition();
+		bcm->registerNic(this->getParentModule()->getSubmodule("nic"), (ChannelAccess*) this->getParentModule()->getSubmodule("nic")->getSubmodule("phy80211p"), &pos);
+
     	//mTransmitRangeSq = pow( channelAccess->getConnectionManager( channelAccess->getParentModule() )->getMaxInterferenceDistance(), 2 );
     	mTransmitRangeSq = pow( bcm->getMaxInterferenceDistance(), 2 );
 
@@ -82,7 +107,7 @@ void MdmacNetworkLayer::initialize(int stage)
 
 		mIncludeDestination = false;
 
-		mTraciManager = TraCIScenarioManagerAccess().get();
+		mTraciManager = TraCIScenarioManagerLaunchdAccess().get();
 		mClusterManager = ClusterManager::getClusterManager();
 
 		sequenceNum = 0;
@@ -136,7 +161,13 @@ void MdmacNetworkLayer::initialize(int stage)
 
 /** @brief Cleanup*/
 void MdmacNetworkLayer::finish() {
+	if ( IsClusterHead() ) {
+	  ClusterDied( CD_Cannibal );
+	}
 
+	cout << mId << " finished" << endl;
+	mClusterManager->leaveCluster(mClusterHead, mId, simTime().dbl());
+	mClusterManager->nodeNeighbourClusterInfoDelete(mId);
 
 	ApplMapManager::getApplMapManager()->unregisterAppl(mId);
 	if (mSendHelloMessage && mSendHelloMessage->isScheduled() )
@@ -463,11 +494,13 @@ void MdmacNetworkLayer::handleSelfMsg(cMessage* msg) {
 		cModule* dstMod = getDstNode();
 		if (!dstMod) { return; }
 
+		cout << "dst choose id: " << dstMod->getId() << endl;
 		Coord dstPos = getHostPosition(dstMod);
 		unsigned long pkgLen = getPkgLen();
 
 		int nextHopId = getNextHopId(dstMod->getId());
-		cout << mId << " send data to " << dstMod->getId() << ", next hopid: " << nextHopId << endl;
+		cout << mId << " send data to " << dstMod->getId() << ", next hopid: " << nextHopId;
+		cout << " same cluster: " << (mClusterHead == mClusterManager->getClusterIdByNodeId(dstMod->getId())) << endl;
 
 		/**
 		 * currently no available next hop
@@ -507,7 +540,8 @@ void MdmacNetworkLayer::handleSelfMsg(cMessage* msg) {
 			}
 
 			int nextHopId = getNextHopId(rcvId);
-			cout << mId << " resend " << rcvId << " nexthop id " << nextHopId << endl;
+			cout << mId << " resend " << rcvId << " nexthop id " << nextHopId;
+			cout << " same cluster: " << (mClusterHead == mClusterManager->getClusterIdByNodeId(rcvId)) << endl;
 
 			/**
 			 * Still not suitable to send
@@ -570,13 +604,22 @@ cModule* MdmacNetworkLayer::getDstNode(int option) {
 	switch (option) {
 		case NEIGHBOR_NODE:
 			{
-				if (mNeighbours.size() == 0) { return NULL; }
-				int idx = int(uniform(0, mNeighbours.size()));
-				auto iter = mNeighbours.begin();
+				const NeighborNodeSet* nns = getCachedNeighborNodes();
+				if (nns->size() == 0) { return NULL; }
+				int idx = int(uniform(0, nns->size()));
+				auto iter = nns->begin();
 				for (int i = 0; i < idx; ++i) {
 					++iter;
 				}
-				return (iter->second.neighborMod);
+				cout << "select Neighbor node" << endl;
+				return (*iter);
+				//if (mNeighbours.size() == 0) { return NULL; }
+				//int idx = int(uniform(0, mNeighbours.size()));
+				//auto iter = mNeighbours.begin();
+				//for (int i = 0; i < idx; ++i) {
+				//	++iter;
+				//}
+				//return (iter->second.neighborMod);
 			}
 			break;
 		case FAR_NODE:
@@ -587,6 +630,7 @@ cModule* MdmacNetworkLayer::getDstNode(int option) {
 					return NULL;
 				}
 				int idx = int(uniform(0, nv->size()));
+				cout << "select far node" << endl;
 				return (*nv)[idx];
 			}
 			break;
@@ -596,7 +640,7 @@ cModule* MdmacNetworkLayer::getDstNode(int option) {
 				//if (seed <= sendNearPosibility) {
 				if (getRandomPermit(sendNearPosibility)) {
 					// get dst from neighbors
-					NeighbourSet* nns = getCachedNeighborNodes();
+					NeighborNodeSet* nns = getCachedNeighborNodes();
 					int idx = int(uniform(0, nns->size()));
 
 					/**
@@ -611,7 +655,9 @@ cModule* MdmacNetworkLayer::getDstNode(int option) {
 						for(int i = 0; i < idx; ++i) {
 							++iter;
 						}
-						return (iter->second.neighborMod);
+						//return (iter->second.neighborMod);
+						cout << "select neighbor node" << endl;
+						return *iter;
 					}
 					/**
 					 * No neighbors are available, return far node
@@ -619,6 +665,7 @@ cModule* MdmacNetworkLayer::getDstNode(int option) {
 					return getDstNode(FAR_NODE);
 				} else {
 					// get dst from far nodes
+					cout << "select far node" << endl;
 					NodeVector* nv = getCachedFarNodes();
 					int idx = int(uniform(0, nv->size()));
 					return (*nv)[idx];
@@ -628,6 +675,33 @@ cModule* MdmacNetworkLayer::getDstNode(int option) {
 	};
 	return NULL;
 
+}
+
+const NicEntry::GateList* MdmacNetworkLayer::getHostNicGateList(const BaseConnectionManager* const bcm,
+			const cModule* host) {
+	ASSERT(bcm != NULL && host != NULL);
+	cModule* nicSubMod = host->getSubmodule("nic");
+	return &bcm->getGateList(nicSubMod->getId());
+}
+
+const MdmacNetworkLayer::NeighborNodeSet
+MdmacNetworkLayer::getRealNeighborNodes(const BaseConnectionManager* const bcm, const cModule* host) {
+
+	const NicEntry::GateList* gl = getHostNicGateList(bcm, host);
+	ASSERT(gl != NULL);
+	NeighborNodeSet result;
+
+	for (auto iter = gl->begin(); iter != gl->end(); ++iter) {
+		cModule* host = cSimulation::getActiveSimulation()->getModule(iter->first->hostId);
+		/**
+		 * Do not add rsu as neighbors
+		 */
+		if (strcmp(host->getName(), "rsu") != 0) {
+			result.insert(host);
+		}
+	}
+
+	return result;
 }
 
 /** @brief decapsulate higher layer message from MdmacControlMessage */
