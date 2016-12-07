@@ -492,12 +492,17 @@ void MdmacNetworkLayer::handleSelfMsg(cMessage* msg) {
 
 		if (!getRandomPermit(sendNodePercent)) { return ; }
 		cModule* dstMod = getDstNode();
-		if (!dstMod) { return; }
+		if (!dstMod) { 
+			cout << "can't get dst node,fuck" << endl;
+			return; 
+		}
 
 		Coord dstPos = getHostPosition(dstMod);
 		unsigned long pkgLen = getPkgLen();
 
 		int nextHopId = getNextHopId(dstMod->getId());
+		cout << mId << " send data to " << dstMod->getId()
+			<< " nextHopId is " << nextHopId << endl;
 
 		/**
 		 * currently no available next hop

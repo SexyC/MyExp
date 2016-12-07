@@ -208,6 +208,13 @@ public:
 					mNeighbourClusters.insert(clusterId);
 				}
 			}
+			/**
+			 * Add the cluster the node is in
+			 * to neighbor cluster
+			 */
+			if (mClusterHead != -1) {
+				mNeighbourClusters.insert(mClusterHead);
+			}
 			mClusterManager->nodeNeighbourClusterInfoUpdate(mId, &mNeighbourClusters);
 		}
 		return &mNeighbourClusters;

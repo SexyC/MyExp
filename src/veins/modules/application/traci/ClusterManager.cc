@@ -112,6 +112,7 @@ ClusterManager::getNeighborClusters(int id, double time, bool forceUpdate) {
 		iter->second.neighborClusters.clear();
 
 		/**
+		 * FIXME: also iterate over heads
 		 * iterate over all members in the cluster
 		 * *i -- node id
 		 */

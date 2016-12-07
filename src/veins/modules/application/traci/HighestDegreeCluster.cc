@@ -58,6 +58,11 @@ int HighestDegreeCluster::getNearestNodeToPos(const Coord& pos) {
 		}
 	}
 
+	if (minDistNodeId == -1) {
+		cout << "getNearestNodeToPos(pos) failed with: neighbor node cnt: "
+			<< mNeighbours.size() << endl;
+	}
+
 	return minDistNodeId;
 }
 
@@ -106,22 +111,23 @@ int HighestDegreeCluster::getNextHopId(int dstId) {
 			return getNearestNodeToPos(getHostPosition(dstId));
 			break;
 		case HEAD | GATEWAY:
-			headGateWayGetNextHopId(dstId);
+			return headGateWayGetNextHopId(dstId);
 			break;
 		case HEAD:
-			headGetNextHopId(dstId);
+			return headGetNextHopId(dstId);
 			break;
 		case GATEWAY:
-			gateWayGetNextHopId(dstId);
+			return gateWayGetNextHopId(dstId);
 			break;
 		case MEMBER:
-			memberGetNextHopId(dstId);
+			return memberGetNextHopId(dstId);
 			break;
 		default:
 			ASSERT(false);
 			break;
 	}
 
+	ASSERT(false);
 	return -1;
 }
 
@@ -254,6 +260,9 @@ int HighestDegreeCluster::gateWayGetNextHopId(int dstId) {
 		if (mNeighbours.find(mClusterHead) == mNeighbours.end()) {
 			return getNearestNodeToPos(dstPos);
 		}
+		if (mClusterHead == -1) {
+			cout << "cluster head is -1" << endl;
+		}
 		return mClusterHead;
 	}
 	
@@ -271,6 +280,9 @@ int HighestDegreeCluster::memberGetNextHopId(int dstId) {
 	hdcEV << "member get next Hop id, cluster id: " << mClusterHead << endl;
 	if (mNeighbours.find(dstId) == mNeighbours.end()) {
 		return dstId;
+	}
+	if (mClusterHead == -1) {
+		cout << "cluster head is -1" << endl;
 	}
 	return mClusterHead;
 }
