@@ -494,13 +494,10 @@ void MdmacNetworkLayer::handleSelfMsg(cMessage* msg) {
 		cModule* dstMod = getDstNode();
 		if (!dstMod) { return; }
 
-		cout << "dst choose id: " << dstMod->getId() << endl;
 		Coord dstPos = getHostPosition(dstMod);
 		unsigned long pkgLen = getPkgLen();
 
 		int nextHopId = getNextHopId(dstMod->getId());
-		cout << mId << " send data to " << dstMod->getId() << ", next hopid: " << nextHopId;
-		cout << " same cluster: " << (mClusterHead == mClusterManager->getClusterIdByNodeId(dstMod->getId())) << endl;
 
 		/**
 		 * currently no available next hop
@@ -540,8 +537,6 @@ void MdmacNetworkLayer::handleSelfMsg(cMessage* msg) {
 			}
 
 			int nextHopId = getNextHopId(rcvId);
-			cout << mId << " resend " << rcvId << " nexthop id " << nextHopId;
-			cout << " same cluster: " << (mClusterHead == mClusterManager->getClusterIdByNodeId(rcvId)) << endl;
 
 			/**
 			 * Still not suitable to send
@@ -611,7 +606,6 @@ cModule* MdmacNetworkLayer::getDstNode(int option) {
 				for (int i = 0; i < idx; ++i) {
 					++iter;
 				}
-				cout << "select Neighbor node" << endl;
 				return (*iter);
 				//if (mNeighbours.size() == 0) { return NULL; }
 				//int idx = int(uniform(0, mNeighbours.size()));
@@ -630,7 +624,6 @@ cModule* MdmacNetworkLayer::getDstNode(int option) {
 					return NULL;
 				}
 				int idx = int(uniform(0, nv->size()));
-				cout << "select far node" << endl;
 				return (*nv)[idx];
 			}
 			break;
@@ -656,7 +649,6 @@ cModule* MdmacNetworkLayer::getDstNode(int option) {
 							++iter;
 						}
 						//return (iter->second.neighborMod);
-						cout << "select neighbor node" << endl;
 						return *iter;
 					}
 					/**
@@ -665,7 +657,6 @@ cModule* MdmacNetworkLayer::getDstNode(int option) {
 					return getDstNode(FAR_NODE);
 				} else {
 					// get dst from far nodes
-					cout << "select far node" << endl;
 					NodeVector* nv = getCachedFarNodes();
 					int idx = int(uniform(0, nv->size()));
 					return (*nv)[idx];
@@ -809,6 +800,15 @@ void MdmacNetworkLayer::init() {
 
 		// this node is the best CH around, so declare it
 		mIsClusterHead = true;
+
+		/**
+		 * if this node belong to other cluster before
+		 * tell cluster manager to remove it from the original cluster
+		 */
+		if (mClusterHead != -1) {
+			mClusterManager->leaveCluster(mClusterHead, mId, simTime().dbl());
+		}
+
 		mClusterHead = mId;
 		mClusterMembers.clear();
 		mClusterMembers.insert( mId );
@@ -819,6 +819,15 @@ void MdmacNetworkLayer::init() {
 
 		// we found a neighbour that's a better CH
 		mIsClusterHead = false;
+
+		/**
+		 * if this node belong to other cluster before
+		 * tell cluster manager to remove it from the original cluster
+		 */
+		if (mClusterHead != -1) {
+			mClusterManager->leaveCluster(mClusterHead, mId, simTime().dbl());
+		}
+
 		mClusterHead = nMax;
 		mClusterMembers.clear();
     	//std::cerr << "Node: " << mId << " joined CH!: " << nMax << "\n";
@@ -994,6 +1003,15 @@ void MdmacNetworkLayer::receiveHelloMessage( MdmacControlMessage *m ) {
         emit( mSigHeadChange, 1 );
 		mIsClusterHead = false;
 		mClusterMembers.clear();
+
+		/**
+		 * if this node belong to other cluster before
+		 * tell cluster manager to remove it from the original cluster
+		 */
+		if (mClusterHead != -1) {
+			mClusterManager->leaveCluster(mClusterHead, mId, simTime().dbl());
+		}
+
 		mClusterHead = m->getNodeId();
 		sendClusterMessage( JOIN_MESSAGE, m->getNodeId() );
 		//ClusterAnalysisScenarioManagerAccess::get()->joinMessageSent( mId, m->getNodeId() );
@@ -1023,6 +1041,13 @@ void MdmacNetworkLayer::receiveChMessage( MdmacControlMessage *m ) {
         emit( mSigHeadChange, 1 );
 		mIsClusterHead = false;
 		mClusterMembers.clear();
+		/**
+		 * if this node belong to other cluster before
+		 * tell cluster manager to remove it from the original cluster
+		 */
+		if (mClusterHead != -1) {
+			mClusterManager->leaveCluster(mClusterHead, mId, simTime().dbl());
+		}
 		mClusterHead = m->getNodeId();
 		sendClusterMessage( JOIN_MESSAGE, m->getNodeId() );
 		//ClusterAnalysisScenarioManagerAccess::get()->joinMessageSent( mId, m->getNodeId() );
