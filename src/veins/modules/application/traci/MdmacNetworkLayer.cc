@@ -24,7 +24,7 @@ using Veins::TraCIScenarioManager;
 
 Define_Module(MdmacNetworkLayer);
 
-#define expEV cout
+#define expEV EV
 
 std::ostream& operator<<( std::ostream& os, const MdmacNetworkLayer::Neighbour& n ) {
 
@@ -165,7 +165,7 @@ void MdmacNetworkLayer::finish() {
 	  ClusterDied( CD_Cannibal );
 	}
 
-	cout << mId << " finished" << endl;
+	expEV << mId << " finished" << endl;
 	mClusterManager->leaveCluster(mClusterHead, mId, simTime().dbl());
 	mClusterManager->nodeNeighbourClusterInfoDelete(mId);
 
@@ -493,7 +493,7 @@ void MdmacNetworkLayer::handleSelfMsg(cMessage* msg) {
 		if (!getRandomPermit(sendNodePercent)) { return ; }
 		cModule* dstMod = getDstNode();
 		if (!dstMod) { 
-			cout << "can't get dst node,fuck" << endl;
+			expEV << "can't get dst node,fuck" << endl;
 			return; 
 		}
 
@@ -501,7 +501,7 @@ void MdmacNetworkLayer::handleSelfMsg(cMessage* msg) {
 		unsigned long pkgLen = getPkgLen();
 
 		int nextHopId = getNextHopId(dstMod->getId());
-		cout << mId << " send data to " << dstMod->getId()
+		expEV << mId << " send data to " << dstMod->getId()
 			<< " nextHopId is " << nextHopId << endl;
 
 		/**
@@ -537,7 +537,7 @@ void MdmacNetworkLayer::handleSelfMsg(cMessage* msg) {
 				 */
 				delete tmp;
 				tmp = NULL;
-				cout << dstNodeId << " is out of our region" << endl;
+				expEV << dstNodeId << " is out of our region" << endl;
 				continue;
 			}
 

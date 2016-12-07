@@ -59,7 +59,7 @@ int HighestDegreeCluster::getNearestNodeToPos(const Coord& pos) {
 	}
 
 	if (minDistNodeId == -1) {
-		cout << "getNearestNodeToPos(pos) failed with: neighbor node cnt: "
+		hdcEV << "getNearestNodeToPos(pos) failed with: neighbor node cnt: "
 			<< mNeighbours.size() << endl;
 	}
 
@@ -100,7 +100,7 @@ int HighestDegreeCluster::getNextHopId(int dstId) {
 	 * Single node
 	 */
 	if (clusterId == -1) {
-		cout << "can't get cluster id by node id, get nearest node instead" << endl;
+		hdcEV << "can't get cluster id by node id, get nearest node instead" << endl;
 		return getNearestNodeToPos(getHostPosition(dstId));
 	}
 
@@ -136,7 +136,7 @@ int HighestDegreeCluster::headGateWayGetNextHopId(int dstId) {
 	unordered_map<int, unordered_set<int> >* n = mClusterManager->getNeighborClusters(mClusterHead, simTime().dbl());
 
 	if (!n) { 
-		cout << "headgateway get next hop id, current cluster is dead, return -1" << endl;
+		hdcEV << "headgateway get next hop id, current cluster is dead, return -1" << endl;
 		return -1; 
 	}
 
@@ -147,7 +147,7 @@ int HighestDegreeCluster::headGateWayGetNextHopId(int dstId) {
 	 * If the neighbor cluster are all died
 	 */
 	if (nextClusterId == -1) { 
-		cout << "headgateway get next id failed with: all neighbor cluster"
+		hdcEV << "headgateway get next id failed with: all neighbor cluster"
 			" is died or no neighbor clusters"
 			<< endl;
 		return -1;
@@ -184,7 +184,7 @@ int HighestDegreeCluster::headGetNextHopId(int dstId) {
 	unordered_map<int, unordered_set<int> >* n = mClusterManager->getNeighborClusters(mClusterHead, simTime().dbl());
 
 	if (!n) { 
-		cout << "head get next id failed with: all neighbor cluster"
+		hdcEV << "head get next id failed with: all neighbor cluster"
 			" is died or no neighbor clusters"
 			<< endl;
 		return -1; 
@@ -202,7 +202,7 @@ int HighestDegreeCluster::headGetNextHopId(int dstId) {
 	 * or no neighbor cluster
 	 */
 	if (nextClusterId == -1) { 
-		cout << "head get next id failed with: we found neighbor cluster"
+		hdcEV << "head get next id failed with: we found neighbor cluster"
 			" but the cluster lost head, died"
 			<< endl;
 		return -1; 
@@ -230,7 +230,7 @@ int HighestDegreeCluster::gateWayGetNextHopId(int dstId) {
 	unordered_map<int, unordered_set<int> >* n = mClusterManager->getNeighborClusters(mClusterHead, simTime().dbl());
 
 	if (!n) { 
-		cout << "gateway get next id failed with: all neighbor cluster"
+		hdcEV << "gateway get next id failed with: all neighbor cluster"
 			" is died or no neighbor clusters"
 			<< endl;
 		return -1; 
@@ -241,7 +241,7 @@ int HighestDegreeCluster::gateWayGetNextHopId(int dstId) {
 	//ASSERT(nextClusterId != -1);
 	
 	if (nextClusterId == -1) { 
-		cout << "head get next id failed with: we found neighbor cluster"
+		hdcEV << "head get next id failed with: we found neighbor cluster"
 			" but the cluster lost head, died"
 			<< endl;
 		return -1; 
@@ -261,7 +261,7 @@ int HighestDegreeCluster::gateWayGetNextHopId(int dstId) {
 			return getNearestNodeToPos(dstPos);
 		}
 		if (mClusterHead == -1) {
-			cout << "cluster head is -1" << endl;
+			hdcEV << "cluster head is -1" << endl;
 		}
 		return mClusterHead;
 	}
@@ -282,7 +282,7 @@ int HighestDegreeCluster::memberGetNextHopId(int dstId) {
 		return dstId;
 	}
 	if (mClusterHead == -1) {
-		cout << "cluster head is -1" << endl;
+		hdcEV << "cluster head is -1" << endl;
 	}
 	return mClusterHead;
 }
