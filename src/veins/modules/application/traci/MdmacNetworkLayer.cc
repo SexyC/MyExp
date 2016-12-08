@@ -174,14 +174,13 @@ void MdmacNetworkLayer::finish() {
 	
 	if (mId == 792) {
 		cout << "is cluster head: " << mIsClusterHead
-			<< "mIsClusterHead: " << IsClusterHead() << endl;
+			<< "mIsClusterHead: " << IsClusterHead(); 
+		cout << " cluster id: " << mClusterHead << endl;
 	}
 
 	if (mIsClusterHead) {
 	  ClusterDied( CD_Cannibal );
 	}
-
-	cout << mId << " finished, cluster id" << mClusterHead << endl;
 
 	mClusterManager->leaveCluster(mClusterHead, mId, simTime().dbl());
 	mClusterManager->nodeNeighbourClusterInfoDelete(mId);
@@ -1021,8 +1020,13 @@ void MdmacNetworkLayer::receiveHelloMessage( MdmacControlMessage *m ) {
 	if ( testClusterHeadChange( m->getNodeId() ) ) {
 
 		// If this was a CH, the cluster is dead, so log lifetime
-		if ( IsClusterHead() )
+		if ( IsClusterHead() ) {
 			ClusterDied( CD_Cannibal );
+
+			if (mId == 792) {
+				cout << "recv hello 792 cannibal" << endl;
+			}
+		}
 
         emit( mSigHeadChange, 1 );
 		mIsClusterHead = false;
@@ -1060,8 +1064,12 @@ void MdmacNetworkLayer::receiveChMessage( MdmacControlMessage *m ) {
 	if ( testClusterHeadChange( m->getNodeId() ) ) {
 
 		// If this was a CH, the cluster has been cannibalised, so log lifetime
-		if ( IsClusterHead() )
+		if ( IsClusterHead() ) {
 			ClusterDied( CD_Cannibal );
+			if (mId == 792) {
+				cout << "recv ch, 792" << endl;
+			}
+		}
 
         emit( mSigHeadChange, 1 );
 		mIsClusterHead = false;
