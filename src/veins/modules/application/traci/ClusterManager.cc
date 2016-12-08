@@ -21,10 +21,6 @@ using Veins::TraCIScenarioManager;
 
 void ClusterManager::clusterInit(int id, int headId, set<int>& members, double time) {
 
-	if (id == 252) {
-		cout << "252 cluster init" << endl;
-	}
-
 	ClusterStat cs(time);
 	cs.heads.insert(headId);
 	for(auto iter = members.begin(); iter != members.end(); ++iter) {
@@ -43,10 +39,6 @@ void ClusterManager::clusterInit(int id, int headId, set<int>& members, double t
 void ClusterManager::clusterDie(int id, double time) {
 	csEV << "cluster died, id: " << id << ", time: " << time << endl;
 
-	if (id == 252) {
-		cout << "252 cluster die" << endl;
-	}
-
 	auto iter = clustersInfo.find(id);
 	if (iter != clustersInfo.end()) {
 		iter->second.endTime = time;
@@ -54,10 +46,6 @@ void ClusterManager::clusterDie(int id, double time) {
 					++i) {
 			nodeClusterMap[*i] = -1;
 		}
-		//for (auto i = iter->second.heads.begin(); i != iter->second.gateWays.end();
-		//			++i) {
-		//	nodeClusterMap[*i] = -1;
-		//}
 		for (auto i = iter->second.members->begin(); i != iter->second.members->end();
 					++i) {
 			nodeClusterMap[*i] = -1;
@@ -91,7 +79,7 @@ void ClusterManager::leaveCluster(int clusterId, int nodeId, double time) {
 	if (clustersInfo.find(clusterId) == clustersInfo.end()) {
 		csEV << time << " leave cluster failed, cluster:" << clusterId << " not exist any more" << endl;
 	} else {
-		clustersInfo[clusterId].members->erase(nodeId);
+		//clustersInfo[clusterId].members->erase(nodeId);
 	}
 	csEV << "leave cluster, id: " << clusterId << ", node id: "
 		<< nodeId << ", time: " << time << endl;

@@ -171,6 +171,12 @@ void MdmacNetworkLayer::finish() {
 	//if ( IsClusterHead() ) {
 	//  ClusterDied( CD_Cannibal );
 	//}
+	
+	if (mId == 792) {
+		cout << "is cluster head: " << mIsClusterHead
+			<< "mIsClusterHead: " << IsClusterHead() << endl;
+	}
+
 	if (mIsClusterHead) {
 	  ClusterDied( CD_Cannibal );
 	}
