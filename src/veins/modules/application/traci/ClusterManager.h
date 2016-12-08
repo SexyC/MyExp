@@ -71,10 +71,12 @@ public:
 			ClusterStat() { }
 			ClusterStat(double time) {
 				startTime = time;
+				members = NULL;
 			}
 			unordered_set<int> heads;
 			//unordered_set<int> gateWays;
-			unordered_set<int> members;
+			//unordered_set<int> members;
+			std::set<int>* members;
 			/**
 			 * key -- neighbor cluster id
 			 * val -- set of gateway node id that 

@@ -215,8 +215,8 @@ public:
 			if (mClusterHead != -1) {
 				mNeighbourClusters.insert(mClusterHead);
 			}
-			mClusterManager->nodeNeighbourClusterInfoUpdate(mId, &mNeighbourClusters);
 		}
+		mClusterManager->nodeNeighbourClusterInfoUpdate(mId, &mNeighbourClusters);
 		return &mNeighbourClusters;
 	}
 protected:

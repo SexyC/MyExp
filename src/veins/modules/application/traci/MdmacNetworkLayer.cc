@@ -110,6 +110,13 @@ void MdmacNetworkLayer::initialize(int stage)
 		mTraciManager = TraCIScenarioManagerLaunchdAccess().get();
 		mClusterManager = ClusterManager::getClusterManager();
 
+		/**
+		 * init cluster info
+		 * also mNeighbourClusters is an empty set
+		 */
+		//mClusterManager->nodeNeighbourClusterInfoUpdate(mId, &mNeighbourClusters);
+		getNeighbourClusters(true);
+
 		sequenceNum = 0;
 		sendNearPosibility = hasPar("sendNearPosibility") ?
 			par("sendNearPosibility") : .5;
@@ -161,11 +168,15 @@ void MdmacNetworkLayer::initialize(int stage)
 
 /** @brief Cleanup*/
 void MdmacNetworkLayer::finish() {
-	if ( IsClusterHead() ) {
+	//if ( IsClusterHead() ) {
+	//  ClusterDied( CD_Cannibal );
+	//}
+	if (mIsClusterHead) {
 	  ClusterDied( CD_Cannibal );
 	}
 
-	expEV << mId << " finished" << endl;
+	cout << mId << " finished, cluster id" << mClusterHead << endl;
+
 	mClusterManager->leaveCluster(mClusterHead, mId, simTime().dbl());
 	mClusterManager->nodeNeighbourClusterInfoDelete(mId);
 
@@ -820,6 +831,7 @@ void MdmacNetworkLayer::init() {
 		mCurrentMaximumClusterSize = 1;
 		sendClusterMessage( CH_MESSAGE );
 
+
 	} else {
 
 		// we found a neighbour that's a better CH
@@ -841,6 +853,7 @@ void MdmacNetworkLayer::init() {
 
 	}
 
+	getNeighbourClusters();
 	mInitialised = true;
 
 }
@@ -1018,6 +1031,7 @@ void MdmacNetworkLayer::receiveHelloMessage( MdmacControlMessage *m ) {
 		}
 
 		mClusterHead = m->getNodeId();
+		getNeighbourClusters(false);
 		sendClusterMessage( JOIN_MESSAGE, m->getNodeId() );
 		//ClusterAnalysisScenarioManagerAccess::get()->joinMessageSent( mId, m->getNodeId() );
 
