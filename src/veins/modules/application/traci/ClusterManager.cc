@@ -118,7 +118,13 @@ ClusterManager::getNeighborClusters(int id, double time, bool forceUpdate) {
 					++i) {
 
 			nodeNeighbourCluster = nodeNeighbourClusterInfo[*i];
-			ASSERT(nodeNeighbourCluster != NULL);
+			//ASSERT(nodeNeighbourCluster != NULL);
+			if (nodeNeighbourCluster == NULL) {
+				/**
+				 * maybe this node is finished
+				 */
+				continue;
+			}
 
 			/**
 			 * iterate over all the neighbor cluster id of one single node in this cluster
