@@ -1,5 +1,6 @@
 Makefile
 
+veins-veins-4.4
 .ycm_extra_conf.py
 
 src/Makefile
