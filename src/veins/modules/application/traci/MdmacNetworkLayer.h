@@ -160,6 +160,7 @@ protected:
 	}
 
 	static const NicEntry::GateList* getHostNicGateList(const BaseConnectionManager* const bcm, const cModule* host);
+	static Coord getHostPosition(cModule* const host, simtime_t t);
 	static Coord getHostPosition(cModule* const host);
 	Coord getHostPosition(int hostId);
 	virtual unsigned long getPkgLen() {

@@ -21,11 +21,36 @@
 
 Define_Module(MultiCHCluster);
 
+void MultiCHCluster::initialize(int stage) {
+	HighestDegreeCluster::initialize(stage);
+	if (stage == 0) {
+		const char *vstr = par("futureTimes").stringValue();
+		futureTimes = cStringTokenizer(vstr).asDoubleVector();
+		for (auto iter = futureTimes.begin(); iter != futureTimes.end();
+					++iter) {
+			cout << *iter << " ";
+		}
+		cout << endl;
+	} else if (stage == 1) {
+	}
+}
 
 /** @brief Compute the CH weight for this node. */
 double MultiCHCluster::calculateWeight() {
+	NeighborNodeSet* nns = getCachedNeighborNodes();
+	
+	double weight = .0;
+	
+	vector<double> weightFactors(futureTimes.size());
 
-	return mNeighbours.size();
+	for (int wIdx = 0; wIdx < weightFactors.size(); ++wIdx) {
+		for (auto iter = nns->begin(); iter != nns->end(); ++iter) {
+			Coord nodePos = getHostPosition(*iter);
+		}
+	}
+
+	return weight;
+	//return mNeighbours.size();
 
 }
 

@@ -461,18 +461,22 @@ void MdmacNetworkLayer::ClusterDied( int deathType ) {
 //
 //}
 
-Coord MdmacNetworkLayer::getHostPosition(cModule* const host) {
-
+Coord MdmacNetworkLayer::getHostPosition(cModule* const host,
+			simtime_t t) {
 	ASSERT(host != NULL);
 	for (cModule::SubmoduleIterator iter(host); !iter.end(); ++iter) {
 		cModule* submod = SUBMODULE_ITERATOR_TO_MODULE(iter);
 		TraCIMobility* mm = dynamic_cast<TraCIMobility*>(submod);
 
 		if (!mm) continue;
-		return mm->getPositionAt(simTime());
+		return mm->getPositionAt(t);
 	}
 	ASSERT(false);
 	return Coord();
+}
+
+Coord MdmacNetworkLayer::getHostPosition(cModule* const host) {
+	return getHostPosition(host, simTime());
 }
 
 Coord MdmacNetworkLayer::getHostPosition(int hostId) {

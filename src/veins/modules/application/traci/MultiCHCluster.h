@@ -25,6 +25,7 @@
 
 #include <set>
 #include <map>
+#include <vector>
 
 //#include "MdmacControlMessage_m.h"
 #include "MdmacNetworkLayer.h"
@@ -35,6 +36,8 @@
  * The degree is the number of nodes with which this node has a connection.
  */
 class MultiCHCluster : public HighestDegreeCluster {
+public:
+	virtual void initialize(int);
 
 protected:
     /** @brief Compute the CH weight for this node. */
@@ -46,6 +49,8 @@ protected:
 	int headGetNextHopId(int dstId);
 	int gateWayGetNextHopId(int dstId);
 	int memberGetNextHopId(int dstId);
+
+	vector<double> futureTimes;
 
 };
 

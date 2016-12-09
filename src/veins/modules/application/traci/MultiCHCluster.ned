@@ -23,5 +23,6 @@ simple MultiCHCluster extends HighestDegreeCluster
 {
     parameters:
         @class(MultiCHCluster);
+		string futureTimes = default("1 2 3");
 
 }
