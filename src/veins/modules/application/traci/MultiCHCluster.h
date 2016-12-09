@@ -13,13 +13,10 @@
 // along with this program.  If not, see http://www.gnu.org/licenses/.
 // 
 
-#ifndef __CLUSTERLIB_HIGHESTDEGREECLUSTER_H_
-#define __CLUSTERLIB_HIGHESTDEGREECLUSTER_H_
+#ifndef __CLUSTERLIB_MULTICHCLUSTER_H_
+#define __CLUSTERLIB_MULTICHCLUSTER_H_
 
 #include <omnetpp.h>
-
-//#include <MiXiMDefs.h>
-//#include <BaseNetwLayer.h>
 
 #include "veins/modules/application/ieee80211p/BaseWaveApplLayer.h"
 #include "veins/modules/mobility/traci/TraCIMobility.h"
@@ -31,29 +28,24 @@
 
 //#include "MdmacControlMessage_m.h"
 #include "MdmacNetworkLayer.h"
+#include "HighestDegreeCluster.h"
 
 /**
  * Implements the Highest Degree Clustering mechanism.
  * The degree is the number of nodes with which this node has a connection.
  */
-class HighestDegreeCluster : public MdmacNetworkLayer {
+class MultiCHCluster : public HighestDegreeCluster {
 
 protected:
     /** @brief Compute the CH weight for this node. */
     double calculateWeight();
-	virtual int getNextHopId(int dstId);
 	virtual int getNearestNodeToPos(const Coord& pos);
 	virtual int getNearestNodeToPos(const unordered_map<int, unordered_set<int> >& neighbors, const Coord& pos);
-	static double distSqr(const Coord& c1, const Coord& c2) {
-		return (c1.x - c2.x) * (c1.x - c2.x)
-			+ (c1.y - c2.y) * (c1.y - c2.y)
-			+ (c1.z - c2.z) * (c1.z - c2.z);
-	}
 
-	virtual int headGateWayGetNextHopId(int dstId);
-	virtual int headGetNextHopId(int dstId);
-	virtual int gateWayGetNextHopId(int dstId);
-	virtual int memberGetNextHopId(int dstId);
+	int headGateWayGetNextHopId(int dstId);
+	int headGetNextHopId(int dstId);
+	int gateWayGetNextHopId(int dstId);
+	int memberGetNextHopId(int dstId);
 
 };
 

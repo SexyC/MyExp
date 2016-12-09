@@ -280,20 +280,20 @@ void MdmacNetworkLayer::onData(WaveShortMessage* wsm) {
 
 		recvDataLength += wsmd->getByteLength();
 
-		cout << simTime().dbl() << " " 
+		expEV << simTime().dbl() << " " 
 			<< wsmd->getSenderAddress() << " " << wsmd->getSerial() << " packet arrived at: " << wsmd->getRecipientAddress()
 			<< std::endl
 			<< "current hosts number: " << hosts.size() << std::endl;
 		PathQueue& pq = wsmd->getPathNodes();
 
-		cout << wsmd->getSenderAddress() << "-->";
+		expEV << wsmd->getSenderAddress() << "-->";
 		unsigned long len = pq.size() + 1;
 		while (!pq.empty()) {
-			cout << pq.front() << "-->";
+			expEV << pq.front() << "-->";
 			pq.pop();
 		}
-		cout << wsmd->getRecipientAddress() << std::endl;
-		cout << "length of path: " << len << std::endl;
+		expEV << wsmd->getRecipientAddress() << std::endl;
+		expEV << "length of path: " << len << std::endl;
 
 		packetDelay.record(simTime() - wsmd->getTimestamp());
 		packetPathLen.record(len);
@@ -317,6 +317,9 @@ void MdmacNetworkLayer::onData(WaveShortMessage* wsm) {
 	if (findHost()->getId() == wsmd->getNextHopId()) {
 
 		int nextHopId = getNextHopId(wsmd->getRecipientAddress());
+		expEV << wsmd->getSenderAddress() << " send to "
+			<< wsmd->getRecipientAddress() << " via "
+			<< mId << " next hop: " << nextHopId << endl;
 
 		/**
 		 * Currently, no neighbor can help send msg
