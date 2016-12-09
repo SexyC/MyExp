@@ -113,6 +113,8 @@ public:
 
 	unordered_map<int, unordered_set<int> >* getNeighborClusters(int id, double time, bool forceUpdate = false);
 
+	void nodeFinished(int nodeId);
+
 protected:
 	unordered_map<int, ClusterStat> clustersInfo;
 

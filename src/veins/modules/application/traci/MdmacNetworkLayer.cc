@@ -172,18 +172,13 @@ void MdmacNetworkLayer::finish() {
 	//  ClusterDied( CD_Cannibal );
 	//}
 	
-	if (mId == 792) {
-		cout << "is cluster head: " << mIsClusterHead
-			<< "mIsClusterHead: " << IsClusterHead(); 
-		cout << " cluster id: " << mClusterHead << endl;
-	}
-
 	if (mIsClusterHead) {
 	  ClusterDied( CD_Cannibal );
 	}
 
 	mClusterManager->leaveCluster(mClusterHead, mId, simTime().dbl());
 	mClusterManager->nodeNeighbourClusterInfoDelete(mId);
+	mClusterManager->nodeFinished(mId);
 
 	ApplMapManager::getApplMapManager()->unregisterAppl(mId);
 	if (mSendHelloMessage && mSendHelloMessage->isScheduled() )
@@ -285,20 +280,20 @@ void MdmacNetworkLayer::onData(WaveShortMessage* wsm) {
 
 		recvDataLength += wsmd->getByteLength();
 
-		expEV << simTime().dbl() << " " 
+		cout << simTime().dbl() << " " 
 			<< wsmd->getSenderAddress() << " " << wsmd->getSerial() << " packet arrived at: " << wsmd->getRecipientAddress()
 			<< std::endl
 			<< "current hosts number: " << hosts.size() << std::endl;
 		PathQueue& pq = wsmd->getPathNodes();
 
-		expEV << wsmd->getSenderAddress() << "-->";
+		cout << wsmd->getSenderAddress() << "-->";
 		unsigned long len = pq.size() + 1;
 		while (!pq.empty()) {
-			expEV << pq.front() << "-->";
+			cout << pq.front() << "-->";
 			pq.pop();
 		}
-		expEV << wsmd->getRecipientAddress() << std::endl;
-		expEV << "length of path: " << len << std::endl;
+		cout << wsmd->getRecipientAddress() << std::endl;
+		cout << "length of path: " << len << std::endl;
 
 		packetDelay.record(simTime() - wsmd->getTimestamp());
 		packetPathLen.record(len);
@@ -1022,10 +1017,6 @@ void MdmacNetworkLayer::receiveHelloMessage( MdmacControlMessage *m ) {
 		// If this was a CH, the cluster is dead, so log lifetime
 		if ( IsClusterHead() ) {
 			ClusterDied( CD_Cannibal );
-
-			if (mId == 792) {
-				cout << "recv hello 792 cannibal" << endl;
-			}
 		}
 
         emit( mSigHeadChange, 1 );
@@ -1041,6 +1032,8 @@ void MdmacNetworkLayer::receiveHelloMessage( MdmacControlMessage *m ) {
 		}
 
 		mClusterHead = m->getNodeId();
+
+		mClusterManager->joinCluster(mClusterHead, mId, simTime().dbl());
 		getNeighbourClusters(false);
 		sendClusterMessage( JOIN_MESSAGE, m->getNodeId() );
 		//ClusterAnalysisScenarioManagerAccess::get()->joinMessageSent( mId, m->getNodeId() );
@@ -1066,9 +1059,6 @@ void MdmacNetworkLayer::receiveChMessage( MdmacControlMessage *m ) {
 		// If this was a CH, the cluster has been cannibalised, so log lifetime
 		if ( IsClusterHead() ) {
 			ClusterDied( CD_Cannibal );
-			if (mId == 792) {
-				cout << "recv ch, 792" << endl;
-			}
 		}
 
         emit( mSigHeadChange, 1 );
@@ -1082,6 +1072,8 @@ void MdmacNetworkLayer::receiveChMessage( MdmacControlMessage *m ) {
 			mClusterManager->leaveCluster(mClusterHead, mId, simTime().dbl());
 		}
 		mClusterHead = m->getNodeId();
+
+		mClusterManager->joinCluster(mClusterHead, mId, simTime().dbl());
 		sendClusterMessage( JOIN_MESSAGE, m->getNodeId() );
 		//ClusterAnalysisScenarioManagerAccess::get()->joinMessageSent( mId, m->getNodeId() );
 

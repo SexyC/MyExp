@@ -324,6 +324,15 @@ void BasePhyLayer::handleMessage(cMessage* msg) {
 
 	//AirFrames
 	} else if(msg->getKind() == AIR_FRAME){
+		/**
+		 * XXX: add by yy
+		 * Sender module could be finished when the message arrived
+		 */
+		AirFrame* frame = static_cast<AirFrame*>(msg);
+		ChannelAccess *const senderModule   = dynamic_cast<ChannelAccess *const>(frame->getSenderModule());
+		if (!senderModule) {
+			EV << "Sender module is dead, drop the packet: " << msg << endl;
+		}
 		handleAirFrame(static_cast<AirFrame*>(msg));
 
 	//unknown message

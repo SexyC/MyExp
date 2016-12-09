@@ -21,6 +21,10 @@ using Veins::TraCIScenarioManager;
 
 void ClusterManager::clusterInit(int id, int headId, set<int>& members, double time) {
 
+	if (clustersInfo.find(id) != clustersInfo.end()) {
+		clustersInfo.erase(id);
+	}
+
 	ClusterStat cs(time);
 	cs.heads.insert(headId);
 	for(auto iter = members.begin(); iter != members.end(); ++iter) {
@@ -33,7 +37,7 @@ void ClusterManager::clusterInit(int id, int headId, set<int>& members, double t
 	csEV << "cluster init, id: " << id << ", headId: " << headId
 		<< ", time: " << time << endl;
 
-	nodeClusterMap[id] = id;
+	nodeClusterMap[headId] = id;
 }
 
 void ClusterManager::clusterDie(int id, double time) {
@@ -63,6 +67,14 @@ void ClusterManager::joinCluster(int clusterId, int nodeId, double time) {
 	 *
 	 * Work around: leave it, cluster init will take care
 	 */
+
+	/**
+	 * If previously it's a cluster head
+	 */
+	if (clustersInfo.find(nodeId) != clustersInfo.end()) {
+		clustersInfo.erase(nodeId);
+	}
+
 	if (clustersInfo.find(clusterId) == clustersInfo.end()) {
 		csEV << time << " join cluster failed, cluster:" << clusterId <<  " not exist any more" << endl;
 		return;
@@ -76,6 +88,10 @@ void ClusterManager::joinCluster(int clusterId, int nodeId, double time) {
 
 void ClusterManager::leaveCluster(int clusterId, int nodeId, double time) {
 
+	if (clustersInfo.find(nodeId) != clustersInfo.end()) {
+		clustersInfo.erase(nodeId);
+	}
+
 	if (clustersInfo.find(clusterId) == clustersInfo.end()) {
 		csEV << time << " leave cluster failed, cluster:" << clusterId << " not exist any more" << endl;
 	} else {
@@ -84,6 +100,21 @@ void ClusterManager::leaveCluster(int clusterId, int nodeId, double time) {
 	csEV << "leave cluster, id: " << clusterId << ", node id: "
 		<< nodeId << ", time: " << time << endl;
 	nodeClusterMap[nodeId] = -1;
+}
+
+void ClusterManager::nodeFinished(int nodeId) {
+	if (clustersInfo.find(nodeId) != clustersInfo.end()) {
+		clustersInfo.erase(nodeId);
+	}
+	auto iter = nodeClusterMap.find(nodeId);
+	if (iter != nodeClusterMap.end()) {
+		int clusterId = iter->second;
+		auto i = clustersInfo.find(clusterId);
+		if (i != clustersInfo.end()) {
+			i->second.heads.erase(nodeId);
+			i->second.members->erase(nodeId);
+		}
+	}
 }
 
 /**
