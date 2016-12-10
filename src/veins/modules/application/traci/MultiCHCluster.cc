@@ -26,13 +26,12 @@ void MultiCHCluster::initialize(int stage) {
 	if (stage == 0) {
 		const char *vstr = par("futureTimes").stringValue();
 		futureTimes = cStringTokenizer(vstr).asDoubleVector();
-		for (auto iter = futureTimes.begin(); iter != futureTimes.end();
-					++iter) {
-			cout << *iter << " ";
-		}
-		cout << endl;
-	} else if (stage == 1) {
-	}
+
+		const char *vstrConFac = par("futureConfidenceFactor").stringValue();
+		futureConfidenceFactor = cStringTokenizer(vstrConFac).asDoubleVector();
+		ASSERT(futureConfidenceFactor.size() == futureTimes.size());
+
+	} else if (stage == 1) { }
 }
 
 /** @brief Compute the CH weight for this node. */
@@ -42,15 +41,30 @@ double MultiCHCluster::calculateWeight() {
 	double weight = .0;
 	
 	vector<double> weightFactors(futureTimes.size());
+	Coord myPos = mobility->getCurrentPosition();
 
 	for (int wIdx = 0; wIdx < weightFactors.size(); ++wIdx) {
 		for (auto iter = nns->begin(); iter != nns->end(); ++iter) {
-			Coord nodePos = getHostPosition(*iter);
+			Coord nodePos = getHostPosition(*iter, simTime() + futureTimes[wIdx]);
+			double disSq = myPos.sqrdist(nodePos);
+
+			if (disSq > mTransmitRangeSq) {
+				continue;
+			}
+
+			if (disSq < mTransmitRangeSq / 2) {
+				weightFactors[wIdx] += 1;
+			} else {
+				weightFactors[wIdx] += (mTransmitRangeSq - disSq) / mTransmitRangeSq;
+			}
 		}
 	}
 
+	for (int wIdx = 0; wIdx < weightFactors.size(); ++wIdx) {
+		weight += weightFactors[wIdx] * futureConfidenceFactor[wIdx];
+	}
+
 	return weight;
-	//return mNeighbours.size();
 
 }
 
@@ -63,7 +77,8 @@ int MultiCHCluster::getNearestNodeToPos(const Coord& pos) {
 	for(auto iter = mNeighbours.begin(); iter != mNeighbours.end();
 				++iter) {
 		Coord nodePos = iter->second.mPosition;
-		double currDistSqr = distSqr(nodePos, pos);
+		double currDistSqr = pos.sqrdist(nodePos);
+		//double currDistSqr = distSqr(nodePos, pos);
 
 		if (currDistSqr < minDistSqr) {
 			minDistSqr = currDistSqr;
@@ -96,7 +111,7 @@ int MultiCHCluster::getNearestNodeToPos(const unordered_map<int, unordered_set<i
 		}
 
 		Coord nodePos = getHostPosition(host);
-		double currDistSqr = distSqr(nodePos, pos);
+		double currDistSqr = pos.sqrdist(nodePos);
 
 		if (currDistSqr < minDistSqr) {
 			minDistSqr = currDistSqr;
@@ -262,5 +277,17 @@ int MultiCHCluster::memberGetNextHopId(int dstId) {
 		hdcEV << "cluster head is -1" << endl;
 	}
 	return mClusterHead;
+}
+
+void MultiCHCluster::receiveHelloMessage(MdmacControlMessage* m) {
+	HighestDegreeCluster::receiveHelloMessage(m);
+}
+
+void MultiCHCluster::receiveChMessage(MdmacControlMessage* m) {
+	HighestDegreeCluster::receiveChMessage(m);
+}
+
+void MultiCHCluster::receiveJoinMessage(MdmacControlMessage* m) {
+	HighestDegreeCluster::receiveJoinMessage(m);
 }
 

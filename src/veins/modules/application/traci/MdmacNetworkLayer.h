@@ -384,13 +384,13 @@ protected:
     bool testClusterHeadChange( unsigned int );
 
     /** @brief Handle a HELLO message. */
-    void receiveHelloMessage( MdmacControlMessage* );
+    virtual void receiveHelloMessage( MdmacControlMessage* );
 
     /** @brief Handle a CH message. */
-    void receiveChMessage( MdmacControlMessage* );
+    virtual void receiveChMessage( MdmacControlMessage* );
 
     /** @brief Handle a JOIN message. */
-    void receiveJoinMessage( MdmacControlMessage* );
+    virtual void receiveJoinMessage( MdmacControlMessage* );
 
     /** @brief Update a neighbour's data. */
     void updateNeighbour( MdmacControlMessage* );

@@ -24,5 +24,6 @@ simple MultiCHCluster extends HighestDegreeCluster
     parameters:
         @class(MultiCHCluster);
 		string futureTimes = default("1 2 3");
+		string futureConfidenceFactor = default("0.5 0.3 0.2");
 
 }

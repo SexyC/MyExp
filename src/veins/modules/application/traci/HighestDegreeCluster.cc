@@ -50,7 +50,8 @@ int HighestDegreeCluster::getNearestNodeToPos(const Coord& pos) {
 	for(auto iter = mNeighbours.begin(); iter != mNeighbours.end();
 				++iter) {
 		Coord nodePos = iter->second.mPosition;
-		double currDistSqr = distSqr(nodePos, pos);
+		double currDistSqr = pos.sqrdist(nodePos);
+		//double currDistSqr = distSqr(nodePos, pos);
 
 		if (currDistSqr < minDistSqr) {
 			minDistSqr = currDistSqr;
@@ -81,7 +82,7 @@ int HighestDegreeCluster::getNearestNodeToPos(const unordered_map<int, unordered
 		}
 
 		Coord nodePos = getHostPosition(host);
-		double currDistSqr = distSqr(nodePos, pos);
+		double currDistSqr = pos.sqrdist(nodePos);
 
 		if (currDistSqr < minDistSqr) {
 			minDistSqr = currDistSqr;

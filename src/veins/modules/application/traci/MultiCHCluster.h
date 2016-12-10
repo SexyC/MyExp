@@ -51,6 +51,16 @@ protected:
 	int memberGetNextHopId(int dstId);
 
 	vector<double> futureTimes;
+	vector<double> futureConfidenceFactor;
+
+    /** @brief Handle a HELLO message. */
+    virtual void receiveHelloMessage( MdmacControlMessage* );
+
+    /** @brief Handle a CH message. */
+    virtual void receiveChMessage( MdmacControlMessage* );
+
+    /** @brief Handle a JOIN message. */
+    virtual void receiveJoinMessage( MdmacControlMessage* );
 
 };
 

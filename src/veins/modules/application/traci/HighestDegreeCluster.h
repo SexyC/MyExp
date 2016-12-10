@@ -44,11 +44,6 @@ protected:
 	virtual int getNextHopId(int dstId);
 	virtual int getNearestNodeToPos(const Coord& pos);
 	virtual int getNearestNodeToPos(const unordered_map<int, unordered_set<int> >& neighbors, const Coord& pos);
-	static double distSqr(const Coord& c1, const Coord& c2) {
-		return (c1.x - c2.x) * (c1.x - c2.x)
-			+ (c1.y - c2.y) * (c1.y - c2.y)
-			+ (c1.z - c2.z) * (c1.z - c2.z);
-	}
 
 	virtual int headGateWayGetNextHopId(int dstId);
 	virtual int headGetNextHopId(int dstId);

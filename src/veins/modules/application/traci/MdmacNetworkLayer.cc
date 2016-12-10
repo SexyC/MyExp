@@ -67,7 +67,6 @@ void MdmacNetworkLayer::initialize(int stage)
 
     	// set up the node.
     	//mId = getId();
-    	mWeight = calculateWeight();
     	//mMobility = FindModule<BaseMobility*>::findSubModule(findHost());
 		mMobility = TraCIMobilityAccess().get(getParentModule());
     	mClusterHead = -1;
@@ -138,6 +137,8 @@ void MdmacNetworkLayer::initialize(int stage)
 
 		packetDelay.setName("packet_delay");
 		packetPathLen.setName("packet_path_length");
+
+    	mWeight = calculateWeight();
 
 //     	TraCIScenarioManager *pManager = TraCIScenarioManagerAccess().get();
 //     	char strNodeName[50];
@@ -464,6 +465,7 @@ void MdmacNetworkLayer::ClusterDied( int deathType ) {
 Coord MdmacNetworkLayer::getHostPosition(cModule* const host,
 			simtime_t t) {
 	ASSERT(host != NULL);
+	ASSERT(t >= simTime());
 	for (cModule::SubmoduleIterator iter(host); !iter.end(); ++iter) {
 		cModule* submod = SUBMODULE_ITERATOR_TO_MODULE(iter);
 		TraCIMobility* mm = dynamic_cast<TraCIMobility*>(submod);
