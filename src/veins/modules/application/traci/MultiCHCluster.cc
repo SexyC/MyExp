@@ -197,6 +197,21 @@ int MultiCHCluster::getNearestNodeToPos(const unordered_map<int, unordered_map<i
 
 }
 
+int MultiCHCluster::getBestHeadAsNextHop(unordered_set<int>& heads, int dstId) {
+
+	for (auto iter = heads.begin(); iter != heads.end(); ++iter) {
+	}
+
+	return -1;
+}
+
+int MultiCHCluster::getBestGateWayAsNextHop(unordered_map<int, int>& gateWays, int dstId) {
+
+	for (auto iter = gateWays.begin(); iter != gateWays.end(); ++iter) {
+	}
+	return -1;
+}
+
 int MultiCHCluster::headGateWayGetNextHopId(int dstId) {
 	hdcEV << "headgateway: headGateWay get next Hop id, cluster id: " << mClusterHead << endl;
 
