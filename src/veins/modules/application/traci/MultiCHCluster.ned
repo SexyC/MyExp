@@ -25,5 +25,10 @@ simple MultiCHCluster extends HighestDegreeCluster
         @class(MultiCHCluster);
 		string futureTimes = default("1 2 3");
 		string futureConfidenceFactor = default("0.5 0.3 0.2");
+		// setting this to 0 means need back up head needed
+		// setting this to negative number means unlimited
+		int backupHeadMaxLimit = default(6);
+		// min(head_back_weight / head_weight)
+		int backupSelectFactor = default(.8);
 
 }

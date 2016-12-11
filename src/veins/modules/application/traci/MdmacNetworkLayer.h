@@ -163,6 +163,7 @@ protected:
 	static Coord getHostPosition(cModule* const host, simtime_t t);
 	static Coord getHostPosition(cModule* const host);
 	Coord getHostPosition(int hostId);
+	Coord getHostPosition(int hostId, simtime_t t);
 	virtual unsigned long getPkgLen() {
 		if (packetLenMax == packetLenMin) { return packetLenMax; }
 		return (unsigned long)(uniform(packetLenMin, packetLenMax));
@@ -199,22 +200,27 @@ protected:
 	void sendMessage(cModule* dstMod, int nextHopId, std::string content, unsigned long pkgLen);
 
 public:
-	unordered_set<int>* getNeighbourClusters(bool forceUpdate = false) {
+	unordered_map<int, int>* getNeighbourClusters(bool forceUpdate = false) {
 		if (forceUpdate || mNeighbourClustersUpdateTime < simTime()) {
 			mNeighbourClustersUpdateTime = simTime();
 			mNeighbourClusters.clear();
 			for (auto iter = mNeighbours.begin(); iter != mNeighbours.end(); ++iter) {
 				int clusterId = mClusterManager->getClusterIdByNodeId(iter->first);
 				if (clusterId != -1) {
-					mNeighbourClusters.insert(clusterId);
+					if (mNeighbourClusters.find(clusterId) == mNeighbourClusters.end()) {
+						mNeighbourClusters[clusterId] = 0;
+					}
+					++mNeighbourClusters[clusterId];
 				}
 			}
 			/**
 			 * Add the cluster the node is in
-			 * to neighbor cluster
+			 * to neighbor cluster if it's not added before
+			 * most unlikely
 			 */
-			if (mClusterHead != -1) {
-				mNeighbourClusters.insert(mClusterHead);
+			if (mClusterHead != -1 &&
+						mNeighbourClusters.find(mClusterHead) == mNeighbourClusters.end()) {
+				mNeighbourClusters[mClusterHead] = 0;
 			}
 		}
 		mClusterManager->nodeNeighbourClusterInfoUpdate(mId, &mNeighbourClusters);
@@ -237,8 +243,10 @@ protected:
 	/**
 	 * do not use this directly
 	 * use getNeighbourClusters
+	 * key -- neighbor cluster id
+	 * val -- the connection cnt with neighbor cluster id
 	 */
-	unordered_set<int> mNeighbourClusters; /**< neighbour clusters, include self cluster id*/
+	unordered_map<int, int> mNeighbourClusters; /**< neighbour clusters, include self cluster id*/
 	simtime_t mNeighbourClustersUpdateTime;
 
 	double mTransmitRangeSq;				/**< Required for the freshness calculation. Obtained from the PhyLayer module. */
@@ -369,7 +377,7 @@ protected:
     void init();
 
     /** @brief Process the neighbour table in one beat. Also, update the node's weight. */
-    void processBeat();
+    virtual void processBeat();
 
     /** @brief Select a CH from the neighbour table. */
     int chooseClusterHead();

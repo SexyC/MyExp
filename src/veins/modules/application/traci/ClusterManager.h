@@ -78,11 +78,12 @@ public:
 			//unordered_set<int> members;
 			std::set<int>* members;
 			/**
-			 * key -- neighbor cluster id
-			 * val -- set of gateway node id that 
-			 *			connnect to that cluster
+			 * key -- cluster id
+			 * val -- map
+			 *          key -- node id
+			 *          val -- connection cnt with that cluster
 			 */
-			unordered_map<int, unordered_set<int> > neighborClusters;
+			unordered_map<int, unordered_map<int, int> > neighborClusters;
 
 			double neighborClusterUpdateTime;
 			double startTime;
@@ -93,6 +94,9 @@ public:
 	void clusterDie(int id, double time);
 	void joinCluster(int clusterId, int nodeId, double time);
 	void leaveCluster(int clusterId, int nodeId, double time);
+
+	void registerBackHead(int clutserId, const vector<int>& backHeads);
+
 	int getClusterIdByNodeId(int nodeId) {
 		auto iter = nodeClusterMap.find(nodeId);
 		if (iter == nodeClusterMap.end()) {
@@ -104,14 +108,20 @@ public:
 	void nodeNeighbourClusterInfoDelete(int id) {
 		nodeNeighbourClusterInfo.erase(id);
 	}
-	void nodeNeighbourClusterInfoUpdate(int id, unordered_set<int>* s) {
+	void nodeNeighbourClusterInfoUpdate(int id, unordered_map<int, int>* s) {
 		nodeNeighbourClusterInfo[id] = s;
 	}
 
 	unordered_map<int, ClusterStat>::size_type
 		getClusterCount() { return clustersInfo.size(); }
 
-	unordered_map<int, unordered_set<int> >* getNeighborClusters(int id, double time, bool forceUpdate = false);
+	/**
+	 * key -- cluster id
+	 * val -- map
+	 *         key -- gateway node id
+	 *         val -- connection cnt with this cluster
+	 */
+	unordered_map<int, unordered_map<int, int> >* getNeighborClusters(int id, double time, bool forceUpdate = false);
 
 	void nodeFinished(int nodeId);
 
@@ -124,7 +134,7 @@ protected:
 	 */
 	unordered_map<int, int> nodeClusterMap;
 
-	unordered_map<int, unordered_set<int>* > nodeNeighbourClusterInfo;
+	unordered_map<int, unordered_map<int, int>* > nodeNeighbourClusterInfo;
 
 private:
 	ClusterManager() {}

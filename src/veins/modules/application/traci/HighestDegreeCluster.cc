@@ -68,7 +68,7 @@ int HighestDegreeCluster::getNearestNodeToPos(const Coord& pos) {
 	return minDistNodeId;
 }
 
-int HighestDegreeCluster::getNearestNodeToPos(const unordered_map<int, unordered_set<int> >& neighbors,
+int HighestDegreeCluster::getNearestNodeToPos(const unordered_map<int, unordered_map<int, int> >& neighbors,
 			const Coord& pos) {
 
 	double minDistSqr = (std::numeric_limits<double>::max)();
@@ -135,7 +135,7 @@ int HighestDegreeCluster::getNextHopId(int dstId) {
 
 int HighestDegreeCluster::headGateWayGetNextHopId(int dstId) {
 	hdcEV << "headGateWay get next Hop id, cluster id: " << mClusterHead << endl;
-	unordered_map<int, unordered_set<int> >* n = mClusterManager->getNeighborClusters(mClusterHead, simTime().dbl());
+	unordered_map<int, unordered_map<int, int> >* n = mClusterManager->getNeighborClusters(mClusterHead, simTime().dbl());
 
 	if (!n) { 
 		hdcEV << "headgateway get next hop id, current cluster is dead, return -1" << endl;
@@ -159,7 +159,7 @@ int HighestDegreeCluster::headGateWayGetNextHopId(int dstId) {
 	 * if nearest cluster is not connected to this gateway
 	 * use this node as head
 	 */
-	unordered_set<int>* pNeighborClusters = getNeighbourClusters();
+	unordered_map<int, int>* pNeighborClusters = getNeighbourClusters();
 	if (pNeighborClusters->find(nextClusterId) == pNeighborClusters->end()) {
 		return headGetNextHopId(dstId);
 	}
@@ -183,7 +183,7 @@ int HighestDegreeCluster::headGateWayGetNextHopId(int dstId) {
 
 int HighestDegreeCluster::headGetNextHopId(int dstId) {
 	hdcEV << "head get next Hop id, cluster id: " << mClusterHead << endl;
-	unordered_map<int, unordered_set<int> >* n = mClusterManager->getNeighborClusters(mClusterHead, simTime().dbl());
+	unordered_map<int, unordered_map<int, int> >* n = mClusterManager->getNeighborClusters(mClusterHead, simTime().dbl());
 
 	if (!n) { 
 		hdcEV << "head get next id failed with: all neighbor cluster"
@@ -223,13 +223,17 @@ int HighestDegreeCluster::headGetNextHopId(int dstId) {
 
 	auto iter = n->find(nextClusterId);
 	ASSERT(iter != n->end());
-	return *(iter->second.begin());
+	/**
+	 * first is node id
+	 * second is connection degree with that cluster
+	 */
+	return (iter->second.begin()->first);
 }
 
 int HighestDegreeCluster::gateWayGetNextHopId(int dstId) {
 
 	hdcEV << "gateway get next Hop id, cluster id: " << mClusterHead << endl;
-	unordered_map<int, unordered_set<int> >* n = mClusterManager->getNeighborClusters(mClusterHead, simTime().dbl());
+	unordered_map<int, unordered_map<int, int> >* n = mClusterManager->getNeighborClusters(mClusterHead, simTime().dbl());
 
 	if (!n) { 
 		hdcEV << "gateway get next id failed with: all neighbor cluster"
@@ -257,7 +261,7 @@ int HighestDegreeCluster::gateWayGetNextHopId(int dstId) {
 	 * if nearest cluster is not connected to this gateway
 	 * send to head
 	 */
-	unordered_set<int>* pNeighborClusters = getNeighbourClusters();
+	unordered_map<int, int>* pNeighborClusters = getNeighbourClusters();
 	if (pNeighborClusters->find(nextClusterId) == pNeighborClusters->end()) {
 		if (mNeighbours.find(mClusterHead) == mNeighbours.end()) {
 			return getNearestNodeToPos(dstPos);

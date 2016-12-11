@@ -26,6 +26,8 @@
 #include <set>
 #include <map>
 #include <vector>
+#include <queue>
+using std::priority_queue;
 
 //#include "MdmacControlMessage_m.h"
 #include "MdmacNetworkLayer.h"
@@ -38,20 +40,35 @@
 class MultiCHCluster : public HighestDegreeCluster {
 public:
 	virtual void initialize(int);
+	struct NodeWeight {
+		int nodeId;
+		double weight;
+		NodeWeight(int id, int w) {
+			nodeId = id;
+			weight = w;
+		}
+	};
+	class NodeWeightGreater {
+		public:
+			bool operator()(NodeWeight& n1, NodeWeight& n2) {
+				return n1.weight > n2.weight;
+			}
+	};
 
 protected:
     /** @brief Compute the CH weight for this node. */
     double calculateWeight();
+
+	vector<int> chooseBackupHeads();
+
 	virtual int getNearestNodeToPos(const Coord& pos);
-	virtual int getNearestNodeToPos(const unordered_map<int, unordered_set<int> >& neighbors, const Coord& pos);
+	virtual int getNearestNodeToPos(const unordered_map<int, unordered_map<int, int> >& neighbors, const Coord& pos);
 
 	int headGateWayGetNextHopId(int dstId);
 	int headGetNextHopId(int dstId);
 	int gateWayGetNextHopId(int dstId);
 	int memberGetNextHopId(int dstId);
 
-	vector<double> futureTimes;
-	vector<double> futureConfidenceFactor;
 
     /** @brief Handle a HELLO message. */
     virtual void receiveHelloMessage( MdmacControlMessage* );
@@ -62,6 +79,12 @@ protected:
     /** @brief Handle a JOIN message. */
     virtual void receiveJoinMessage( MdmacControlMessage* );
 
+	virtual void processBeat();
+
+	vector<double> futureTimes;
+	vector<double> futureConfidenceFactor;
+	int backupHeadMaxLimit;
+	int backupSelectFactor;
 };
 
 #endif

@@ -102,6 +102,16 @@ void ClusterManager::leaveCluster(int clusterId, int nodeId, double time) {
 	nodeClusterMap[nodeId] = -1;
 }
 
+void ClusterManager::registerBackHead(int clusterId, const vector<int>& backHeads) {
+	auto iter = clustersInfo.find(clusterId);
+	ASSERT(iter != clustersInfo.end());
+	iter->second.heads.clear();
+	for (auto i = backHeads.begin(); i != backHeads.end(); ++i) {
+		iter->second.heads.insert(*i);
+	}
+	iter->second.heads.insert(clusterId);
+}
+
 void ClusterManager::nodeFinished(int nodeId) {
 	if (clustersInfo.find(nodeId) != clustersInfo.end()) {
 		clustersInfo.erase(nodeId);
@@ -121,7 +131,7 @@ void ClusterManager::nodeFinished(int nodeId) {
  * could return NULL if the cluster is died
  * or not init by head yet
  */
-unordered_map<int, unordered_set<int> >*
+unordered_map<int, unordered_map<int, int> >*
 ClusterManager::getNeighborClusters(int id, double time, bool forceUpdate) {
 	/**
 	 * iter->first -- cluster id
@@ -136,12 +146,15 @@ ClusterManager::getNeighborClusters(int id, double time, bool forceUpdate) {
 	 */
 	if (iter == clustersInfo.end()) { return NULL; }
 
-	unordered_set<int>* nodeNeighbourCluster = NULL;
+	/**
+	 * key -- cluster id
+	 * val -- connection cnt with the cluster
+	 */
+	unordered_map<int, int>* nodeNeighbourCluster = NULL;
 	if (forceUpdate || iter->second.neighborClusterUpdateTime < time) {
 		iter->second.neighborClusters.clear();
 
 		/**
-		 * FIXME: also iterate over heads
 		 * iterate over all members in the cluster
 		 * *i -- node id
 		 */
@@ -159,13 +172,15 @@ ClusterManager::getNeighborClusters(int id, double time, bool forceUpdate) {
 
 			/**
 			 * iterate over all the neighbor cluster id of one single node in this cluster
+			 * cIter->first -- neighbor cluster id
+			 * cIter->second -- connection cnt with this neighbor cluster
 			 */
 			for(auto cIter = nodeNeighbourCluster->begin(); cIter != nodeNeighbourCluster->end(); ++cIter) {
-				if (iter->second.neighborClusters.find(*cIter)
+				if (iter->second.neighborClusters.find(cIter->first)
 							== iter->second.neighborClusters.end()) {
-					iter->second.neighborClusters[*cIter] = unordered_set<int>();
+					iter->second.neighborClusters[cIter->first] = unordered_map<int, int>();
 				}
-				iter->second.neighborClusters[*cIter].insert(*i);
+				iter->second.neighborClusters[cIter->first][*i] = cIter->second;
 			}
 		}
 
@@ -179,13 +194,15 @@ ClusterManager::getNeighborClusters(int id, double time, bool forceUpdate) {
 
 			/**
 			 * iterate over all the neighbor cluster id of one single node in this cluster
+			 * cIter->first -- neighbor cluster id
+			 * cIter->second -- connection cnt with this neighbor cluster
 			 */
 			for(auto cIter = nodeNeighbourCluster->begin(); cIter != nodeNeighbourCluster->end(); ++cIter) {
-				if (iter->second.neighborClusters.find(*cIter)
+				if (iter->second.neighborClusters.find(cIter->first)
 							== iter->second.neighborClusters.end()) {
-					iter->second.neighborClusters[*cIter] = unordered_set<int>();
+					iter->second.neighborClusters[cIter->first] = unordered_map<int, int>();
 				}
-				iter->second.neighborClusters[*cIter].insert(*i);
+				iter->second.neighborClusters[cIter->first][*i] = cIter->second;
 			}
 		}
 	}

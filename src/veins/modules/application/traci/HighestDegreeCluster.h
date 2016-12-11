@@ -43,7 +43,7 @@ protected:
     double calculateWeight();
 	virtual int getNextHopId(int dstId);
 	virtual int getNearestNodeToPos(const Coord& pos);
-	virtual int getNearestNodeToPos(const unordered_map<int, unordered_set<int> >& neighbors, const Coord& pos);
+	virtual int getNearestNodeToPos(const unordered_map<int, unordered_map<int, int> >& neighbors, const Coord& pos);
 
 	virtual int headGateWayGetNextHopId(int dstId);
 	virtual int headGetNextHopId(int dstId);

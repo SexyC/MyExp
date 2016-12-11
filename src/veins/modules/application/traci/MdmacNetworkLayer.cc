@@ -482,10 +482,13 @@ Coord MdmacNetworkLayer::getHostPosition(cModule* const host) {
 }
 
 Coord MdmacNetworkLayer::getHostPosition(int hostId) {
+	return getHostPosition(hostId, simTime());
+}
 
+Coord MdmacNetworkLayer::getHostPosition(int hostId, simtime_t t) {
 	cModule* host = cSimulation::getActiveSimulation()->getModule(hostId);
 	ASSERT(host != NULL);
-	return MdmacNetworkLayer::getHostPosition(host);
+	return MdmacNetworkLayer::getHostPosition(host, t);
 }
 
 /** @brief Handle self messages */
