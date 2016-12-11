@@ -75,6 +75,9 @@ void MdmacNetworkLayer::initialize(int stage)
     	mCurrentMaximumClusterSize = 0;
     	mClusterStartTime = 0;
 
+		sendDataLength = 0;
+		forwardDataLength = 0;
+
 		bcm = FindModule<BaseConnectionManager*>::findGlobalModule();
 		ASSERT(bcm != NULL);
 
@@ -91,6 +94,8 @@ void MdmacNetworkLayer::initialize(int stage)
     	mAngleThreshold = par("angleThreshold").doubleValue() * M_PI;
     	mHopCount = par("hopCount").longValue();
     	mBeaconInterval = par("beaconInterval").doubleValue();
+		mForwardBufferSize = par("forwardBufferSize").doubleValue();
+		mCurrentBufferOccupied = 0;
 
 		mSendData = NULL;
 		mSendHelloMessage = NULL;
@@ -327,8 +332,20 @@ void MdmacNetworkLayer::onData(WaveShortMessage* wsm) {
 		 * push to buffer
 		 */
 		if (nextHopId < 0) {
+
+			/**
+			 * if buffer is full, drop current packet
+			 * TODO: add statistic code
+			 */
+			if (checkBufferFull(wsmd->getByteLength())) {
+				return;
+			}
+
+			mCurrentBufferOccupied += wsmd->getByteLength();
+
 			wsmd->getPathNodes().push(wsmd->getNextHopId());
 			msgQueue.push_back(wsmd->dup());
+
 
 			ASSERT(mWaitSendData);
 			if (!mWaitSendData->isScheduled()) {
@@ -340,6 +357,7 @@ void MdmacNetworkLayer::onData(WaveShortMessage* wsm) {
 		wsmd->setNextHopId(nextHopId);
 
 		forwardDataLength += wsmd->getByteLength();
+		cout << forwardDataLength << " forward data" << endl;
 
 		sendWSM(wsmd->dup());
 
@@ -531,11 +549,25 @@ void MdmacNetworkLayer::handleSelfMsg(cMessage* msg) {
 		 * currently no available next hop
 		 */
 		if (nextHopId < 0) {
+
+			/**
+			 * if buffer is full, drop the packet
+			 * TODO: add statistic code
+			 */
+			if (checkBufferFull(pkgLen)) {
+				return;
+			}
+
 			WaveShortMessageWithDst* wsmd = prepareAndInitWSMWithDst(dstMod,
 						-1 /* next hop id is not sure */, /*ss.str()*/ "", pkgLen);
 
 			sendDataLength += pkgLen;
+
+			cout << sendDataLength << " send data" << endl;
+
 			msgQueue.push_back(wsmd);
+
+			mCurrentBufferOccupied += pkgLen;
 
 			ASSERT(mWaitSendData);
 			if (!mWaitSendData->isScheduled()) {
@@ -545,6 +577,7 @@ void MdmacNetworkLayer::handleSelfMsg(cMessage* msg) {
 		}
 
 		sendDataLength += pkgLen;
+		cout << sendDataLength << " send data" << endl;
 		sendMessage(dstMod, nextHopId, /*ss.str()*/ "", pkgLen);
 	} else if (msg == mWaitSendData) {
 		int msgQueueSize = msgQueue.size();
@@ -572,6 +605,7 @@ void MdmacNetworkLayer::handleSelfMsg(cMessage* msg) {
 			if (nextHopId < 0) {
 				msgQueue.push_back(tmp);
 			} else {
+				mCurrentBufferOccupied -= tmp->getByteLength();
 				tmp->setNextHopId(nextHopId);
 				sendWSM(tmp);
 			}

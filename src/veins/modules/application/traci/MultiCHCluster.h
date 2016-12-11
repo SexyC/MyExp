@@ -32,6 +32,7 @@ using std::priority_queue;
 //#include "MdmacControlMessage_m.h"
 #include "MdmacNetworkLayer.h"
 #include "HighestDegreeCluster.h"
+#include "ApplMapManager.h"
 
 /**
  * Implements the Highest Degree Clustering mechanism.

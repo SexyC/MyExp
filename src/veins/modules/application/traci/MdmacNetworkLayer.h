@@ -285,6 +285,8 @@ protected:
 	double mAngleThreshold;					/**< The maximum angle between the directions of this node and another node for it to be considered for CH. */
 	unsigned int mHopCount;					/**< The number of hops for cluster control messages. */
 	double mBeaconInterval;					/**< The interval between each HELLO message. */
+	double mForwardBufferSize;				/**< The maxmium data buffer that a node can provide, unit byte */
+	double mCurrentBufferOccupied;			/**< Current used buffer, unit byte */
 
     /*@}*/
 
@@ -338,6 +340,14 @@ protected:
 	virtual void handleParkingUpdate(cObject* obj);
 	virtual void sendWSM(WaveShortMessage* wsm);
 	virtual MdmacControlMessage* prepareWSMCB(int kind, int dest, int nHops);
+
+	virtual bool checkBufferFull(double size) {
+		bool isFull = (mCurrentBufferOccupied + size) > mForwardBufferSize;
+		if (isFull) {
+			cout << mId << " buffer full" << endl;
+		}
+		return isFull;
+	}
 
     /** @brief Handle messages from upper layer */
     //virtual void handleUpperMsg(cMessage* msg);

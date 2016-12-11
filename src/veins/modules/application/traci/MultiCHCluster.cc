@@ -201,7 +201,6 @@ int MultiCHCluster::headGateWayGetNextHopId(int dstId) {
 	hdcEV << "headgateway: headGateWay get next Hop id, cluster id: " << mClusterHead << endl;
 
 	if (mNeighbours.find(dstId) == mNeighbours.end()) {
-		cout << "just neighbor node" << endl;
 		return dstId;
 	}
 
@@ -255,7 +254,6 @@ int MultiCHCluster::headGetNextHopId(int dstId) {
 	hdcEV << "head get next Hop id, cluster id: " << mClusterHead << endl;
 
 	if (mNeighbours.find(dstId) == mNeighbours.end()) {
-		cout << "head: just neighbor node" << endl;
 		return dstId;
 	}
 	unordered_map<int, unordered_map<int, int> >* n = mClusterManager->getNeighborClusters(mClusterHead, simTime().dbl());
@@ -298,9 +296,9 @@ int MultiCHCluster::headGetNextHopId(int dstId) {
 
 	auto iter = n->find(nextClusterId);
 	ASSERT(iter != n->end());
-	cout << mClusterHead << "-->" << iter->first << " ";
-	cout << "selecting best gateway as next hop: " << iter->second.begin()->first;
-	cout << " while gateway size: " << iter->second.size() << endl;
+	hdcEV << mClusterHead << "-->" << iter->first << " ";
+	hdcEV << "selecting best gateway as next hop: " << iter->second.begin()->first;
+	hdcEV << " while gateway size: " << iter->second.size() << endl;
 	return (iter->second.begin()->first);
 }
 
@@ -309,7 +307,6 @@ int MultiCHCluster::gateWayGetNextHopId(int dstId) {
 	hdcEV << "gateway get next Hop id, cluster id: " << mClusterHead << endl;
 
 	if (mNeighbours.find(dstId) == mNeighbours.end()) {
-		cout << "gateway: just neighbor node" << endl;
 		return dstId;
 	}
 	unordered_map<int, unordered_map<int, int> >* n = mClusterManager->getNeighborClusters(mClusterHead, simTime().dbl());
@@ -364,7 +361,6 @@ int MultiCHCluster::gateWayGetNextHopId(int dstId) {
 int MultiCHCluster::memberGetNextHopId(int dstId) {
 	hdcEV << "member get next Hop id, cluster id: " << mClusterHead << endl;
 	if (mNeighbours.find(dstId) == mNeighbours.end()) {
-		cout << "member: just neighbor node" << endl;
 		return dstId;
 	}
 	if (mClusterHead == -1) {

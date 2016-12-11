@@ -32,6 +32,9 @@ simple MdmacNetworkLayer extends BaseWaveApplLayer
     	int freshnessThreshold = default(4);
     	double angleThreshold = default(0.25);	// multiple of PI
     	int hopCount = default(1);
+		double forwardBufferSize @unit(byte) = default(10MB);
+		double packetLenMin @unit(byte) = default(10kB);
+		double packetLenMax @unit(byte) = default(20kB);
     	//double beaconInterval @unit(s) = default(20s);
 
 		// signals
