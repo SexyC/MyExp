@@ -196,7 +196,7 @@ ClusterManager::getNeighborClusters(int id, double time, bool forceUpdate) {
 					iter->second.neighborClusters[cIter->first] = unordered_map<int, int>();
 				}
 				iter->second.neighborClusters[cIter->first][*i] = cIter->second;
-				cout << "cluster id: " << cIter->first << " gateway: " << *i << " degree: " << cIter->second << endl;
+				//cout << "cluster id: " << cIter->first << " gateway: " << *i << " degree: " << cIter->second << endl;
 			}
 		}
 
@@ -206,7 +206,13 @@ ClusterManager::getNeighborClusters(int id, double time, bool forceUpdate) {
 		for(auto i = iter->second.heads.begin(); i != iter->second.heads.end();
 					++i) {
 			nodeNeighbourCluster = nodeNeighbourClusterInfo[*i];
-			ASSERT(nodeNeighbourCluster != NULL);
+			//ASSERT(nodeNeighbourCluster != NULL);
+			if (nodeNeighbourCluster == NULL) {
+				/**
+				 * maybe this back head is finished
+				 */
+				continue;
+			}
 
 			/**
 			 * iterate over all the neighbor cluster id of one single node in this cluster
