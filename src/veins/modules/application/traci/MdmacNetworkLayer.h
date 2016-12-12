@@ -40,7 +40,7 @@ using std::string;
 #include "ApplMapManager.h"
 
 //#define BEAT_LENGTH	0.25	// measured in second.
-#define BEAT_LENGTH	2	// measured in second.
+#define BEAT_LENGTH	1	// measured in second.
 
 using Veins::AnnotationManagerAccess;
 using Veins::AnnotationManager;
@@ -217,11 +217,15 @@ public:
 			 * Add the cluster the node is in
 			 * to neighbor cluster if it's not added before
 			 * most unlikely
+			 *
+			 * FIXME: Should not set this
+			 * If all the neighbors of this node do not belong to the same cluster with this node
+			 * Then this node should not considered as connected to this cluster
 			 */
-			if (mClusterHead != -1 &&
-						mNeighbourClusters.find(mClusterHead) == mNeighbourClusters.end()) {
-				mNeighbourClusters[mClusterHead] = 0;
-			}
+			//if (mClusterHead != -1 &&
+			//			mNeighbourClusters.find(mClusterHead) == mNeighbourClusters.end()) {
+			//	mNeighbourClusters[mClusterHead] = 0;
+			//}
 		}
 		mClusterManager->nodeNeighbourClusterInfoUpdate(mId, &mNeighbourClusters);
 		return &mNeighbourClusters;

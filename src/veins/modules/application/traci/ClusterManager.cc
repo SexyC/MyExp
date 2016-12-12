@@ -196,6 +196,7 @@ ClusterManager::getNeighborClusters(int id, double time, bool forceUpdate) {
 					iter->second.neighborClusters[cIter->first] = unordered_map<int, int>();
 				}
 				iter->second.neighborClusters[cIter->first][*i] = cIter->second;
+				cout << "cluster id: " << cIter->first << " gateway: " << *i << " degree: " << cIter->second << endl;
 			}
 		}
 

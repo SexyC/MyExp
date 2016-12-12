@@ -357,7 +357,7 @@ void MdmacNetworkLayer::onData(WaveShortMessage* wsm) {
 		wsmd->setNextHopId(nextHopId);
 
 		forwardDataLength += wsmd->getByteLength();
-		cout << forwardDataLength << " forward data" << endl;
+		expEV << forwardDataLength << " forward data" << endl;
 
 		sendWSM(wsmd->dup());
 
@@ -563,7 +563,7 @@ void MdmacNetworkLayer::handleSelfMsg(cMessage* msg) {
 
 			sendDataLength += pkgLen;
 
-			cout << sendDataLength << " send data" << endl;
+			expEV << sendDataLength << " send data" << endl;
 
 			msgQueue.push_back(wsmd);
 
@@ -577,7 +577,7 @@ void MdmacNetworkLayer::handleSelfMsg(cMessage* msg) {
 		}
 
 		sendDataLength += pkgLen;
-		cout << sendDataLength << " send data" << endl;
+		expEV << sendDataLength << " send data" << endl;
 		sendMessage(dstMod, nextHopId, /*ss.str()*/ "", pkgLen);
 	} else if (msg == mWaitSendData) {
 		int msgQueueSize = msgQueue.size();
