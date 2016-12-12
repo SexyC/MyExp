@@ -226,6 +226,10 @@ public:
 		mClusterManager->nodeNeighbourClusterInfoUpdate(mId, &mNeighbourClusters);
 		return &mNeighbourClusters;
 	}
+
+	virtual double getWeight() { return mWeight; }
+	virtual double getForwardBufferSize() { return mForwardBufferSize; }
+	virtual double getCurrentBufferOccupied() { return mCurrentBufferOccupied; }
 protected:
 
 	//unsigned int mID;						/**< Node's unique ID. */

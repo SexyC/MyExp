@@ -96,6 +96,7 @@ public:
 	void leaveCluster(int clusterId, int nodeId, double time);
 
 	void registerBackHead(int clutserId, const vector<int>& backHeads);
+	bool isBackHead(int clusterId, int nodeId);
 
 	int getClusterIdByNodeId(int nodeId) {
 		auto iter = nodeClusterMap.find(nodeId);
@@ -122,6 +123,11 @@ public:
 	 *         val -- connection cnt with this cluster
 	 */
 	unordered_map<int, unordered_map<int, int> >* getNeighborClusters(int id, double time, bool forceUpdate = false);
+	/**
+	 * get the cluster connected to this node's neighbor node
+	 * return the same as above
+	 */
+	unordered_map<int, unordered_map<int, int> > getNeighborClusters(vector<int>& neighborNodes, bool forceUpdate = false);
 
 	void nodeFinished(int nodeId);
 

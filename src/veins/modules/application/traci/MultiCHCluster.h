@@ -67,6 +67,7 @@ protected:
 
 	int headGateWayGetNextHopId(int dstId);
 	int headGetNextHopId(int dstId);
+	int backHeadGetNextHopId(int dstId);
 	int gateWayGetNextHopId(int dstId);
 	int memberGetNextHopId(int dstId);
 
@@ -88,6 +89,9 @@ protected:
 	vector<double> futureConfidenceFactor;
 	int backupHeadMaxLimit;
 	int backupSelectFactor;
+
+	double headFactorOfRemainCap;
+	double gateWayFactorOfRemainCap;
 };
 
 #endif

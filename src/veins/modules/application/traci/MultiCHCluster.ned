@@ -31,4 +31,7 @@ simple MultiCHCluster extends HighestDegreeCluster
 		// min(head_back_weight / head_weight)
 		int backupSelectFactor = default(.8);
 
+		// (1-headFactorOfRemainCap) * weight + headFactorOfRemainCap * remainCap
+		double headFactorOfRemainCap = default(.6);
+		double gateWayFactorOfRemainCap = default(.6);
 }

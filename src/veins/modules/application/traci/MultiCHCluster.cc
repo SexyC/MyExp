@@ -35,6 +35,17 @@ void MultiCHCluster::initialize(int stage) {
 		backupHeadMaxLimit = par("backupHeadMaxLimit");
 		backupSelectFactor = par("backupSelectFactor");
 
+		headFactorOfRemainCap = par("headFactorOfRemainCap");
+
+		if (!(headFactorOfRemainCap >= 0 && headFactorOfRemainCap <= 1)) {
+			error("headFactorOfRemainCap setting wrong");
+		}
+
+		gateWayFactorOfRemainCap = par("gateWayFactorOfRemainCap");
+		if (!(gateWayFactorOfRemainCap >= 0 && gateWayFactorOfRemainCap <= 1)) {
+			error("gateWayFactorOfRemainCap setting wrong");
+		}
+
 	} else if (stage == 1) { }
 }
 
@@ -199,17 +210,123 @@ int MultiCHCluster::getNearestNodeToPos(const unordered_map<int, unordered_map<i
 
 int MultiCHCluster::getBestHeadAsNextHop(unordered_set<int>& heads, int dstId) {
 
+	double maxWeight = 0;
+	double maxRemainCap = 0;
+	/**
+	 * find out max weight and max remain cap for normalization
+	 */
+	unordered_map<int, double> weightFactors;
+	weightFactors.reserve(heads.size());
+
+	unordered_map<int, double> capacityFactor;
+	capacityFactor.reserve(heads.size());
+
 	for (auto iter = heads.begin(); iter != heads.end(); ++iter) {
+		MultiCHCluster* mch = 
+			dynamic_cast<MultiCHCluster*>(ApplMapManager::getApplMapManager()->getBaseWaveApplLayerById(*iter));
+		ASSERT(mch);
+
+		double nodeWeight = mch->getWeight();
+
+		weightFactors[*iter] = nodeWeight;
+		if (nodeWeight > maxWeight) {
+			maxWeight = nodeWeight;
+		}
+
+		double nodeForwardBufferSize = mch->getForwardBufferSize();
+		double nodeCurrentBufferOccupied = mch->getCurrentBufferOccupied();
+		double nodeRemainCap = nodeForwardBufferSize - nodeCurrentBufferOccupied;
+
+		capacityFactor[*iter] = nodeRemainCap;
+		if (nodeRemainCap > maxRemainCap) {
+			maxRemainCap = nodeRemainCap;
+		}
 	}
 
-	return -1;
+	if (maxWeight == 0 || maxRemainCap == 0) {
+		cout << "maxWeight == 0 || maxRemainCap == 0" << endl;
+		return -1;
+	}
+
+	/**
+	 * normalize weight
+	 */
+	for (auto iter = weightFactors.begin(); iter != weightFactors.end(); ++iter) {
+		iter->second /= maxWeight;
+	}
+
+	/**
+	 * normalize remain cap
+	 */
+	double maxFactor = std::numeric_limits<double>::min();
+	int nodeId = -1;
+	for (auto iter = capacityFactor.begin(); iter != capacityFactor.end(); ++iter) {
+		iter->second /= maxRemainCap;
+		iter->second = weightFactors[iter->first] * (1 - headFactorOfRemainCap)
+			+ iter->second * headFactorOfRemainCap;
+
+		if (iter->second > maxFactor) {
+			maxFactor = iter->second;
+			nodeId = iter->first;
+		}
+	}
+
+	cout << "cluster head: " << mClusterHead;
+	cout << " selecting head: " << nodeId << " with factor: " << capacityFactor[nodeId] << endl;
+
+	return nodeId;
 }
 
 int MultiCHCluster::getBestGateWayAsNextHop(unordered_map<int, int>& gateWays, int dstId) {
 
+	unordered_map<int, double> capacityFactor;
+	capacityFactor.reserve(gateWays.size());
+	double maxRemainCap = 0;
+
+	int maxDegree = 0;
 	for (auto iter = gateWays.begin(); iter != gateWays.end(); ++iter) {
+		if (iter->second > maxDegree) {
+			maxDegree = iter->second;
+		}
+		MultiCHCluster* mch =
+			dynamic_cast<MultiCHCluster*>(ApplMapManager::getApplMapManager()->getBaseWaveApplLayerById(iter->first));
+		ASSERT(mch);
+		
+		double nodeForwardBufferSize = mch->getForwardBufferSize();
+		double nodeCurrentBufferOccupied = mch->getCurrentBufferOccupied();
+		double nodeRemainCap = nodeForwardBufferSize - nodeCurrentBufferOccupied;
+
+		capacityFactor[iter->first] = nodeRemainCap;
+		if (nodeRemainCap > maxRemainCap) {
+			maxRemainCap = nodeRemainCap;
+		}
 	}
-	return -1;
+
+	if (maxRemainCap == 0 || maxDegree == 0) {
+		cout << "maxRemainCap == 0 || maxDegree == 0" << endl;
+		return -1;
+	}
+
+	/**
+	 * normalize remainCap
+	 */
+	int gateWayId = -1;
+	double maxGateWayFactor = std::numeric_limits<double>::min();
+	for (auto iter = capacityFactor.begin(); iter != capacityFactor.end();
+				++iter) {
+		iter->second /= maxRemainCap;
+		iter->second = ((double) gateWays[iter->first] / (double) maxDegree) * (1 - gateWayFactorOfRemainCap)
+			+ iter->second * gateWayFactorOfRemainCap;
+
+		if (iter->second > maxGateWayFactor) {
+			maxGateWayFactor = iter->second;
+			gateWayId = iter->first;
+		}
+	}
+	cout << "cluster head: " << mClusterHead;
+	cout << " selecting head: " << gateWayId << " with factor: " << capacityFactor[gateWayId] << endl;
+
+	return gateWayId;
 }
 
 int MultiCHCluster::headGateWayGetNextHopId(int dstId) {
@@ -303,6 +420,9 @@ int MultiCHCluster::headGetNextHopId(int dstId) {
 	 */
 	if (nextClusterId == mClusterHead) {
 		if (mNeighbours.find(dstId) == mNeighbours.end()) {
+			/**
+			 * FIXME: maybe we should return -1
+			 */
 			return getNearestNodeToPos(dstPos);
 		} else {
 			return dstId;
@@ -311,10 +431,17 @@ int MultiCHCluster::headGetNextHopId(int dstId) {
 
 	auto iter = n->find(nextClusterId);
 	ASSERT(iter != n->end());
+
+	int selectedGateWayId = getBestGateWayAsNextHop(iter->second, dstId);
 	hdcEV << mClusterHead << "-->" << iter->first << " ";
-	hdcEV << "selecting best gateway as next hop: " << iter->second.begin()->first;
+	hdcEV << "selecting best gateway as next hop: " << selectedGateWayId;
 	hdcEV << " while gateway size: " << iter->second.size() << endl;
-	return (iter->second.begin()->first);
+	//return (iter->second.begin()->first);
+	return selectedGateWayId;
+}
+
+int MultiCHCluster::backHeadGetNextHopId(int dstId) {
+	return -1;
 }
 
 int MultiCHCluster::gateWayGetNextHopId(int dstId) {
