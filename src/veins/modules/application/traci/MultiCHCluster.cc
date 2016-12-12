@@ -208,6 +208,32 @@ int MultiCHCluster::getNearestNodeToPos(const unordered_map<int, unordered_map<i
 
 }
 
+int MultiCHCluster::getBestHeadAsNextHop(int clusterId, int dstId) {
+	unordered_set<int>* heads = mClusterManager->getClusterHeads(clusterId);
+	if (!heads) { return -1; }
+	return getBestHeadAsNextHop(*heads, dstId);
+}
+
+/**
+ * clusterId -- current cluster the node is in
+ * neighbors -- current neighbor node that the node is connected to
+ * dstId -- packet dst node id
+ */
+int MultiCHCluster::getBestHeadAsNextHop(int clusterId, vector<int>& neighbors, int dstId) {
+	unordered_set<int>* heads = mClusterManager->getClusterHeads(clusterId);
+	if (!heads) { return -1; }
+
+	unordered_set<int> neighborHead;
+
+	for (auto iter = neighbors.begin(); iter != neighbors.end(); ++iter) {
+		if (heads->find(*iter) != heads->end()) {
+			neighborHead.insert(*iter);
+		}
+	}
+	
+	return getBestHeadAsNextHop(neighborHead, dstId);
+}
+
 int MultiCHCluster::getBestHeadAsNextHop(unordered_set<int>& heads, int dstId) {
 
 	double maxWeight = 0;
@@ -329,6 +355,12 @@ int MultiCHCluster::getBestGateWayAsNextHop(unordered_map<int, int>& gateWays, i
 	return gateWayId;
 }
 
+/**
+ * This function works as following steps:
+ * 0. If the dst is my neighbor, forward to it
+ * 1. Find nearest cluster, if I'm connected to it, then work as gateway
+ * 2. If I'm not, work as head
+ */
 int MultiCHCluster::headGateWayGetNextHopId(int dstId) {
 	hdcEV << "headgateway: headGateWay get next Hop id, cluster id: " << mClusterHead << endl;
 
@@ -382,6 +414,14 @@ int MultiCHCluster::headGateWayGetNextHopId(int dstId) {
 	return getNearestNodeToPos(dstPos);
 }
 
+/**
+ * This function follows the next steps:
+ * 0. If the dst is my neighbor, forward to it
+ * 1. find best forward cluster
+ * 2. if step 1 failed, return -1
+ * 3. If step 1 return my cluster is nearest, forward to closest node
+ * 4. Find a best gateway to forward to the neighbor cluster
+ */
 int MultiCHCluster::headGetNextHopId(int dstId) {
 	hdcEV << "head get next Hop id, cluster id: " << mClusterHead << endl;
 
@@ -440,10 +480,78 @@ int MultiCHCluster::headGetNextHopId(int dstId) {
 	return selectedGateWayId;
 }
 
+/**
+ * This function work as following steps:
+ * 1. Find the clusters that connected to the gateway this back head connected to
+ * 2. Find the best cluster to forward in the clusters found in step 1
+ * 3. If we can't find best cluster in step 2, find if we can find best cluster using real head
+ * 4. If step 3 return yes, then forward to real head, else return -1
+ * 5. If step 2 return a valid best cluster id, then find best gateway to forward it
+ */
 int MultiCHCluster::backHeadGetNextHopId(int dstId) {
-	return -1;
+
+	cout << "backHead is working" << endl;
+
+	vector<int> myNeighborNodes;
+	myNeighborNodes.reserve(mNeighbours.size());
+
+	for (auto iter = mNeighbours.begin(); iter != mNeighbours.end(); ++iter) {
+		myNeighborNodes.push_back(iter->first);
+	}
+
+	unordered_map<int, unordered_map<int, int> > myNeighborCluster
+		= mClusterManager->getNeighborClusters(myNeighborNodes);
+
+	Coord dstPos = getHostPosition(dstId);
+	int nextClusterId = getNearestNodeToPos(myNeighborCluster, dstPos);
+
+	if (nextClusterId == -1) {
+		hdcEV << "back head get next id failed with: we found neighbor cluster"
+			" but the cluster lost head, died"
+			<< endl;
+
+		unordered_map<int, unordered_map<int, int> >* n = mClusterManager->getNeighborClusters(mClusterHead, simTime().dbl());
+		
+		if (!n) { 
+			hdcEV << "back head get next id failed with: all cluster neighbor cluster"
+				" is died or no neighbor clusters"
+				<< endl;
+			return -1; 
+		}
+		nextClusterId = getNearestNodeToPos(*n, dstPos);
+
+		if (nextClusterId == -1) {
+			hdcEV << "back head get next id failed with: we found neighbor cluster"
+				" but the cluster lost head, died"
+				<< endl;
+			return -1;
+		}
+		/**
+		 * if back head can not find gateway but cluster head can
+		 * forward to cluster head
+		 */
+		return mClusterHead;
+	}
+
+	auto iter = myNeighborCluster.find(nextClusterId);
+	ASSERT(iter != myNeighborCluster.end());
+
+	int selectedGateWayId = getBestGateWayAsNextHop(iter->second, dstId);
+	hdcEV << mClusterHead << "-->" << iter->first << " ";
+	hdcEV << "selecting best gateway as next hop: " << selectedGateWayId;
+	hdcEV << " while gateway size: " << iter->second.size() << endl;
+
+	return selectedGateWayId;
 }
 
+/**
+ * This one follow the next steps:
+ * 0. check if dst is my neighbor, if yes, forward to it(work as any fucking node)
+ * 1. check if the best forward cluster is connected to me, if yes, forward to it(work as gateway)
+ * 2. check if I'm the back up head, if yes, work as back up head
+ * 3. check if I'm connected to some head(real head or back up head), if yes, forward to it(work as member)
+ * 4. find the nearest node to dst node
+ */
 int MultiCHCluster::gateWayGetNextHopId(int dstId) {
 
 	hdcEV << "gateway get next Hop id, cluster id: " << mClusterHead << endl;
@@ -465,12 +573,15 @@ int MultiCHCluster::gateWayGetNextHopId(int dstId) {
 	//ASSERT(nextClusterId != -1);
 	
 	if (nextClusterId == -1) { 
-		hdcEV << "head get next id failed with: we found neighbor cluster"
+		hdcEV << "gateway get next id failed with: we found neighbor cluster"
 			" but the cluster lost head, died"
 			<< endl;
 		return -1; 
 	}
 
+	/**
+	 * FIXME: Should forward to head
+	 */
 	if (nextClusterId == mClusterHead) {
 		return getNearestNodeToPos(dstPos);
 	}
@@ -481,13 +592,37 @@ int MultiCHCluster::gateWayGetNextHopId(int dstId) {
 	 */
 	unordered_map<int, int>* pNeighborClusters = getNeighbourClusters();
 	if (pNeighborClusters->find(nextClusterId) == pNeighborClusters->end()) {
-		if (mNeighbours.find(mClusterHead) == mNeighbours.end()) {
+
+		/**
+		 * If I'm the back head
+		 */
+		if (mClusterManager->isBackHead(mClusterHead, mId)) {
+			return backHeadGetNextHopId(dstId);
+		}
+
+		vector<int> myNeighborNodeIds;
+		myNeighborNodeIds.reserve(mNeighbours.size());
+
+		for (auto iter = mNeighbours.begin(); iter != mNeighbours.end(); ++iter) {
+			myNeighborNodeIds.push_back(iter->first);
+		}
+
+		int headId = getBestHeadAsNextHop(mClusterHead, myNeighborNodeIds, dstId);
+
+		if (headId == -1) {
+			hdcEV << "can't get forward head or back head" << endl;
 			return getNearestNodeToPos(dstPos);
 		}
-		if (mClusterHead == -1) {
-			hdcEV << "cluster head is -1" << endl;
-		}
-		return mClusterHead;
+
+		return headId;
+
+		//if (mNeighbours.find(mClusterHead) == mNeighbours.end()) {
+		//	return getNearestNodeToPos(dstPos);
+		//}
+		//if (mClusterHead == -1) {
+		//	hdcEV << "cluster head is -1" << endl;
+		//}
+		//return mClusterHead;
 	}
 	
 	for(auto iter = mNeighbours.begin(); iter != mNeighbours.end(); ++iter) {
@@ -500,16 +635,39 @@ int MultiCHCluster::gateWayGetNextHopId(int dstId) {
 	return getNearestNodeToPos(dstPos);
 }
 
+/**
+ * This function work as the following steps:
+ * 0. check if dst is my neighbor, if yes, forward to it(work as any fucking node)
+ * 1. check if I'm the back up head, if yes, work as back up head
+ * 2. get neighbor best head to forward(work as a member node)
+ */
 int MultiCHCluster::memberGetNextHopId(int dstId) {
 	hdcEV << "member get next Hop id, cluster id: " << mClusterHead << endl;
 	if (mNeighbours.find(dstId) == mNeighbours.end()) {
 		return dstId;
 	}
-	if (mClusterHead == -1) {
-		hdcEV << "cluster head is -1" << endl;
+
+	if (mClusterManager->isBackHead(mClusterHead, mId)) {
+		return backHeadGetNextHopId(dstId);
 	}
-	hdcEV << "member forward to head" << endl;
-	return mClusterHead;
+
+	vector<int> myNeighborNodeIds;
+	myNeighborNodeIds.reserve(mNeighbours.size());
+
+	for (auto iter = mNeighbours.begin(); iter != mNeighbours.end(); ++iter) {
+		myNeighborNodeIds.push_back(iter->first);
+	}
+
+	/**
+	 * Find neighbor heads
+	 */
+	int headId = getBestHeadAsNextHop(mClusterHead, myNeighborNodeIds, dstId);
+
+	if (headId == -1) {
+		hdcEV << "member id: " << mId <<
+			" can't get correct head for forwarding" << endl;
+	}
+	return headId;
 }
 
 void MultiCHCluster::receiveHelloMessage(MdmacControlMessage* m) {

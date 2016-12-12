@@ -131,6 +131,12 @@ public:
 
 	void nodeFinished(int nodeId);
 
+	unordered_set<int>* getClusterHeads(int clusterId) {
+		auto iter = clustersInfo.find(clusterId);
+		if (iter == clustersInfo.end()) { return NULL; }
+		return &iter->second.heads;
+	}
+
 protected:
 	unordered_map<int, ClusterStat> clustersInfo;
 

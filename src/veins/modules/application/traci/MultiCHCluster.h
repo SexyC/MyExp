@@ -71,7 +71,9 @@ protected:
 	int gateWayGetNextHopId(int dstId);
 	int memberGetNextHopId(int dstId);
 
+	int getBestHeadAsNextHop(int, int);
 	int getBestHeadAsNextHop(unordered_set<int>&, int);
+	int getBestHeadAsNextHop(int, vector<int>&, int);
 	int getBestGateWayAsNextHop(unordered_map<int, int>&, int);
 
     /** @brief Handle a HELLO message. */
