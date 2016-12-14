@@ -425,6 +425,10 @@ void MdmacNetworkLayer::ClusterStarted() {
 	ClusterAlgorithm::ClusterStarted();
 	mIsClusterHead = true;
 
+	if (mClusterHead == 1284 || mId == 1284) {
+		cout << "1284 started: " << mClusterHead << " " << mId << endl;
+	}
+
 }
 
 
@@ -434,6 +438,10 @@ void MdmacNetworkLayer::ClusterDied( int deathType ) {
 
 	if ( deathType == CD_Attrition )
 		init();
+
+	if (mClusterHead == 1284 || mId == 1284) {
+		cout << "1284 died: " << mClusterHead << " " << mId << endl;
+	}
 }
 
 

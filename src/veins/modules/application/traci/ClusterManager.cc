@@ -72,6 +72,9 @@ void ClusterManager::joinCluster(int clusterId, int nodeId, double time) {
 	 * If previously it's a cluster head
 	 */
 	if (clustersInfo.find(nodeId) != clustersInfo.end()) {
+		if (nodeId == 1284) {
+			cout << "1284 join " << clusterId << endl;
+		}
 		clustersInfo.erase(nodeId);
 	}
 
@@ -88,9 +91,9 @@ void ClusterManager::joinCluster(int clusterId, int nodeId, double time) {
 
 void ClusterManager::leaveCluster(int clusterId, int nodeId, double time) {
 
-	if (clustersInfo.find(nodeId) != clustersInfo.end()) {
-		clustersInfo.erase(nodeId);
-	}
+	//if (clustersInfo.find(nodeId) != clustersInfo.end()) {
+	//	clustersInfo.erase(nodeId);
+	//}
 
 	if (clustersInfo.find(clusterId) == clustersInfo.end()) {
 		csEV << time << " leave cluster failed, cluster:" << clusterId << " not exist any more" << endl;
