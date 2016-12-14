@@ -51,7 +51,7 @@ void MultiCHCluster::initialize(int stage) {
 
 /** @brief Compute the CH weight for this node. */
 double MultiCHCluster::calculateWeight() {
-	NeighborNodeSet* nns = getCachedNeighborNodes();
+	NeighborNodeSet* nns = getCachedNeighborNodes(true);
 
 	double weight = .0;
 

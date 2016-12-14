@@ -72,9 +72,6 @@ void ClusterManager::joinCluster(int clusterId, int nodeId, double time) {
 	 * If previously it's a cluster head
 	 */
 	if (clustersInfo.find(nodeId) != clustersInfo.end()) {
-		if (nodeId == 1284) {
-			cout << "1284 join " << clusterId << endl;
-		}
 		clustersInfo.erase(nodeId);
 	}
 
