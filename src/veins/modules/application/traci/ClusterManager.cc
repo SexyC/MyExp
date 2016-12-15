@@ -104,7 +104,11 @@ void ClusterManager::leaveCluster(int clusterId, int nodeId, double time) {
 
 void ClusterManager::registerBackHead(int clusterId, const vector<int>& backHeads) {
 	auto iter = clustersInfo.find(clusterId);
-	ASSERT(iter != clustersInfo.end());
+	if (iter == clustersInfo.end()) {
+		return;
+	};
+
+	//ASSERT(iter != clustersInfo.end());
 	iter->second.heads.clear();
 	for (auto i = backHeads.begin(); i != backHeads.end(); ++i) {
 		iter->second.heads.insert(*i);
