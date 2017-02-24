@@ -42,6 +42,9 @@ simple MdmacNetworkLayer extends BaseWaveApplLayer
 		//@signal[sigHelloOverhead](type="int");
 		@signal[sigOverhead](type="long");
 		@signal[sigHelloOverhead](type="long");
+		@signal[sigSentPkts](type="long");
+		@signal[sigRecvPkts](type="long");
+		@signal[sigLostPkts](type="long");
 		@signal[sigClusterLifetime](type="double");
 		//@signal[sigClusterSize](type="int");
 		//@signal[sigHeadChange](type="int");
@@ -63,6 +66,9 @@ simple MdmacNetworkLayer extends BaseWaveApplLayer
 		@statistic[      deathType]( source =           sigDeathType; record = vector; title =                "Cluster Death Types"; 				);
 		@statistic[         deathX]( source =              sigDeathX; record = vector; title =           "Cluster Death Position X"; 				);
 		@statistic[         deathY]( source =              sigDeathY; record = vector; title =           "Cluster Death Position Y"; 				);
+		@statistic[    sigSentPkts]( source =              sigSentPkts; record = stats; title =           "total sent packets"; 				);
+		@statistic[    sigRecvPkts]( source =              sigRecvPkts; record = stats; title =           "total recv packets"; 				);
+		@statistic[    sigLostPkts]( source =              sigLostPkts; record = stats; title =           "total lost packets"; 				);
 
 }
 

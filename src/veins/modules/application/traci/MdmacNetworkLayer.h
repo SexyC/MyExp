@@ -329,6 +329,10 @@ protected:
 	AnnotationManager* annotations;
 	BaseConnectionManager* bcm;
 
+	simsignal_t mSigSentPkts;
+	simsignal_t mSigRecvPkts;
+	simsignal_t mSigLostPkts;
+
 	double recvDataLength;
 	double sendDataLength;
 	double forwardDataLength;

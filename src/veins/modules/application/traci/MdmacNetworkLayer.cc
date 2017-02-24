@@ -59,6 +59,10 @@ void MdmacNetworkLayer::initialize(int stage)
 
     if(stage == 0) {
 
+		mSigSentPkts = registerSignal( "sigSentPkts" );
+		mSigRecvPkts = registerSignal( "sigRecvPkts" );
+		mSigLostPkts = registerSignal( "sigLostPkts" );
+
     	mId = findHost()->getId();
 		ApplMapManager::getApplMapManager()->registerAppl(mId, this);
 
@@ -304,6 +308,8 @@ void MdmacNetworkLayer::onData(WaveShortMessage* wsm) {
 		packetDelay.record(simTime() - wsmd->getTimestamp());
 		packetPathLen.record(len);
 
+		emit(mSigRecvPkts, 1);
+
 		return;
 	}
 
@@ -338,6 +344,8 @@ void MdmacNetworkLayer::onData(WaveShortMessage* wsm) {
 			 * TODO: add statistic code
 			 */
 			if (checkBufferFull(wsmd->getByteLength())) {
+				
+				emit(mSigLostPkts, 1);
 				return;
 			}
 
@@ -579,6 +587,9 @@ void MdmacNetworkLayer::handleSelfMsg(cMessage* msg) {
 
 		sendDataLength += pkgLen;
 		expEV << sendDataLength << " send data" << endl;
+
+		emit(mSigSentPkts, 1);
+
 		sendMessage(dstMod, nextHopId, /*ss.str()*/ "", pkgLen);
 	} else if (msg == mWaitSendData) {
 		int msgQueueSize = msgQueue.size();
