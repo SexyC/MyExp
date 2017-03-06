@@ -332,6 +332,7 @@ protected:
 	simsignal_t mSigSentPkts;
 	simsignal_t mSigRecvPkts;
 	simsignal_t mSigLostPkts;
+	simsignal_t mSigLoadPkts;
 
 	double recvDataLength;
 	double sendDataLength;
@@ -433,7 +434,7 @@ protected:
 	enum { NEIGHBOR_NODE, FAR_NODE, PICK_ONE_NODE };
 	inline bool getRandomPermit(double p) {
 		ASSERT(p >= .0 && p <= 1.0);
-		return uniform(0, 1) <= p;
+		return uniform(0, 1) < p;
 	}
 
 	virtual cModule* getDstNode(int option = PICK_ONE_NODE);

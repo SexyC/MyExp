@@ -62,6 +62,7 @@ void MdmacNetworkLayer::initialize(int stage)
 		mSigSentPkts = registerSignal( "sigSentPkts" );
 		mSigRecvPkts = registerSignal( "sigRecvPkts" );
 		mSigLostPkts = registerSignal( "sigLostPkts" );
+		mSigLoadPkts = registerSignal( "sigLoadPkts" );
 
     	mId = findHost()->getId();
 		ApplMapManager::getApplMapManager()->registerAppl(mId, this);
@@ -127,7 +128,7 @@ void MdmacNetworkLayer::initialize(int stage)
 
 		sequenceNum = 0;
 		sendNearPosibility = hasPar("sendNearPosibility") ?
-			par("sendNearPosibility") : .5;
+			par("sendNearPosibility") : .0;
 
 		sendNodePercent = hasPar("sendNodePercent") ?
 			par("sendNodePercent") : .5;
@@ -280,6 +281,8 @@ void MdmacNetworkLayer::onData(WaveShortMessage* wsm) {
 	findHost()->getDisplayString().updateWith("r=16,green");
 	host->getDisplayString().updateWith("r=16,green");
 	annotations->scheduleErase(1, annotations->drawLine(wsm->getSenderPos(), mobility->getPositionAt(simTime()), "blue"));
+
+	emit(mSigLoadPkts, 1);
 
 	const std::map<std::string, cModule*> &hosts = mTraciManager->getManagedHosts();
 
@@ -706,6 +709,7 @@ cModule* MdmacNetworkLayer::getDstNode(int option) {
 				//double seed = uniform(0, 1);
 				//if (seed <= sendNearPosibility) {
 				if (getRandomPermit(sendNearPosibility)) {
+					cout << "pick up neighbor nodes " << sendNearPosibility << endl;
 					// get dst from neighbors
 					NeighborNodeSet* nns = getCachedNeighborNodes();
 					int idx = int(uniform(0, nns->size()));

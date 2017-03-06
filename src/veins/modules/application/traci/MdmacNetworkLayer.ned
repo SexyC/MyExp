@@ -32,7 +32,11 @@ simple MdmacNetworkLayer extends BaseWaveApplLayer
     	int freshnessThreshold = default(4);
     	double angleThreshold = default(0.25);	// multiple of PI
     	int hopCount = default(1);
+		double sendNearPosibility = default(0.0);
+		double sendNodePercent = default(0.0);
 		double forwardBufferSize @unit(byte) = default(10MB);
+		double packetSentInterval = default(10);
+		double packetSentIntervalBeg = default(10);
 		double packetLenMin @unit(byte) = default(10kB);
 		double packetLenMax @unit(byte) = default(20kB);
     	//double beaconInterval @unit(s) = default(20s);
@@ -45,6 +49,7 @@ simple MdmacNetworkLayer extends BaseWaveApplLayer
 		@signal[sigSentPkts](type="long");
 		@signal[sigRecvPkts](type="long");
 		@signal[sigLostPkts](type="long");
+		@signal[sigLoadPkts](type="long");
 		@signal[sigClusterLifetime](type="double");
 		//@signal[sigClusterSize](type="int");
 		//@signal[sigHeadChange](type="int");
@@ -69,6 +74,7 @@ simple MdmacNetworkLayer extends BaseWaveApplLayer
 		@statistic[    sigSentPkts]( source =              sigSentPkts; record = stats; title =           "total sent packets"; 				);
 		@statistic[    sigRecvPkts]( source =              sigRecvPkts; record = stats; title =           "total recv packets"; 				);
 		@statistic[    sigLostPkts]( source =              sigLostPkts; record = stats; title =           "total lost packets"; 				);
+		@statistic[    sigLoadPkts]( source =              sigLoadPkts; record = stats; title =           "total load packets"; 				);
 
 }
 
